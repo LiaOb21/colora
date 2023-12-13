@@ -3,3 +3,5 @@ resources/**
 logs/**
 .snakemake
 .snakemake/**
+overview.md
+pipeline_building.md
