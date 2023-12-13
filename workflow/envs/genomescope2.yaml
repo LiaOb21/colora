@@ -1,0 +1,5 @@
+channels:
+  - bioconda
+
+dependencies:
+  - genomescope2=2.0
