@@ -1,0 +1,26 @@
+# config.yaml
+
+# Path to hifi reads
+hifi_path: "/home/lia/Desktop/git_repos/colora/resources/raw_hifi"
+
+
+# Customisable parameters for kmc
+kmc:
+  k: 21 # kmer size, it will be the same used for genomescope2
+  t: 8 # number of threads
+  ci: 1 # exclude k-mers occurring less than <value> times (default: 2)
+  cs: 100000 #maximal value of a counter (default: 255)
+
+# Customisable parameters for kmc_tools transform
+kmc_tools:
+  cx: 100000 # exclude k-mers occurring more of than <value> times
+
+# Customisable parameters for oatk
+oatk:
+  k: 1001 # kmer size [1001]
+  c: 150 #  minimum kmer coverage [3]
+  t: 8  # number of threads [1]
+  m: "/home/lia/Desktop/git_repos/colora/resources/oatkDB/angiosperm_mito.fam" # mitochondria gene annotation HMM profile database [NULL]
+  p: "/home/lia/Desktop/git_repos/colora/resources/oatkDB/angiosperm_pltd.fam" # plastid gene annotation HMM profile database [NULL]
+
+
