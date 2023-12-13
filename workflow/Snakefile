@@ -2,3 +2,31 @@
 # Please follow the best practices: 
 # https://snakemake.readthedocs.io/en/stable/snakefiles/best_practices.html,
 # in particular regarding the standardized folder structure mentioned there. 
+
+
+# Main Snakefile
+
+# set config file where you can specify your inputs
+
+configfile: "config/config.yaml"
+
+# Include the hifi_prep rule
+include: "rules/hifi_prep.smk"
+
+# Include the kmc rule
+include: "rules/kmc.smk"
+
+# Include the genomescope2 rule
+include: "rules/genomescope2.smk"
+
+# Include the oatk rule
+include: "rules/oatk.smk"
+
+# Define the rule all, which is the default rule that Snakemake runs when no specific rule or target is specified
+rule all:
+    input:
+        "results/reads/hifi/hifi.fastq.gz", # output of hifi_prep rule
+        "results/kmc/out.hist", # output of kmc rule
+        "results/genomescope", # output directory of genomescope
+        "results/oatk/oatk.asm.mito.ctg.fasta", # mitochondrion fasta from oatk
+        "results/oatk/oatk.asm.pltd.ctg.fasta" # chloroplast fasta from oatk
