@@ -6,16 +6,18 @@ import glob
 
 rule hifi_prep:
     input:
-        expand("{hifi_path}/{file}.fastq.gz", hifi_path=config["hifi_path"], file=glob_wildcards(config["hifi_path"] + "/{file}.fastq.gz").file)
+        files = expand("{hifi_path}{file}.fastq.gz", hifi_path=config["hifi_path"], file=glob_wildcards(config["hifi_path"] + "{file}.fastq.gz").file)
     output:
-        "results/reads/hifi/hifi.fastq.gz"
+        hifi = "results/reads/hifi/hifi.fastq.gz"
     params:
-        num_files = len(glob.glob(config["hifi_path"] + "/*.fastq.gz"))
+        num_files = len(glob.glob(config["hifi_path"] + "*.fastq.gz"))
+    log:
+        "logs/hifi_prep.log"
     shell:
         """
         if [ {params.num_files} -gt 1 ]; then
-            zcat {input} | gzip > {output}
+            zcat {input.files} | gzip > {output.hifi}
         else
-            cp {input[0]} {output}
+            cp {input.files[0]} {output.hifi}
         fi
         """
