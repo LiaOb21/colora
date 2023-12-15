@@ -1,7 +1,7 @@
 # config.yaml
 
 # Path to hifi reads
-hifi_path: "/home/lia/Desktop/git_repos/colora/resources/raw_hifi"
+hifi_path: "/home/lia/Desktop/git_repos/colora/resources/raw_hifi/"
 
 
 # Customisable parameters for kmc
