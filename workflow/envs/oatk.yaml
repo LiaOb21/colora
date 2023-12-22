@@ -2,4 +2,4 @@ channels:
   - bioconda
 
 dependencies:
-  - hmmer=3.4
+  - oatk=1.0
