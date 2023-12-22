@@ -10,5 +10,9 @@ cluster: |
 default-resources:
   - partition=standard
   - qos=normal
-  - mem=200G
+  - mem_mb=204800 
   - time=3-00:00:00
+
+use-conda: True
+conda-frontend: mamba
+slurm: True 
