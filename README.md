@@ -24,6 +24,8 @@ How to run `colora`:
 conda config --set channel_priority flexible # if you want to use conda/mamba otherwise genomescope won't work
 
 snakemake --use-conda --conda-frontend mamba --snakefile workflow/Snakefile --cores all
+
+snakemake --cluster "sbatch --cpus-per-task 100 --mem 200G -t 3-00"
 ```
 
 # TODO
