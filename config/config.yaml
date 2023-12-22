@@ -7,7 +7,7 @@ hifi_path: "/home/lia/Desktop/git_repos/colora/resources/raw_hifi/"
 # Customisable parameters for kmc
 kmc:
   k: 21 # kmer size, it will be the same used for genomescope2
-  t: 8 # number of threads
+  t: 20 # number of threads
   ci: 1 # exclude k-mers occurring less than <value> times (default: 2)
   cs: 100000 #maximal value of a counter (default: 255)
 
@@ -19,17 +19,17 @@ kmc_tools:
 oatk:
   k: 1001 # kmer size [1001]
   c: 150 #  minimum kmer coverage [3]
-  t: 8  # number of threads [1]
+  t: 20  # number of threads [1]
   m: "/home/lia/Desktop/git_repos/colora/resources/oatkDB/angiosperm_mito.fam" # mitochondria gene annotation HMM profile database [NULL]
   p: "/home/lia/Desktop/git_repos/colora/resources/oatkDB/angiosperm_pltd.fam" # plastid gene annotation HMM profile database [NULL]
 
 # Customisable parameters for minimap2
 minimap2:
-  t: 8  # number of threads
+  t: 20  # number of threads
 
 # Customisable parameters for hifiasm
 hifiasm:
-  t: 8  # number of threads
+  t: 50  # number of threads
   optional_params: 
     "-f": "0" # used for small datasets
     "-l": "" # purge level. 0: no purging; 1: light; 2/3: aggressive [0 for trio; 3 for unzip]
