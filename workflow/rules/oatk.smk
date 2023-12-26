@@ -6,6 +6,8 @@ rule run_oatk:
     output:
         mito = "results/oatk/oatk.asm.mito.ctg.fasta",
         pltd = "results/oatk/oatk.asm.pltd.ctg.fasta"
+    log:
+        "logs/oatk.log"
     conda:
         "../envs/oatk.yaml"
     shell:
