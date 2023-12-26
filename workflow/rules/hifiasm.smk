@@ -4,10 +4,12 @@
 
 rule run_hifiasm:
     input:
-        organelles_filtered="results/reads/hifi/filtered_orgs_reads.fastq.gz",
+        "results/reads/hifi/hifi.fastq.gz",
     output:
         gfa="results/assemblies/hifiasm/hifiasm.asm.bp.p_ctg.gfa",
-        fasta="results/assemblies/hifiasm/hifiasm.asm.bp.p_ctg.fa",
+        fasta="results/assemblies/hifiasm/hifiasm.asm.bp.p_ctg.fa"
+    log:
+        "logs/hifiasm.log"
     conda:
         "../envs/hifiasm.yaml"
     params:
@@ -16,6 +18,6 @@ rule run_hifiasm:
         ),
     shell:
         """
-        hifiasm {input.organelles_filtered} -t {config[hifiasm][t]} -o results/assemblies/hifiasm/hifiasm.asm {params.optional_params} 
+        hifiasm {input} -t {config[hifiasm][t]} -o results/assemblies/hifiasm/hifiasm.asm {params.optional_params} 
         awk '/^S/{{print ">"$$2;print $$3}}' {output.gfa} > {output.fasta}
         """
