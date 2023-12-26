@@ -5,6 +5,8 @@ rule run_genomescope2:
         "results/kmc/out.hist"
     output:
         directory("results/genomescope")
+    log:
+        "logs/genomescope2.log"
     conda:
         "../envs/genomescope2.yaml"
     shell:
