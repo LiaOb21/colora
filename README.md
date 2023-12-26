@@ -25,7 +25,10 @@ conda config --set channel_priority flexible # if you want to use conda/mamba ot
 
 snakemake --software-deployment-method conda --conda-frontend mamba --snakefile workflow/Snakefile --cores all
 
-snakemake --cluster "sbatch --cpus-per-task 50 --mem 200G -t 3-00" --use-conda --conda-frontend mamba --snakefile workflow/Snakefile
+
+#for the cluster:
+
+srun --cpus-per-task 100 --mem 200G -t 5-00 snakemake --software-deployment-method conda --conda-frontend mamba --snakefile workflow/Snakefile --cores 100
 ```
 
 Before executing the command, ensure you have appropriately changed your `config.yaml`
