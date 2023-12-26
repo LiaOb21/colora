@@ -37,6 +37,7 @@ rule run_purge_dups:
         mv {output.self_paf} results/assemblies/purge_dups/
         mv {output.dups_bed} results/assemblies/purge_dups/
         mv {output.log} results/assemblies/purge_dups/
+        mv hap.fa results/assemblies/purge_dups/
         mv {output.purged_fasta} {output.fasta_rename}
         mv {output.fasta_rename} results/assemblies/purge_dups/
         """
