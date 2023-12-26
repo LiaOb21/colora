@@ -20,13 +20,7 @@ include: "rules/kmc.smk"
 include: "rules/genomescope2.smk"
 # Include the oatk rule
 include: "rules/oatk.smk"
-# Include the minimap2 rule
-include: "rules/minimap2.smk"
-# Include the samtools rule
-include: "rules/samtools.smk"
-# Include the seqkit rule
-include: "rules/seqkit.smk"
-# Include the seqkit rule
+# Include the hifiasm rule
 include: "rules/hifiasm.smk"
 # Include the purge_dups rule
 include: "rules/purge_dups.smk"
@@ -40,10 +34,6 @@ rule all:
         "results/genomescope",  # output directory of genomescope
         "results/oatk/oatk.asm.mito.ctg.fasta",  # mitochondrion fasta from oatk
         "results/oatk/oatk.asm.pltd.ctg.fasta",  # chloroplast fasta from oatk
-        "results/minimap2/aln.mito.sam",  # minimap2 alignment for mitochondrion
-        "results/minimap2/aln.pltd.sam",  # minimap2 alignment for chloroplast
-        "results/samtools/organelles.reads.txt",  # organelles reads to exclude, result of samtools
-        "results/reads/hifi/filtered_orgs_reads.fastq.gz",  # hifi excluding organelles reads
         "results/assemblies/hifiasm/hifiasm.asm.bp.p_ctg.gfa",  # draft hifiasm assembly.gfa
         "results/assemblies/hifiasm/hifiasm.asm.bp.p_ctg.fa",  # draft hifiasm assembly.fa
         "results/assemblies/purge_dups/hifiasm.asm.purged.fa"  # purged assembly with purge_dups
