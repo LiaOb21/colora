@@ -7,6 +7,8 @@ rule run_kmc:
         out_kmc_pre = "results/kmc/output.kmc_pre",
         out_kmc_suf = "results/kmc/output.kmc_suf",
         hist = "results/kmc/out.hist"
+    log:
+        "logs/kmc.log"
     conda:
         "../envs/kmc.yaml"
     shell:
