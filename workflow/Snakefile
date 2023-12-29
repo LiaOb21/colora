@@ -7,13 +7,18 @@
 # Main Snakefile
 
 # set config file where you can specify your inputs
-
-
 configfile: "config/config.yaml"
 
+# import glob to read {sample}
+import glob 
+
+#set {samples} wildcard
+samples = glob_wildcards(config["hic_path"] + "{sample}_1.fastq.gz").sample
 
 # Include the hifi_prep rule
 include: "rules/hifi_prep.smk"
+# Include the nanoplot
+include: "rules/nanoplot.smk"
 # Include the kmc rule
 include: "rules/kmc.smk"
 # Include the genomescope2 rule
@@ -24,16 +29,20 @@ include: "rules/oatk.smk"
 include: "rules/hifiasm.smk"
 # Include the purge_dups rule
 include: "rules/purge_dups.smk"
+# Include the fastp rule
+include: "rules/fastp.smk"
 
 
 # Define the rule all, which is the default rule that Snakemake runs when no specific rule or target is specified
 rule all:
     input:
         "results/reads/hifi/hifi.fastq.gz",  # output of hifi_prep rule
+        "results/nanoplot",  # output directory of nanoplot
         "results/kmc/out.hist",  # output of kmc rule
         "results/genomescope",  # output directory of genomescope
         "results/oatk/oatk.asm.mito.ctg.fasta",  # mitochondrion fasta from oatk
         "results/oatk/oatk.asm.pltd.ctg.fasta",  # chloroplast fasta from oatk
-        "results/assemblies/hifiasm/hifiasm.asm.bp.p_ctg.gfa",  # draft hifiasm assembly.gfa
-        "results/assemblies/hifiasm/hifiasm.asm.bp.p_ctg.fa",  # draft hifiasm assembly.fa
-        "results/assemblies/purge_dups/hifiasm.asm.purged.fa"  # purged assembly with purge_dups
+        "results/hifiasm/hifiasm.asm.bp.p_ctg.gfa",  # draft hifiasm assembly.gfa
+        "results/hifiasm/hifiasm.asm.bp.p_ctg.fa",  # draft hifiasm assembly.fa
+        "results/purge_dups/purged.fa",  # purged assembly with purge_dups
+        expand("results/fastp/{sample}_report_fastp.HiC.html", sample=samples) # fastp report for HiC reads pre-processing
