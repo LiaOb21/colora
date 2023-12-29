@@ -1,8 +1,8 @@
-import glob
-
 # This rule joins together HiFi reads in the case in which 
 # we have different files from different runs. 
 # If the file is only one this rule is skipped
+
+import glob
 
 rule hifi_prep:
     input:
