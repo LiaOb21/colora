@@ -1,0 +1,5 @@
+channels:
+  - bioconda
+
+dependencies:
+  - nanoplot=1.20.0
