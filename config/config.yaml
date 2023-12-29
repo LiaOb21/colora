@@ -1,8 +1,25 @@
 # config.yaml
 
 # Path to hifi reads
-hifi_path: "/home/lia/Desktop/git_repos/colora/resources/raw_hifi/"
+hifi_path: "resources/raw_hifi/"
 
+# Path to hic reads
+hic_path: "resources/raw_hic/"
+
+# Customisable parameters for nanoplot
+nanoplot:
+  t: 20 # number of threads
+
+# Customisable parameters for fastp 
+fastp:
+  t: 20 # number of threads
+  cut_window_size: 4
+  cut_mean_quality: 20
+  optional_params: 
+    "--detect_adapter_for_pe": "true"
+    "--cut_front": "true"
+    "--cut_tail": "true"
+    "-p": "false"
 
 # Customisable parameters for kmc
 kmc:
