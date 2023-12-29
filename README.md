@@ -25,6 +25,8 @@ conda config --set channel_priority flexible # if you want to use conda/mamba ot
 
 snakemake --software-deployment-method conda --conda-frontend mamba --snakefile workflow/Snakefile --cores all
 
+snakemake --software-deployment-method conda --conda-frontend mamba --snakefile workflow/Snakefile --cores all --dry-run
+
 
 #for the cluster:
 
@@ -37,3 +39,20 @@ Before executing the command, ensure you have appropriately changed your `config
 
 
 * The workflow will occur in the snakemake-workflow-catalog once it has been made public. Then the link under "Usage" will point to the usage instructions if `<owner>` and `<repo>` were correctly set.
+
+1. Rule for Nanoplot    DONE
+2. Rule for fastp DONE - TO TEST WITH DATA
+3. Rule for arima pipeline
+4. Rule for yahs
+5. formatting
+6. log files
+7. add optional params to all the rules
+
+
+Notes:
+purge dups rule wasn't working due to issues with the path where the output files are written.Evaluate possibility to change directory within the rule.
+
+Purge_dups rule wasn't working also because the command to convert the hifiasm gfa to fasta not interpreted correctly by snakemake.
+Now hifiasm and purge_dups rules have been fixed.
+
+Evaluate how to perform the second purge_dups run.
