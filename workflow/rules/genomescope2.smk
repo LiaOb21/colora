@@ -11,5 +11,5 @@ rule run_genomescope2:
         "../envs/genomescope2.yaml"
     shell:
         """
-        genomescope2 -i {input} -o {output} -k {config[kmc][k]}
+        genomescope2 -i {input} -o {output} -k {config[kmc][k]} >> {log} 2>&1
         """
