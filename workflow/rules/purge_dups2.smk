@@ -22,6 +22,8 @@ rule run_purge_dups_alt:
         hist_plot = "results/purge_dups_alt/hist.out.png"
     conda:
         "../envs/purge_dups.yaml"
+    log:
+        "logs/purge_dups_alt.log"
     shell:
         """
         cat {input.fasta} {input.hap_fa_in} > merged.fa >> {log} 2>&1
