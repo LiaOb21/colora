@@ -50,3 +50,14 @@ hifiasm:
   optional_params: 
     "-f": "0" # used for small datasets
     "-l": "" # purge level. 0: no purging; 1: light; 2/3: aggressive [0 for trio; 3 for unzip]
+
+# Customisable parameters for arima mapping pipeline:
+arima:
+  MAPQ_FILTER: 10
+  CPU: 12
+
+# Customisable parameters for yahs
+yahs:
+  o: "hifiasm_p_purged_yahs" # output prefix
+  optional_params: 
+    "-e": "GATC" # you can specify the restriction enzyme(s) used by the Hi-C experiment
