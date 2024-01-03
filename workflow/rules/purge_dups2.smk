@@ -31,7 +31,7 @@ rule run_purge_dups_alt:
         split_fa merged.fa > hifiasm.asm.split >> {log} 2>&1
         minimap2 -xasm5 -DP hifiasm.asm.split hifiasm.asm.split -t {config[minimap2][t]} | gzip -c - > hifiasm.split.self.paf.gz >> {log} 2>&1
         purge_dups -2 -T cutoffs -c PB.base.cov hifiasm.split.self.paf.gz > dups.bed 2> purge_dups.log
-        get_seqs -e dups.bed results/hifiasm/hifiasm.asm.bp.a_ctg.fa > hifiasm_a_purged.fa >> {log} 2>&1
+        get_seqs -e dups.bed results/hifiasm/hifiasm.asm.a_ctg.fa > hifiasm_a_purged.fa >> {log} 2>&1
         hist_plot.py -c cutoffs PB.stat hist.out.png >> {log} 2>&1
 
         mkdir -p results/purge_dups/ >> {log} 2>&1
