@@ -1,0 +1,7 @@
+channels:
+  - bioconda
+
+dependencies:
+  - bwa=0.7.17
+  - samtools=1.19
+  - picard=2.18.7
