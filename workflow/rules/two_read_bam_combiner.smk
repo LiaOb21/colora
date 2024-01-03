@@ -17,5 +17,5 @@ rule two_read_bam_combiner:
     shell:
         """
         mkdir -p results/arima_mapping_pipeline/TMP_DIR
-        perl scripts/two_read_bam_combiner.pl {input.bam1_filt} {input.bam2_filt} samtools {config[arima][MAPQ_FILTER]} | samtools view -bS -t {input.REF}.fai - | samtools sort -@ {config[arima][CPU]} -o {output.tmp_bam} - >> {log} 2>&1
+        perl scripts/two_read_bam_combiner.pl {input.bam1_filt} {input.bam2_filt} samtools {config[arima][MAPQ_FILTER]} | samtools view -bS -t {input.REF}.fai - | samtools sort -@ {config[arima][CPU]} -o {output.tmp_bam} - 
         """
