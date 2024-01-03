@@ -15,9 +15,11 @@ rule hifi_prep:
         "logs/hifi_prep.log"
     shell:
         """
-        if [ {params.num_files} -gt 1 ]; then
-            zcat {input.files} | gzip > {output.hifi}
-        else
-            cp {input.files[0]} {output.hifi}
+        {{
+            if [ {params.num_files} -gt 1 ]; then
+                zcat {input.files} | gzip > {output.hifi}
+            else
+                cp {input.files[0]} {output.hifi}
         fi
+        }} >> {log} 2>&1
         """
