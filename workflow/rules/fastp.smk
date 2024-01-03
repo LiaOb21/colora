@@ -17,5 +17,5 @@ rule run_fastp:
         "../envs/fastp.yaml"
     shell:
         """
-        fastp -p -i {input.forward_in} -I {input.reverse_in} -o {output.forward_out} -O {output.reverse_out} --cut_window_size {config[fastp][cut_window_size]} --cut_mean_quality {config[fastp][cut_mean_quality]} --json {output.json} --html {output.html} --thread {config[fastp][t]} {params.optional_params}
+        fastp -p -i {input.forward_in} -I {input.reverse_in} -o {output.forward_out} -O {output.reverse_out} --cut_window_size {config[fastp][cut_window_size]} --cut_mean_quality {config[fastp][cut_mean_quality]} --json {output.json} --html {output.html} --thread {config[fastp][t]} {params.optional_params} >> {log} 2>&1
         """
