@@ -7,10 +7,10 @@ rule run_hifiasm:
     input:
         "results/reads/hifi/hifi.fastq.gz",
     output:
-        gfa="results/hifiasm/hifiasm.asm.bp.p_ctg.gfa",
-        gfa_alt="results/hifiasm/hifiasm.asm.bp.a_ctg.gfa",
-        fasta="results/hifiasm/hifiasm.asm.bp.p_ctg.fa",
-        fasta_alt="results/hifiasm/hifiasm.asm.bp.a_ctg.fa"
+        gfa="results/hifiasm/hifiasm.asm.p_ctg.gfa",
+        gfa_alt="results/hifiasm/hifiasm.asm.a_ctg.gfa",
+        fasta="results/hifiasm/hifiasm.asm.p_ctg.fa",
+        fasta_alt="results/hifiasm/hifiasm.asm.a_ctg.fa"
     log:
         "logs/hifiasm.log"
     conda:
