@@ -3,7 +3,7 @@
 rule run_purge_dups_alt:
     input:
         reads = "results/reads/hifi/hifi.fastq.gz",
-        fasta = "results/hifiasm/hifiasm.asm.bp.a_ctg.fa",
+        fasta = "results/hifiasm/hifiasm.asm.a_ctg.fa",
         hap_fa_in = "results/purge_dups/hap.fa"
     output:
         merged_fasta = "results/purge_dups_alt/merged.fa",
