@@ -8,7 +8,6 @@ PICARD = r"""{CONDA_PREFIX}/share/picard-*/picard.jar"""
 rule picard:
     input:
         tmp_bam="results/arima_mapping_pipeline/TMP_DIR/{sample}.bam",
-        TMP_DIR = "results/arima_mapping_pipeline/TMP_DIR"
     output:
         bam_paired="results/arima_mapping_pipeline/PAIR_DIR/{sample}.bam",
         mark_dup="results/arima_mapping_pipeline/REP_DIR/{sample}_rep1.bam",
@@ -23,7 +22,7 @@ rule picard:
         mkdir -p results/arima_mapping_pipeline/PAIR_DIR/
         mkdir -p results/arima_mapping_pipeline/REP_DIR/
         java -Xmx4G -Djava.io.tmpdir=temp/ -jar {PICARD} AddOrReplaceReadGroups INPUT={input.tmp_bam} OUTPUT={output.bam_paired} ID={wildcards.sample} LB={wildcards.sample} SM={wildcards.sample} PL=ILLUMINA PU=none >> {log} 2>&1
-        java -Xmx30G -XX:-UseGCOverheadLimit -Djava.io.tmpdir=temp/ -jar {PICARD} MarkDuplicates INPUT={output.bam_paired} OUTPUT={output.mark_dup} METRICS_FILE={output.metrics} TMP_DIR={input.TMP_DIR} ASSUME_SORTED=TRUE VALIDATION_STRINGENCY=LENIENT REMOVE_DUPLICATES=TRUE >> {log} 2>&1
+        java -Xmx30G -XX:-UseGCOverheadLimit -Djava.io.tmpdir=temp/ -jar {PICARD} MarkDuplicates INPUT={output.bam_paired} OUTPUT={output.mark_dup} METRICS_FILE={output.metrics} TMP_DIR=results/arima_mapping_pipeline/TMP_DIR ASSUME_SORTED=TRUE VALIDATION_STRINGENCY=LENIENT REMOVE_DUPLICATES=TRUE >> {log} 2>&1
         samtools index {output.mark_dup} >> {log} 2>&1
         perl scripts/get_stats.pl {output.mark_dup} > {output.stats} >> {log} 2>&1
         """
