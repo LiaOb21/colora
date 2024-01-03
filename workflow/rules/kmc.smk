@@ -13,7 +13,7 @@ rule run_kmc:
         "../envs/kmc.yaml"
     shell:
         """
-        mkdir -p results/kmc/temp
-        kmc -k{config[kmc][k]} -t{config[kmc][t]} -ci{config[kmc][ci]} -cs{config[kmc][cs]} -fq {input} results/kmc/output results/kmc/temp/
-        kmc_tools transform results/kmc/output histogram {output.hist} -cx{config[kmc_tools][cx]}
+        mkdir -p results/kmc/temp >> {log} 2>&1
+        kmc -k{config[kmc][k]} -t{config[kmc][t]} -ci{config[kmc][ci]} -cs{config[kmc][cs]} -fq {input} results/kmc/output results/kmc/temp/ >> {log} 2>&1
+        kmc_tools transform results/kmc/output histogram {output.hist} -cx{config[kmc_tools][cx]} >> {log} 2>&1
         """
