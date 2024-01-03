@@ -24,14 +24,14 @@ rule run_purge_dups:
         "logs/purge_dups.log"
     shell:
         """
-        minimap2 -xasm20 {input.fasta} {input.reads} -t {config[minimap2][t]} | gzip -c - > hifi_vs_hifiasm_contigs.paf.gz 
-        pbcstat hifi_vs_hifiasm_contigs.paf.gz
+        minimap2 -xasm20 {input.fasta} {input.reads} -t {config[minimap2][t]} | gzip -c - > hifi_vs_hifiasm_contigs.paf.gz >> {log} 2>&1
+        pbcstat hifi_vs_hifiasm_contigs.paf.gz >> {log} 2>&1
         calcuts PB.stat > cutoffs 2>calcults.log 
-        split_fa results/assemblies/hifiasm/hifiasm.asm.p_ctg.fa > hifiasm.asm.split  
-        minimap2 -xasm5 -DP hifiasm.asm.split hifiasm.asm.split -t {config[minimap2][t]} | gzip -c - > hifiasm.split.self.paf.gz 
+        split_fa results/hifiasm/hifiasm.asm.p_ctg.fa > hifiasm.asm.split >> {log} 2>&1 
+        minimap2 -xasm5 -DP hifiasm.asm.split hifiasm.asm.split -t {config[minimap2][t]} | gzip -c - > hifiasm.split.self.paf.gz >> {log} 2>&1
         purge_dups -2 -T cutoffs -c PB.base.cov hifiasm.split.self.paf.gz > dups.bed 2> purge_dups.log 
-        get_seqs -e dups.bed results/hifiasm/hifiasm.asm.bp.p_ctg.fa > hifiasm_p_purged.fa 
-        hist_plot.py -c cutoffs PB.stat hist.out.png 
+        get_seqs -e dups.bed results/hifiasm/hifiasm.asm.bp.p_ctg.fa > hifiasm_p_purged.fa >> {log} 2>&1
+        hist_plot.py -c cutoffs PB.stat hist.out.png >> {log} 2>&1
 
         mkdir -p results/purge_dups/ 
         mv hifi_vs_hifiasm_contigs.paf.gz {output.paf}
