@@ -16,7 +16,7 @@ If you use this workflow in a paper, don't forget to give credits to the authors
 
 - place raw hifi reads in /resources/raw_hifi
 - place oatk database of interest from github.oatkdb.repo in /resources/oatkDB
-- install oatk and make sure it's in your path
+- place raw hic reads in /resources/raw_hic
 
 
 How to run `colora`:
