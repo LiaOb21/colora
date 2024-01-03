@@ -29,8 +29,22 @@ include: "rules/oatk.smk"
 include: "rules/hifiasm.smk"
 # Include the purge_dups rule
 include: "rules/purge_dups.smk"
+# Include the purge_dups2 rule for alternate assembly
+include: "rules/purge_dups2.smk"
 # Include the fastp rule
 include: "rules/fastp.smk"
+# Include the bwa_index rule
+include: "rules/bwa_index.smk"
+# Include the bwa_mem rule
+include: "rules/bwa_mem.smk"
+# Include the filter_five_end rule
+include: "rules/filter_five_end.smk"
+# Include the two_read_bam_combiner rule
+include: "rules/two_read_bam_combiner.smk"
+# Include the picard rule
+include: "rules/picard.smk"
+# Include the yahs rule
+include: "rules/yahs.smk"
 
 
 # Define the rule all, which is the default rule that Snakemake runs when no specific rule or target is specified
@@ -44,5 +58,21 @@ rule all:
         "results/oatk/oatk.asm.pltd.ctg.fasta",  # chloroplast fasta from oatk
         "results/hifiasm/hifiasm.asm.bp.p_ctg.gfa",  # draft hifiasm assembly.gfa
         "results/hifiasm/hifiasm.asm.bp.p_ctg.fa",  # draft hifiasm assembly.fa
-        "results/purge_dups/purged.fa",  # purged assembly with purge_dups
-        expand("results/fastp/{sample}_report_fastp.HiC.html", sample=samples) # fastp report for HiC reads pre-processing
+        "results/purge_dups/hifiasm_p_purged.fa",  # purged assembly with purge_dups
+        "results/purge_dups_alt/hifiasm_a_purged.fa", # purged alternate assembly with purge_dups2
+        expand("results/fastp/{sample}_report_fastp.HiC.html", sample=samples), # fastp report for HiC reads pre-processing
+        "results/purge_dups/hifiasm_p_purged.fa.sa", # bwa index for purged assembly
+        "results/purge_dups/hifiasm_p_purged.fa.amb", # bwa index for purged assembly
+        "results/purge_dups/hifiasm_p_purged.fa.ann", # bwa index for purged assembly
+        "results/purge_dups/hifiasm_p_purged.fa.bwt", # bwa index for purged assembly
+        "results/purge_dups/hifiasm_p_purged.fa.pac", # bwa index for purged assembly
+        expand("results/arima_mapping_pipeline/RAW_DIR/{sample}_1.bam", sample=samples), # bwa mem bam file1
+        expand("results/arima_mapping_pipeline/RAW_DIR/{sample}_2.bam", sample=samples), # bwa mem bam file2
+        expand("results/arima_mapping_pipeline/FILT_DIR/{sample}_1.bam", sample=samples), # filtered bam file1"
+        expand("results/arima_mapping_pipeline/FILT_DIR/{sample}_2.bam", sample=samples), # filtered bam file2"
+        expand("results/arima_mapping_pipeline/TMP_DIR/{sample}.bam", sample=samples), # combined bam file")
+        expand("results/arima_mapping_pipeline/PAIR_DIR/{sample}.bam", sample=samples), # paired bam file
+        expand("results/arima_mapping_pipeline/REP_DIR/{sample}_rep1.bam", sample=samples), # marked duplicates bam file
+        expand("results/arima_mapping_pipeline/REP_DIR/metrics.{sample}_rep1.txt", sample=samples), # marked duplicates metrics file
+        expand("results/arima_mapping_pipeline/REP_DIR/{sample}_rep1.bam.stats", sample=samples), # marked duplicates stats file
+        "results/yahs/hifiasm_p_purged_yahs_scaffolds_final.fa" # final scaffolded assembly
