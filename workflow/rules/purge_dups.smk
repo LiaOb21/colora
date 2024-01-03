@@ -3,7 +3,7 @@
 rule run_purge_dups:
     input:
         reads = "results/reads/hifi/hifi.fastq.gz",
-        fasta = "results/hifiasm/hifiasm.asm.bp.p_ctg.fa"
+        fasta = "results/hifiasm/hifiasm.asm.p_ctg.fa"
     output:
         paf = "results/purge_dups/hifi_vs_hifiasm_contigs.paf.gz",
         calcuts_log = "results/purge_dups/calcuts.log",
