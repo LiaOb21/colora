@@ -12,6 +12,6 @@ rule run_oatk:
         "../envs/oatk.yaml"
     shell:
         """
-        oatk -k {config[oatk][k]} -c {config[oatk][c]} -t {config[oatk][t]} -m {config[oatk][m]} -p {config[oatk][p]} {input}
-        mv oatk.asm* results/oatk/
+        oatk -k {config[oatk][k]} -c {config[oatk][c]} -t {config[oatk][t]} -m {config[oatk][m]} -p {config[oatk][p]} {input} >> {log} 2>&1
+        mv oatk.asm* results/oatk/ >> {log} 2>&1
         """
