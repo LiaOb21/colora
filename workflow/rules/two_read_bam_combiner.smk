@@ -7,7 +7,7 @@ rule two_read_bam_combiner:
     input:
         bam1_filt="results/arima_mapping_pipeline/FILT_DIR/{sample}_1.bam",
         bam2_filt="results/arima_mapping_pipeline/FILT_DIR/{sample}_2.bam",
-        FAIDX="results/purge_dups/hifiasm_p_purged.fa.fai"
+        REF = "results/purge_dups/hifiasm_p_purged.fa"
     output:
         tmp_bam="results/arima_mapping_pipeline/TMP_DIR/{sample}.bam"
     log:
@@ -16,5 +16,5 @@ rule two_read_bam_combiner:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
-        perl scripts/two_read_bam_combiner.pl {input.bam1_filt} {input.bam2_filt} {config[arima][MAPQ_FILTER]} | samtools view -bS -t {input.FAIDX} - | samtools sort -@ {config[arima][CPU]} -o {output.tmp_bam} - >> {log} 2>&1
+        perl scripts/two_read_bam_combiner.pl {input.bam1_filt} {input.bam2_filt} samtools {config[arima][MAPQ_FILTER]} | samtools view -bS -t {input.REF}.fai - | samtools sort -@ {config[arima][CPU]} -o {output.tmp_bam} - >> {log} 2>&1
         """
