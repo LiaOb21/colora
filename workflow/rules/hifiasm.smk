@@ -1,5 +1,5 @@
-# This rule uses hifiasm to assemble the genome after filtering out organelles reads
-# Following the instructions for assembling heterozygous genomes from the hifiasm github
+# This rule uses hifiasm to assemble the genome from the hifi reads
+# Following the instructions for obtaining primary/alternate assemblies: https://hifiasm.readthedocs.io/en/latest/pa-assembly.html#produce-primary-alternate-assemblies
 
 GFA_TO_FASTA = r"""/^S/{print ">"$2;print $3}"""
 
@@ -8,7 +8,9 @@ rule run_hifiasm:
         "results/reads/hifi/hifi.fastq.gz",
     output:
         gfa="results/hifiasm/hifiasm.asm.bp.p_ctg.gfa",
-        fasta="results/hifiasm/hifiasm.asm.bp.p_ctg.fa"
+        gfa_alt="results/hifiasm/hifiasm.asm.bp.a_ctg.gfa",
+        fasta="results/hifiasm/hifiasm.asm.bp.p_ctg.fa",
+        fasta_alt="results/hifiasm/hifiasm.asm.bp.a_ctg.fa"
     log:
         "logs/hifiasm.log"
     conda:
@@ -19,6 +21,7 @@ rule run_hifiasm:
         )
     shell:
         """
-        hifiasm {input} -t {config[hifiasm][t]} -o results/hifiasm/hifiasm.asm {params.optional_params} 
-        awk {GFA_TO_FASTA:q} {output.gfa} > {output.fasta}
+        hifiasm {input} -t {config[hifiasm][t]} -o results/hifiasm/hifiasm.asm --primary {params.optional_params} >> {log} 2>&1
+        awk {GFA_TO_FASTA:q} {output.gfa} > {output.fasta} >> {log} 2>&1 
+        awk {GFA_TO_FASTA:q} {output.gfa_alt} > {output.fasta_alt} >> {log} 2>&1
         """
