@@ -11,6 +11,10 @@ rule run_fastp:
         reverse_out = "results/fastp/{sample}_trim_2.fastq.gz",
         json = "results/fastp/{sample}_report_fastp.HiC.json",
         html = "results/fastp/{sample}_report_fastp.HiC.html"
+    params:
+        optional_params=" ".join(
+            f"{k} {v}" for k, v in config["fastp"]["optional_params"].items() if v
+        )
     log:
         "logs/{sample}_fastp.log"
     conda:
