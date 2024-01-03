@@ -18,7 +18,7 @@ rule picard:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
-        PICARD="{CONDA_PREFIX}/share/picard-*/picard.jar" >> {log} 2>&1
+        PICARD="{CONDA_PREFIX}/share/picard-*/picard.jar"
         java -Xmx4G -Djava.io.tmpdir=temp/ -jar $PICARD AddOrReplaceReadGroups INPUT={input.tmp_bam} OUTPUT={output.bam_paired} ID={sample} LB={sample} SM={sample} PL=ILLUMINA PU=none >> {log} 2>&1
         java -Xmx30G -XX:-UseGCOverheadLimit -Djava.io.tmpdir=temp/ -jar $PICARD MarkDuplicates INPUT={output.bam_paired} OUTPUT={output.mark_dup} METRICS_FILE={output.metrics} TMP_DIR={input.TMP_DIR} ASSUME_SORTED=TRUE VALIDATION_STRINGENCY=LENIENT REMOVE_DUPLICATES=TRUE >> {log} 2>&1
         samtools index {output.mark_dup} >> {log} 2>&1
