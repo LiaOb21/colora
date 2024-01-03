@@ -20,6 +20,8 @@ rule run_purge_dups:
         hist_plot = "results/purge_dups/hist.out.png"
     conda:
         "../envs/purge_dups.yaml"
+    log:
+        "logs/purge_dups.log"
     shell:
         """
         minimap2 -xasm20 {input.fasta} {input.reads} -t {config[minimap2][t]} | gzip -c - > hifi_vs_hifiasm_contigs.paf.gz >> {log} 2>&1
