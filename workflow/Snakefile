@@ -68,9 +68,9 @@ rule all:
         "results/purge_dups/hifiasm_p_purged.fa.pac", # bwa index for purged assembly
         expand("results/arima_mapping_pipeline/RAW_DIR/{sample}_1.bam", sample=samples), # bwa mem bam file1
         expand("results/arima_mapping_pipeline/RAW_DIR/{sample}_2.bam", sample=samples), # bwa mem bam file2
-        expand("results/arima_mapping_pipeline/FILT_DIR/{sample}_1.bam", sample=samples), # filtered bam file1"
-        expand("results/arima_mapping_pipeline/FILT_DIR/{sample}_2.bam", sample=samples), # filtered bam file2"
-        expand("results/arima_mapping_pipeline/TMP_DIR/{sample}.bam", sample=samples), # combined bam file")
+        expand("results/arima_mapping_pipeline/FILT_DIR/{sample}_1.bam", sample=samples), # filtered bam file1
+        expand("results/arima_mapping_pipeline/FILT_DIR/{sample}_2.bam", sample=samples), # filtered bam file2
+        expand("results/arima_mapping_pipeline/TMP_DIR/{sample}.bam", sample=samples), # combined bam file
         expand("results/arima_mapping_pipeline/PAIR_DIR/{sample}.bam", sample=samples), # paired bam file
         expand("results/arima_mapping_pipeline/REP_DIR/{sample}_rep1.bam", sample=samples), # marked duplicates bam file
         expand("results/arima_mapping_pipeline/REP_DIR/metrics.{sample}_rep1.txt", sample=samples), # marked duplicates metrics file
