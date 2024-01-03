@@ -16,6 +16,7 @@ rule fiter_five_end:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
+        mkdir -p results/arima_mapping_pipeline/FILT_DIR
         samtools view -h {input.bam1} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam1_filt} >> {log} 2>&1
         samtools view -h {input.bam2} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam2_filt} >> {log} 2>&1
         """
