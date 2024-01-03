@@ -11,5 +11,5 @@ rule run_nanoplot:
         "../envs/nanoplot.yaml"
     shell:
         """
-        NanoPlot -t {config[nanoplot][t]} --fastq {input} --loglength -o {output} --plots dot --verbose
+        NanoPlot -t {config[nanoplot][t]} --fastq {input} --loglength -o {output} --plots dot --verbose >> {log} 2>&1
         """
