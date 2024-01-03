@@ -42,7 +42,7 @@ Before executing the command, ensure you have appropriately changed your `config
 
 1. Rule for Nanoplot    DONE
 2. Rule for fastp DONE - TO TEST WITH DATA
-3. Rule for arima pipeline
+3. Rule for arima pipeline -> plan: make a directory with the perl scripts ued by the pipeline; place the main script of the pipeline in the rule; set the parameters required from the pipeline from the config file.
 4. Rule for yahs
 5. formatting
 6. log files
@@ -56,3 +56,11 @@ Purge_dups rule wasn't working also because the command to convert the hifiasm g
 Now hifiasm and purge_dups rules have been fixed.
 
 Evaluate how to perform the second purge_dups run.
+
+Arima pipeline:
+ - creating conda environments with needed tools so no need to specify tools' path
+ - Remove the PREFIX line and the option -p $PREFIX from the bwa command, it is not necessary and creates problems in the reading of files
+- add -M flag in bwa mem command - step 1.A and 1.B
+
+considera di mettere tutto in shell. No
+splitting arima in several rules. Possible problem with the basename files of hic reads. to check
