@@ -17,7 +17,7 @@ rule picard:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
-        PICARD_PATH=${{CONDA_PREFIX}}/share/picard-*/picard.jar
+        PICARD=${{CONDA_PREFIX}}/share/picard-*/picard.jar
         mkdir -p results/arima_mapping_pipeline/PAIR_DIR/
         mkdir -p results/arima_mapping_pipeline/REP_DIR/
         java -Xmx4G -Djava.io.tmpdir=temp/ -jar ${PICARD} AddOrReplaceReadGroups INPUT={input.tmp_bam} OUTPUT={output.bam_paired} ID={wildcards.sample} LB={wildcards.sample} SM={wildcards.sample} PL=ILLUMINA PU=none 
