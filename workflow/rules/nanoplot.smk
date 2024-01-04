@@ -4,12 +4,12 @@ rule run_nanoplot:
     input:
         "results/reads/hifi/hifi.fastq.gz"
     output:
-        "results/nanoplot"
+        "results/nanoplot/NanoPlot-report.html"
     log:
         "logs/nanoplot.log"
     conda:
         "../envs/nanoplot.yaml"
     shell:
         """
-        NanoPlot -t {config[nanoplot][t]} --fastq {input} --loglength -o {output} --plots dot --verbose >> {log} 2>&1
+        NanoPlot -t {config[nanoplot][t]} --fastq {input} --loglength -o results/nanoplot --plots dot --verbose >> {log} 2>&1
         """
