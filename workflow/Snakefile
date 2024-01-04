@@ -51,7 +51,7 @@ include: "rules/yahs.smk"
 rule all:
     input:
         "results/reads/hifi/hifi.fastq.gz",  # output of hifi_prep rule
-        "results/nanoplot",  # output directory of nanoplot
+        "results/nanoplot/NanoPlot-report.html",  # nanoplot report
         "results/kmc/out.hist",  # output of kmc rule
         "results/genomescope",  # output directory of genomescope
         "results/oatk/oatk.asm.mito.ctg.fasta",  # mitochondrion fasta from oatk
