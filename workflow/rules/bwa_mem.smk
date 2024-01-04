@@ -18,6 +18,6 @@ rule bwa_mem:
     shell:
         """
         mkdir -p results/arima_mapping_pipeline/RAW_DIR
-        bwa mem -M -t {config[arima][CPU]} {input.REF} {input.forward_hic} | samtools view -@ {config[arima][CPU]} -Sb - > {output.bam1} >> {log} 2>&1
-        bwa mem -M -t {config[arima][CPU]} {input.REF} {input.reverse_hic} | samtools view -@ {config[arima][CPU]} -Sb - > {output.bam2} >> {log} 2>&1
+        bwa mem -M -t {config[arima][CPU]} {input.REF} {input.forward_hic} | samtools view -@ {config[arima][CPU]} -Sb - > {output.bam1} 
+        bwa mem -M -t {config[arima][CPU]} {input.REF} {input.reverse_hic} | samtools view -@ {config[arima][CPU]} -Sb - > {output.bam2} 
         """
