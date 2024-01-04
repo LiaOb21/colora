@@ -3,7 +3,8 @@
 # For more info: https://github.com/ArimaGenomics/mapping_pipeline
 # colora doesn't contain the codes to handle technical and biological replicates of hic reads, refer to the original pipeline for that
 
-PICARD = r"""{CONDA_PREFIX}/share/picard-*/picard.jar"""
+import os
+PICARD = os.environ.get('CONDA_PREFIX') + "/share/picard-*/picard.jar"
 
 rule picard:
     input:
