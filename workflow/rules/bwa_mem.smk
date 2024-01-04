@@ -6,6 +6,7 @@
 rule bwa_mem:
     input:
         REF = "results/purge_dups/hifiasm_p_purged.fa",
+        index = rules.bwa_index.output[0],
         forward_hic = "results/fastp/{sample}_trim_1.fastq.gz",
         reverse_hic = "results/fastp/{sample}_trim_2.fastq.gz"
     output:
