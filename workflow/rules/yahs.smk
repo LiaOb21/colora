@@ -12,7 +12,7 @@ rule run_yahs:
     log:
         "logs/yahs_{sample}.log"
     conda:
-        "../envs/yahs_{sample}.yaml"
+        "../envs/yahs.yaml"
     params:
         optional_params=" ".join(
             f"{k} {v}" for k, v in config["yahs"]["optional_params"].items() if v
