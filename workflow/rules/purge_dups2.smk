@@ -1,6 +1,10 @@
 # This rule uses purge_dups purge haplotigs and overlaps from the alternate assembly produced by hifiasm
 
 rule run_purge_dups_alt:
+    depends:
+        "results/purge_dups_alt/hifiasm_p_purged.fa",
+        "results/purge_dups/hap.fa",
+        "results/purge_dups/hist.out.png"
     input:
         reads = "results/reads/hifi/hifi.fastq.gz",
         fasta = "results/hifiasm/hifiasm.asm.a_ctg.fa",
@@ -26,7 +30,7 @@ rule run_purge_dups_alt:
         "logs/purge_dups_alt.log"
     shell:
         """
-        cat {input.fasta} {input.hap_fa_in} > merged.fa >> {log} 2>&1
+        cat {input.fasta} {input.hap_fa_in} > merged.fa 
         minimap2 -xasm20 merged.fa {input.reads} -t {config[minimap2][t]} | gzip -c - > hifi_vs_hifiasm_contigs.paf.gz >> {log} 2>&1
         pbcstat hifi_vs_hifiasm_contigs.paf.gz >> {log} 2>&1
         calcuts PB.stat > cutoffs 2>calcults.log
