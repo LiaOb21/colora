@@ -18,6 +18,5 @@ rule bwa_index:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
-        echo "### Step 0: Index reference" # Run only once! Skip this step if you have already generated BWA index files >> {log} 2>&1
         bwa index -a bwtsw {input.REF} >> {log} 2>&1
         """
