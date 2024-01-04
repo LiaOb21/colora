@@ -75,4 +75,4 @@ rule all:
         expand("results/arima_mapping_pipeline/REP_DIR/{sample}_rep1.bam", sample=samples), # marked duplicates bam file
         expand("results/arima_mapping_pipeline/REP_DIR/metrics.{sample}_rep1.txt", sample=samples), # marked duplicates metrics file
         expand("results/arima_mapping_pipeline/REP_DIR/{sample}_rep1.bam.stats", sample=samples), # marked duplicates stats file
-        "results/yahs/hifiasm_p_purged_yahs_scaffolds_final.fa" # final scaffolded assembly
+        expand("results/yahs/hifiasm_p_purged_yahs_{sample}_scaffolds_final.fa", sample=samples) # final scaffolded assembly
