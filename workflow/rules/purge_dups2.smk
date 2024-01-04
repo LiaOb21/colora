@@ -1,10 +1,6 @@
 # This rule uses purge_dups purge haplotigs and overlaps from the alternate assembly produced by hifiasm
 
 rule run_purge_dups_alt:
-    depends:
-        "results/purge_dups_alt/hifiasm_p_purged.fa",
-        "results/purge_dups/hap.fa",
-        "results/purge_dups/hist.out.png"
     input:
         reads = "results/reads/hifi/hifi.fastq.gz",
         fasta = "results/hifiasm/hifiasm.asm.a_ctg.fa",
