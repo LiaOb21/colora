@@ -37,8 +37,8 @@ oatk:
   k: 1001 # kmer size [1001]
   c: 150 #  minimum kmer coverage [3]
   t: 20  # number of threads [1]
-  m: "/home/lia/Desktop/git_repos/colora/resources/oatkDB/angiosperm_mito.fam" # mitochondria gene annotation HMM profile database [NULL]
-  p: "/home/lia/Desktop/git_repos/colora/resources/oatkDB/angiosperm_pltd.fam" # plastid gene annotation HMM profile database [NULL]
+  m: "resources/oatkDB/embryophyta_mito.fam" # mitochondria gene annotation HMM profile database [NULL]
+  p: "resources/oatkDB/embryophyta_pltd.fam" # plastid gene annotation HMM profile database [NULL]
 
 # Customisable parameters for minimap2
 minimap2:
