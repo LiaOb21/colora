@@ -6,6 +6,7 @@
 
 A Snakemake workflow for for genome assembly.
 
+![Alt text](Colora-1.jpg)
 Input files: hifi reads and hic reads.
 
 ## Usage
@@ -40,27 +41,28 @@ Before executing the command, ensure you have appropriately changed your `config
 
 * The workflow will occur in the snakemake-workflow-catalog once it has been made public. Then the link under "Usage" will point to the usage instructions if `<owner>` and `<repo>` were correctly set.
 
-1. Rule for Nanoplot    DONE
-2. Rule for fastp DONE - TO TEST WITH DATA
-3. Rule for arima pipeline -> plan: make a directory with the perl scripts ued by the pipeline; place the main script of the pipeline in the rule; set the parameters required from the pipeline from the config file.
-4. Rule for yahs
-5. formatting
-6. log files
-7. add optional params to all the rules
+- [x] Rule for Nanoplot
+- [x] Rule for fastp 
+- [x] Rules for arima pipeline - split in several rules
+- [x] Rule for yahs
+- [ ] Formatting and linting to be fixed according to snakemake requirements
+- [ ] log files: some of them are empty because it's impossible to redirect stderr and stdout to the file
+- [ ] add optional params to all the rules
+- [ ] implement ncbi `FCS` (decontamination) as optional rule (orange path in the scheme above)
+- [ ] implement `assemblyQC` - waiting for new Merqury release to make a new conda recipe (light green path above)
+- [ ] add singularity and docker as option for environment management (n.b. ncbi FCS can be run only with singularity)
+- [ ] packages versions: I put the versions I used as mandatory, but I'm not sure if it is a good idea
+- [ ] Rule `purge_dups.smk` and `purge_dups_alt.smk`: redirecting outputs to the final directory doesn't looks nice + in the root directory at the end of the workflow there are some files that I'm not sure why they are there 
+- [ ] integrate the snakemake report in the workflow
 
 
 Notes:
-purge dups rule wasn't working due to issues with the path where the output files are written.Evaluate possibility to change directory within the rule.
+- purge dups rule wasn't working due to issues with the path where the output files are written.Evaluate possibility to change directory within the rule. Purge_dups rule wasn't working also because the command to convert the hifiasm gfa to fasta not interpreted correctly by snakemake. SOLVED
 
-Purge_dups rule wasn't working also because the command to convert the hifiasm gfa to fasta not interpreted correctly by snakemake.
-Now hifiasm and purge_dups rules have been fixed.
 
-Evaluate how to perform the second purge_dups run.
+- Arima pipeline - changes compared to the original pipeline:
+   - creating conda environments with needed tools so no need to specify tools' path
+   - Remove the PREFIX line and the option -p $PREFIX from the bwa command, it is not necessary and creates problems in the reading of files
+  - add -M flag in bwa mem command - step 1.A and 1.B
+  - pipeline split in several rules
 
-Arima pipeline:
- - creating conda environments with needed tools so no need to specify tools' path
- - Remove the PREFIX line and the option -p $PREFIX from the bwa command, it is not necessary and creates problems in the reading of files
-- add -M flag in bwa mem command - step 1.A and 1.B
-
-considera di mettere tutto in shell. No
-splitting arima in several rules. Possible problem with the basename files of hic reads. to check
