@@ -54,6 +54,8 @@ Before executing the command, ensure you have appropriately changed your `config
 - [ ] packages versions: I put the versions I used as mandatory, but I'm not sure if it is a good idea
 - [ ] Rule `purge_dups.smk` and `purge_dups_alt.smk`: redirecting outputs to the final directory doesn't looks nice + in the root directory at the end of the workflow there are some files that I'm not sure why they are there 
 - [ ] integrate the snakemake report in the workflow
+- [ ] input / output
+- [ ] slurm integration
 
 
 Notes:
