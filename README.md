@@ -22,11 +22,9 @@ If you use this workflow in a paper, don't forget to give credits to the authors
 
 How to run `colora`:
 ```
-conda config --set channel_priority flexible # if you want to use conda/mamba otherwise genomescope won't work
+snakemake --software-deployment-method conda --snakefile workflow/Snakefile --cores all
 
-snakemake --software-deployment-method conda --conda-frontend mamba --snakefile workflow/Snakefile --cores all
-
-snakemake --software-deployment-method conda --conda-frontend mamba --snakefile workflow/Snakefile --cores all --dry-run
+snakemake --software-deployment-method conda --snakefile workflow/Snakefile --cores all --dry-run
 
 
 #for the cluster:
@@ -47,7 +45,6 @@ Before executing the command, ensure you have appropriately changed your `config
 - [x] Rule for yahs
 - [ ] Formatting and linting to be fixed according to snakemake requirements
 - [ ] log files: some of them are empty because it's impossible to redirect stderr and stdout to the file
-- [ ] add optional params to all the rules
 - [ ] implement ncbi `FCS` (decontamination) as optional rule (orange path in the scheme above)
 - [ ] implement `assemblyQC` - waiting for new Merqury release to make a new conda recipe (light green path above)
 - [ ] add singularity and docker as option for environment management (n.b. ncbi FCS can be run only with singularity)
@@ -67,4 +64,3 @@ Notes:
    - Remove the PREFIX line and the option -p $PREFIX from the bwa command, it is not necessary and creates problems in the reading of files
   - add -M flag in bwa mem command - step 1.A and 1.B
   - pipeline split in several rules
-
