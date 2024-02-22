@@ -43,16 +43,21 @@ Before executing the command, ensure you have appropriately changed your `config
 - [x] Rule for fastp 
 - [x] Rules for arima pipeline - split in several rules
 - [x] Rule for yahs
+- [x] integrate the snakemake report in the workflow: not necessary
+- [x] input / output: hardcoded is okay
+- [x] test dataset
+- [x] test config file
+- [x] test possibility to add ONT reads as optional param in hifiasm
+- [ ] test possibility to add HiC reads as optional params in hifiasm: file names change in this case. Need more study. Probably this needs a separate rule.
+- [ ] packages versions: create stable yaml files with conda export
+- [ ] add singularity and docker as option for environment management (n.b. ncbi FCS can be run only with singularity)
+- [ ] implement ncbi `FCS` (decontamination) as optional rule (orange path in the scheme above)
+- [ ] make decontamination and purging steps optional
+- [ ] slurm integration (profile)
+- [ ] Rule `purge_dups.smk` and `purge_dups_alt.smk`: redirecting outputs to the final directory doesn't looks nice + in the root directory at the end of the workflow there are some files that I'm not sure why they are there
+- [ ] implement `assemblyQC` - waiting for new Merqury release to make a new conda recipe (light green path above)
 - [ ] Formatting and linting to be fixed according to snakemake requirements
 - [ ] log files: some of them are empty because it's impossible to redirect stderr and stdout to the file
-- [ ] implement ncbi `FCS` (decontamination) as optional rule (orange path in the scheme above)
-- [ ] implement `assemblyQC` - waiting for new Merqury release to make a new conda recipe (light green path above)
-- [ ] add singularity and docker as option for environment management (n.b. ncbi FCS can be run only with singularity)
-- [ ] packages versions: I put the versions I used as mandatory, but I'm not sure if it is a good idea
-- [ ] Rule `purge_dups.smk` and `purge_dups_alt.smk`: redirecting outputs to the final directory doesn't looks nice + in the root directory at the end of the workflow there are some files that I'm not sure why they are there 
-- [ ] integrate the snakemake report in the workflow
-- [ ] input / output
-- [ ] slurm integration
 
 
 Notes:
