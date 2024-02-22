@@ -37,8 +37,9 @@ oatk:
   k: 1001 # kmer size [1001]
   c: 150 #  minimum kmer coverage [3]
   t: 20  # number of threads [1]
-  m: "resources/oatkDB/embryophyta_mito.fam" # mitochondria gene annotation HMM profile database [NULL]
-  p: "resources/oatkDB/embryophyta_pltd.fam" # plastid gene annotation HMM profile database [NULL]
+  m: "resources/oatkDB/path/to/mito/db_mito.fam" # mitochondria gene annotation HMM profile database [NULL]
+  optional_params: 
+    "-p": "resources/oatkDB/path/to/plastid/db_pltd.fam" # to use for species that have a plastid db
 
 # Customisable parameters for minimap2
 minimap2:
