@@ -39,7 +39,7 @@ oatk:
   t: 20  # number of threads [1]
   m: "resources/oatkDB/path/to/mito/db_mito.fam" # mitochondria gene annotation HMM profile database [NULL]
   optional_params: 
-    "-p": "resources/oatkDB/path/to/plastid/db_pltd.fam" # to use for species that have a plastid db
+    "-p": "" # resources/oatkDB/path/to/plastid/db_pltd.fam - to use for species that have a plastid db, leave empty if not available
 
 # Customisable parameters for minimap2
 minimap2:
