@@ -10,8 +10,12 @@ rule run_oatk:
         "logs/oatk.log"
     conda:
         "../envs/oatk.yaml"
+    params:
+        optional_params=" ".join(
+            f"{k} {v}" for k, v in config["oatk"]["optional_params"].items() if v
+        )
     shell:
         """
-        oatk -k {config[oatk][k]} -c {config[oatk][c]} -t {config[oatk][t]} -m {config[oatk][m]} -p {config[oatk][p]} {input} >> {log} 2>&1
+        oatk -k {config[oatk][k]} -c {config[oatk][c]} -t {config[oatk][t]} -m {config[oatk][m]} {params.optional_params} {input} >> {log} 2>&1
         mv oatk.asm* results/oatk/ >> {log} 2>&1
         """
