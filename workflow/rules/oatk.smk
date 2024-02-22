@@ -4,8 +4,7 @@ rule run_oatk:
     input:
         "results/reads/hifi/hifi.fastq.gz"
     output:
-        mito = "results/oatk/oatk.asm.mito.ctg.fasta",
-        pltd = "results/oatk/oatk.asm.pltd.ctg.fasta"
+        mito = "results/oatk/oatk.asm.mito.ctg.fasta"
     log:
         "logs/oatk.log"
     conda:
