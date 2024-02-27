@@ -12,6 +12,7 @@ rule bwa_mem:
     output:
         bam1="results/arima_mapping_pipeline/RAW_DIR/{sample}_1.bam",
         bam2="results/arima_mapping_pipeline/RAW_DIR/{sample}_2.bam"
+    threads: config['arima']['CPU']
     log:
         "logs/{sample}_bwa_mem.log"
     conda:
@@ -19,6 +20,6 @@ rule bwa_mem:
     shell:
         """
         mkdir -p results/arima_mapping_pipeline/RAW_DIR
-        bwa mem -M -t {config[arima][CPU]} {input.REF} {input.forward_hic} | samtools view -@ {config[arima][CPU]} -Sb - > {output.bam1} 
-        bwa mem -M -t {config[arima][CPU]} {input.REF} {input.reverse_hic} | samtools view -@ {config[arima][CPU]} -Sb - > {output.bam2} 
+        bwa mem -M -t {threads} {input.REF} {input.forward_hic} | samtools view -@ {threads} -Sb - > {output.bam1} 
+        bwa mem -M -t {threads} {input.REF} {input.reverse_hic} | samtools view -@ {threads} -Sb - > {output.bam2} 
         """
