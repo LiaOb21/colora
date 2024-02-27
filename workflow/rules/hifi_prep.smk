@@ -13,6 +13,8 @@ rule hifi_prep:
         num_files = len(glob.glob(config["hifi_path"] + "*.fastq.gz"))
     log:
         "logs/hifi_prep.log"
+    conda:
+        "../envs/basic.yaml"
     shell:
         """
         {{
