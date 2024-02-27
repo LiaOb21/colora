@@ -34,6 +34,12 @@ srun --cpus-per-task 100 --mem 200G -t 5-00 snakemake --software-deployment-meth
 
 Before executing the command, ensure you have appropriately changed your `config.yaml`
 
+Test the pipeline:
+
+```
+snakemake --configfile config/config_test.yaml --software-deployment-method conda --snakefile workflow/Snakefile --cores all 
+```
+
 # TODO
 
 
@@ -52,11 +58,13 @@ Before executing the command, ensure you have appropriately changed your `config
 - [ ] packages versions: create stable yaml files with conda export
 - [ ] add singularity and docker as option for environment management (n.b. ncbi FCS can be run only with singularity)
 - [ ] implement ncbi `FCS` (decontamination) as optional rule (orange path in the scheme above)
-- [ ] make decontamination and purging steps optional
+- [x] make purging steps optional 
+- [ ] make decontamination optional
 - [ ] slurm integration (profile)
-- [ ] Rule `purge_dups.smk` and `purge_dups_alt.smk`: redirecting outputs to the final directory doesn't looks nice + in the root directory at the end of the workflow there are some files that I'm not sure why they are there
+- [ ] setting of resources for each rule
+- [x] Rule `purge_dups.smk` and `purge_dups_alt.smk`: redirecting outputs to the final directory doesn't looks nice + in the root directory at the end of the workflow there are some files that I'm not sure why they are there
 - [ ] implement `assemblyQC` - waiting for new Merqury release to make a new conda recipe (light green path above)
-- [ ] Formatting and linting to be fixed according to snakemake requirements
+- [x] Formatting and linting to be fixed according to snakemake requirements
 - [ ] log files: some of them are empty because it's impossible to redirect stderr and stdout to the file
 
 
