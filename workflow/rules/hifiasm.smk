@@ -1,8 +1,6 @@
 # This rule uses hifiasm to assemble the genome from the hifi reads
 # Following the instructions for obtaining primary/alternate assemblies: https://hifiasm.readthedocs.io/en/latest/pa-assembly.html#produce-primary-alternate-assemblies
 
-GFA_TO_FASTA = r"""/^S/{print ">"$2;print $3}"""
-
 rule run_hifiasm:
     input:
         "results/reads/hifi/hifi.fastq.gz",
@@ -23,6 +21,6 @@ rule run_hifiasm:
     shell:
         """
         hifiasm {input} -t {threads} -o results/hifiasm/hifiasm.asm --primary {params.optional_params} >> {log} 2>&1
-        awk {GFA_TO_FASTA:q} {output.gfa} > {output.fasta}  
-        awk {GFA_TO_FASTA:q} {output.gfa_alt} > {output.fasta_alt} 
+        awk -f scripts/gfa_to_fasta.awk < {output.gfa} > {output.fasta}
+        awk -f scripts/gfa_to_fasta.awk < {output.gfa_alt} > {output.fasta_alt}
         """
