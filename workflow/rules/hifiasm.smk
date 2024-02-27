@@ -11,6 +11,7 @@ rule run_hifiasm:
         gfa_alt="results/hifiasm/hifiasm.asm.a_ctg.gfa",
         fasta="results/hifiasm/hifiasm.asm.p_ctg.fa",
         fasta_alt="results/hifiasm/hifiasm.asm.a_ctg.fa"
+    threads: config['hifiasm']['t']
     log:
         "logs/hifiasm.log"
     conda:
@@ -21,7 +22,7 @@ rule run_hifiasm:
         )
     shell:
         """
-        hifiasm {input} -t {config[hifiasm][t]} -o results/hifiasm/hifiasm.asm --primary {params.optional_params} >> {log} 2>&1
+        hifiasm {input} -t {threads} -o results/hifiasm/hifiasm.asm --primary {params.optional_params} >> {log} 2>&1
         awk {GFA_TO_FASTA:q} {output.gfa} > {output.fasta}  
         awk {GFA_TO_FASTA:q} {output.gfa_alt} > {output.fasta_alt} 
         """
