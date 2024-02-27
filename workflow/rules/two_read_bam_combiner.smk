@@ -10,6 +10,9 @@ rule two_read_bam_combiner:
         REF = "results/purge_dups/hifiasm_p_purged.fa"
     output:
         tmp_bam="results/arima_mapping_pipeline/TMP_DIR/{sample}.bam"
+    threads: config['arima']['CPU']
+    params:
+        MAPQ_FILTER = config['arima']['MAPQ_FILTER']
     log:
         "logs/{sample}_two_read_bam_combiner.log"
     conda:
@@ -18,5 +21,5 @@ rule two_read_bam_combiner:
         """
         mkdir -p results/arima_mapping_pipeline/TMP_DIR
         samtools faidx {input.REF}
-        perl scripts/two_read_bam_combiner.pl {input.bam1_filt} {input.bam2_filt} samtools {config[arima][MAPQ_FILTER]} | samtools view -bS -t {input.REF}.fai - | samtools sort -@ {config[arima][CPU]} -o {output.tmp_bam} - 
+        perl scripts/two_read_bam_combiner.pl {input.bam1_filt} {input.bam2_filt} samtools {params.MAPQ_FILTER} | samtools view -bS -t {input.REF}.fai - | samtools sort -@ {threads} -o {output.tmp_bam} - 
         """
