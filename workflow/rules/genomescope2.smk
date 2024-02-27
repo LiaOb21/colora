@@ -5,11 +5,13 @@ rule run_genomescope2:
         "results/kmc/out.hist"
     output:
         directory("results/genomescope")
+    params:
+        k = config['kmc']['k']
     log:
         "logs/genomescope2.log"
     conda:
         "../envs/genomescope2.yaml"
     shell:
         """
-        genomescope2 -i {input} -o {output} -k {config[kmc][k]} >> {log} 2>&1
+        genomescope2 -i {input} -o {output} -k {params.k} >> {log} 2>&1
         """
