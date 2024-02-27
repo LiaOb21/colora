@@ -7,7 +7,7 @@
 # Main Snakefile
 
 # set config file where you can specify your inputs
-configfile: "config/config.yaml"
+configfile: "../config/config.yaml"
 
 # import glob to read {sample}
 import glob 
