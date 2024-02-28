@@ -27,6 +27,8 @@ include: "rules/genomescope2.smk"
 include: "rules/oatk.smk"
 # Include the hifiasm rule
 include: "rules/hifiasm.smk"
+# Include the ncbi_fcsgx rule
+# include: "rules/ncbi_fcsgx.smk" # to add if eventually I manage to integrate fcsgx
 
 if config["include_purge_dups"] == True:
     # Include the purge_dups rule
