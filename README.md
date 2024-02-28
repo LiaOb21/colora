@@ -7,7 +7,7 @@
 A Snakemake workflow for for genome assembly.
 
 ![Alt text](Colora-1.jpg)
-Input files: hifi reads and hic reads.
+Input files: hifi reads, optionally ONT, and hic reads.
 
 ## Usage
 
@@ -36,8 +36,13 @@ Before executing the command, ensure you have appropriately changed your `config
 
 Test the pipeline:
 
+- 1. Download test data
+- 2. Download oatk DB
+- 3. Download FCS-GX test database
+- 4. Run the test pipeline
+
 ```
-snakemake --configfile config/config_test.yaml --software-deployment-method conda --snakefile workflow/Snakefile --cores all 
+snakemake --configfile config/config_test.yaml --software-deployment-method conda --snakefile workflow/Snakefile --cores all --dry-run
 ```
 
 # TODO
@@ -77,3 +82,6 @@ Notes:
    - Remove the PREFIX line and the option -p $PREFIX from the bwa command, it is not necessary and creates problems in the reading of files
   - add -M flag in bwa mem command - step 1.A and 1.B
   - pipeline split in several rules
+
+
+- Decontamination with FCS-GX using conda is impossible at the moment. The conda recipe is incomplete and it only allows to produce the report with the contaminants but it doesn't allow to remove the contaminants, i.e. there is not a `clean genome` option in `run_gx.py`, like in the docker/singularity version `fcs.py`. Opened an issue on github: https://github.com/ncbi/fcs/issues/74. The only way to implement this decontamination step is getting the authors to update the bioconda recipe or explain better how to use it. It's usage is substantially different from what explained in the wiki, and any attempt to understand the code is vane because it's like a box into a box into a box.
