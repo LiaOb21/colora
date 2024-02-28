@@ -55,6 +55,13 @@ hifiasm:
     "--h1": ""
     "--h2": ""
 
+# Customisable parameters for fcsgx
+
+# fcsgx:
+#   ncbi_tax_id: 4932
+#   path_to_gx_db: "resources/gx_test_db/test-only"
+#   contaminants_output_name: "contaminants.fa"
+
 # Set this to False if you want to skip purge_dups steps:
 include_purge_dups: True
 
