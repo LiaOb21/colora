@@ -10,8 +10,7 @@ def get_all_inputs():
         "results/oatk/oatk.asm.mito.ctg.fasta",  # mitochondrion fasta from oatk
         "results/hifiasm/hifiasm.asm.p_ctg.gfa",  # draft hifiasm assembly.gfa
         "results/hifiasm/hifiasm.asm.p_ctg.fa",  # draft hifiasm assembly.fa
-        "results/purge_dups/hifiasm_p_purged.fa",  # purged assembly with purge_dups
-        "results/purge_dups_alt/hifiasm_a_purged.fa", # purged alternate assembly with purge_dups2
+#        "results/ncbi_fcsgx/hifiasm.asm.p_ctg_clean.fa", # to add if eventually I manage to integrate fcsgx 
         expand("results/fastp/{sample}_report_fastp.HiC.html", sample=samples), # fastp report for HiC reads pre-processing
         [f"results/purge_dups/hifiasm_p_purged.fa.{ext}" for ext in ["sa", "amb", "ann", "bwt", "pac"]] if config["include_purge_dups"] else [f"results/hifiasm/hifiasm.asm.p_ctg.fa.{ext}" for ext in ["sa", "amb", "ann", "bwt", "pac"]],    # bwa index outputs
         expand("results/arima_mapping_pipeline/RAW_DIR/{sample}_1.bam", sample=samples), # bwa mem bam file1
@@ -27,6 +26,9 @@ def get_all_inputs():
     ]
     if config["oatk"]["optional_params"]["-p"]:
         inputs.append("results/oatk/oatk.asm.pltd.ctg.fasta")  # chloroplast fasta from oatk
+    if config["include_purge_dups"] == True:
+        inputs.append("results/purge_dups/hifiasm_p_purged.fa") # purged assembly with purge_dups
+        inputs.append("results/purge_dups_alt/hifiasm_a_purged.fa") # # purged alternate assembly with purge_dups2
     return inputs
 
 
