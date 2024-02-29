@@ -3,10 +3,15 @@
 # For more info: https://github.com/ArimaGenomics/mapping_pipeline
 # colora doesn't contain the codes to handle technical and biological replicates of hic reads, refer to the original pipeline for that
 
+
+# include common.smk to use get_bwa_index_inputs and get_bwa_index_outputs functions
+# get_bwa_index_outputs is used to locate the index files
+include: "common.smk"
+
 rule bwa_mem:
     input:
-        REF = "results/purge_dups/hifiasm_p_purged.fa",
-        index = rules.bwa_index.output[0],
+        REF = get_bwa_index_inputs(),
+        index = get_bwa_index_outputs()[0],
         forward_hic = "results/fastp/{sample}_trim_1.fastq.gz",
         reverse_hic = "results/fastp/{sample}_trim_2.fastq.gz"
     output:
