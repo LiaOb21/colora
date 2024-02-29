@@ -28,14 +28,11 @@ include: "rules/oatk.smk"
 # Include the hifiasm rule
 include: "rules/hifiasm.smk"
 # Include the ncbi_fcsgx rule
-# include: "rules/ncbi_fcsgx.smk" # to add if eventually I manage to integrate fcsgx
-
-if config["include_purge_dups"] == True:
-    # Include the purge_dups rule
-    include: "rules/purge_dups.smk"
-    # Include the purge_dups2 rule for alternate assembly
-    include: "rules/purge_dups2.smk"
-
+include: "rules/ncbi_fcsgx.smk" # to add if eventually I manage to integrate fcsgx
+# Include the purge_dups rule
+include: "rules/purge_dups.smk"
+# Include the purge_dups2 rule for alternate assembly
+include: "rules/purge_dups2.smk"
 # Include the fastp rule
 include: "rules/fastp.smk"
 # Include the bwa_index rule
