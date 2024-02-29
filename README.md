@@ -6,8 +6,11 @@
 
 A Snakemake workflow for for genome assembly.
 
-![Alt text](Colora-1.jpg)
-Input files: hifi reads, optionally ONT, and hic reads.
+Why colora? :snake: Colora means "snake" in Sardinian language :snake: 
+
+
+Input reads: hifi reads, optionally ONT, and hic reads.
+Other inputs: oatk database, ncbi FCS database (optional), BUSCO database (to be implemented)
 
 ## Usage
 
@@ -15,9 +18,10 @@ The usage of this workflow is described in the [Snakemake Workflow Catalog](http
 
 If you use this workflow in a paper, don't forget to give credits to the authors by citing the URL of this (original) <colora> sitory and its DOI (see above).
 
-- place raw hifi reads in /resources/raw_hifi
-- place oatk database of interest from github.oatkdb.repo in /resources/oatkDB
-- place raw hic reads in /resources/raw_hic
+- place raw hifi reads in resources/raw_hifi
+- place oatk database of interest from github.oatkdb.repo in resources/oatkDB
+- place raw hic reads in resources/raw_hic
+- place ncbi database for FCS-GX in resources/gx_db (optional, this needs ~500GB of disk space and a large RAM)
 
 
 How to run `colora`:
@@ -29,7 +33,7 @@ snakemake --software-deployment-method conda --snakefile workflow/Snakefile --co
 
 #for the cluster:
 
-srun --cpus-per-task 100 --mem 200G -t 5-00 snakemake --software-deployment-method conda --conda-frontend mamba --snakefile workflow/Snakefile --cores 100
+snakemake --software-deployment-method conda --conda-frontend mamba --snakefile workflow/Snakefile --cores 100
 ```
 
 Before executing the command, ensure you have appropriately changed your `config.yaml`
@@ -38,11 +42,23 @@ Test the pipeline:
 
 - 1. Download test data
 - 2. Download oatk DB
-- 3. Download FCS-GX test database
+- 3. Download FCS-GX test database 
+
+You can skip this step if you are not going to run the decontamination step with FCS-GX
+```
+mamba create -n ncbi_fcsgx ncbi-fcs-gx
+mamba activate ncbi_fcsgx
+cd colora/resources
+mkdir gx_test_db
+cd gx_test_db
+sync_files.py get --mft https://ftp.ncbi.nlm.nih.gov/genomes/TOOLS/FCS/database/test-only/test-only.manifest --d
+ir ./test-only
+```
+
 - 4. Run the test pipeline
 
 ```
-snakemake --configfile config/config_test.yaml --software-deployment-method conda --snakefile workflow/Snakefile --cores all --dry-run
+snakemake --configfile config/config_test.yaml --software-deployment-method conda --snakefile workflow/Snakefile --cores 4
 ```
 
 # TODO
@@ -61,21 +77,18 @@ snakemake --configfile config/config_test.yaml --software-deployment-method cond
 - [x] test possibility to add ONT reads as optional param in hifiasm
 - [ ] test possibility to add HiC reads as optional params in hifiasm: file names change in this case. Need more study. Probably this needs a separate rule.
 - [ ] packages versions: create stable yaml files with conda export
-- [ ] add singularity and docker as option for environment management (n.b. ncbi FCS can be run only with singularity)
-- [ ] implement ncbi `FCS` (decontamination) as optional rule (orange path in the scheme above)
+- [ ] add singularity and docker as option for environment management
+- [x] implement ncbi `FCS` (decontamination) as optional rule (orange path in the scheme above)
 - [x] make purging steps optional 
-- [ ] make decontamination optional
 - [ ] slurm integration (profile)
 - [ ] setting of resources for each rule
-- [x] Rule `purge_dups.smk` and `purge_dups_alt.smk`: redirecting outputs to the final directory doesn't looks nice + in the root directory at the end of the workflow there are some files that I'm not sure why they are there
+- [x] Rule `purge_dups.smk` and `purge_dups_alt.smk`: redirecting outputs 
 - [ ] implement `assemblyQC` - waiting for new Merqury release to make a new conda recipe (light green path above)
 - [x] Formatting and linting to be fixed according to snakemake requirements
 - [ ] log files: some of them are empty because it's impossible to redirect stderr and stdout to the file
 
 
 Notes:
-- purge dups rule wasn't working due to issues with the path where the output files are written.Evaluate possibility to change directory within the rule. Purge_dups rule wasn't working also because the command to convert the hifiasm gfa to fasta not interpreted correctly by snakemake. SOLVED
-
 
 - Arima pipeline - changes compared to the original pipeline:
    - creating conda environments with needed tools so no need to specify tools' path
@@ -83,5 +96,3 @@ Notes:
   - add -M flag in bwa mem command - step 1.A and 1.B
   - pipeline split in several rules
 
-
-- Decontamination with FCS-GX using conda is impossible at the moment. The conda recipe is incomplete and it only allows to produce the report with the contaminants but it doesn't allow to remove the contaminants, i.e. there is not a `clean genome` option in `run_gx.py`, like in the docker/singularity version `fcs.py`. Opened an issue on github: https://github.com/ncbi/fcs/issues/74. The only way to implement this decontamination step is getting the authors to update the bioconda recipe or explain better how to use it. It's usage is substantially different from what explained in the wiki, and any attempt to understand the code is vane because it's like a box into a box into a box.
