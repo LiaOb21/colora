@@ -1,6 +1,6 @@
 # This rule runs oatk to extract organelles reads from the hifi reads. 
 
-rule run_oatk:
+rule oatk:
     input:
         "results/reads/hifi/hifi.fastq.gz"
     output:
