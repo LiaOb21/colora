@@ -20,6 +20,7 @@ rule purge_dups_alt:
         hap_fa = "results/purge_dups_alt/hap.fa",
         purged_fasta = "results/purge_dups_alt/hifiasm_a_purged.fa",
         hist_plot = "results/purge_dups_alt/hist.out.png"
+    threads: config['minimap2']['t']
     conda:
         "../envs/purge_dups.yaml"
     log:
@@ -27,11 +28,11 @@ rule purge_dups_alt:
     shell:
         """
         cat {input.fasta} {input.hap_fa_in} > merged.fa 
-        minimap2 -xasm20 merged.fa {input.reads} -t {config[minimap2][t]} | gzip -c - > hifi_vs_hifiasm_contigs.paf.gz 
+        minimap2 -xasm20 merged.fa {input.reads} -t {threads} | gzip -c - > hifi_vs_hifiasm_contigs.paf.gz 
         pbcstat hifi_vs_hifiasm_contigs.paf.gz 
         calcuts PB.stat > cutoffs 2>calcults.log
         split_fa merged.fa > hifiasm.asm.split 
-        minimap2 -xasm5 -DP hifiasm.asm.split hifiasm.asm.split -t {config[minimap2][t]} | gzip -c - > hifiasm.split.self.paf.gz 
+        minimap2 -xasm5 -DP hifiasm.asm.split hifiasm.asm.split -t {threads} | gzip -c - > hifiasm.split.self.paf.gz 
         purge_dups -2 -T cutoffs -c PB.base.cov hifiasm.split.self.paf.gz > dups.bed 2> purge_dups.log
         get_seqs -e dups.bed results/hifiasm/hifiasm.asm.a_ctg.fa > purged.fa
         hist_plot.py -c cutoffs PB.stat hist.out.png 
