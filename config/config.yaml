@@ -8,11 +8,11 @@ hic_path: "resources/raw_hic/"
 
 # Customisable parameters for nanoplot
 nanoplot:
-  t: 20 # number of threads
+  t: 4 # number of threads
 
 # Customisable parameters for fastp 
 fastp:
-  t: 20 # number of threads
+  t: 4 # number of threads
   cut_window_size: 4
   cut_mean_quality: 20
   optional_params: 
@@ -24,7 +24,7 @@ fastp:
 # Customisable parameters for kmc
 kmc:
   k: 21 # kmer size, it will be the same used for genomescope2
-  t: 20 # number of threads
+  t: 4 # number of threads
   ci: 1 # exclude k-mers occurring less than <value> times (default: 2)
   cs: 100000 #maximal value of a counter (default: 255)
 
@@ -36,32 +36,45 @@ kmc_tools:
 oatk:
   k: 1001 # kmer size [1001]
   c: 150 #  minimum kmer coverage [3]
-  t: 20  # number of threads [1]
-  m: "resources/oatkDB/path/to/mito/db_mito.fam" # mitochondria gene annotation HMM profile database [NULL]
+  t: 4  # number of threads [1]
+  m: "resources/oatkDB/dikarya_mito.fam" # mitochondria gene annotation HMM profile database [NULL]
   optional_params: 
-    "-p": "" # resources/oatkDB/path/to/plastid/db_pltd.fam - to use for species that have a plastid db, leave empty if not available
+    "-p": "" # to use for species that have a plastid db
 
 # Customisable parameters for minimap2
 minimap2:
-  t: 20  # number of threads
+  t: 4  # number of threads
 
 # Customisable parameters for hifiasm
 hifiasm:
-  t: 50  # number of threads
+  t: 4  # number of threads
   optional_params: 
     "-f": "0" # used for small datasets
     "-l": "" # purge level. 0: no purging; 1: light; 2/3: aggressive [0 for trio; 3 for unzip]
+    "--ul": "" # use this if you have also ont data yu want to integrate in your assembly
+    "--h1": ""
+    "--h2": ""
+
+#Set this to False if you want to skip the fcsgx step:
+include_fcsgx: True #inlcude this rule only if you have preiously downloaded the database (recommended to run fcsgx only on a HPC. It requires around 500 GB of space on your disk and a large RAM)
+
+# Customisable parameters for fcsgx
+fcsgx:
+  ncbi_tax_id: 4932
+  path_to_gx_db: "resources/gx_test_db/test-only"
+  contaminants_output_name: "contaminants.fa"
+  action_report_name: "hifiasm.asm.p_ctg.4932.fcs_gx_report.txt" # here you must change only the number to the tax id of your organism to match ncbi_tax_id
 
 # Set this to False if you want to skip purge_dups steps:
-include_purge_dups: False
+include_purge_dups: True
 
 # Customisable parameters for arima mapping pipeline:
 arima:
   MAPQ_FILTER: 10
-  CPU: 12
+  CPU: 4
 
 # Customisable parameters for yahs
 yahs:
-  o: "hifiasm_p_purged_yahs" # output prefix
+#  o: "hifiasm_p_purged_yahs" # output prefix use of this needs evaluation
   optional_params: 
     "-e": "GATC" # you can specify the restriction enzyme(s) used by the Hi-C experiment
