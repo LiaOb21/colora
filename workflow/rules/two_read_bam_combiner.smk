@@ -3,11 +3,15 @@
 # For more info: https://github.com/ArimaGenomics/mapping_pipeline
 # colora doesn't contain the codes to handle technical and biological replicates of hic reads, refer to the original pipeline for that
 
+
+# include common.smk to use get_bwa_index_inputs
+include: "common.smk"
+
 rule two_read_bam_combiner:
     input:
         bam1_filt="results/arima_mapping_pipeline/FILT_DIR/{sample}_1.bam",
         bam2_filt="results/arima_mapping_pipeline/FILT_DIR/{sample}_2.bam",
-        REF = "results/purge_dups/hifiasm_p_purged.fa"
+        REF = get_bwa_index_inputs()
     output:
         tmp_bam="results/arima_mapping_pipeline/TMP_DIR/{sample}.bam"
     threads: config['arima']['CPU']
