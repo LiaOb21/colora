@@ -1,7 +1,7 @@
 # This rule uses hifiasm to assemble the genome from the hifi reads
 # Following the instructions for obtaining primary/alternate assemblies: https://hifiasm.readthedocs.io/en/latest/pa-assembly.html#produce-primary-alternate-assemblies
 
-rule run_hifiasm:
+rule hifiasm:
     input:
         "results/reads/hifi/hifi.fastq.gz",
     output:
