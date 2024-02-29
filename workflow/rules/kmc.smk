@@ -1,6 +1,6 @@
 # This rule generates kmers from hifi raw data
 
-rule run_kmc:
+rule kmc:
     input:
         "results/reads/hifi/hifi.fastq.gz"
     output:
