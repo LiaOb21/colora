@@ -1,6 +1,6 @@
 # This rule runs nanoplot to qc hifi reads. 
 
-rule run_nanoplot:
+rule nanoplot:
     input:
         "results/reads/hifi/hifi.fastq.gz"
     output:
