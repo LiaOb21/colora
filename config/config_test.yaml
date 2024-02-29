@@ -55,12 +55,15 @@ hifiasm:
     "--h1": ""
     "--h2": ""
 
-# Customisable parameters for fcsgx
+#Set this to False if you want to skip the fcsgx step:
+include_fcsgx: True #inlcude this rule only if you have preiously downloaded the database (recommended to run fcsgx only on a HPC. It requires around 500 GB of space on your disk and a large RAM)
 
-# fcsgx:
-#   ncbi_tax_id: 4932
-#   path_to_gx_db: "resources/gx_test_db/test-only"
-#   contaminants_output_name: "contaminants.fa"
+# Customisable parameters for fcsgx
+fcsgx:
+  ncbi_tax_id: 4932
+  path_to_gx_db: "resources/gx_test_db/test-only"
+  contaminants_output_name: "contaminants.fa"
+  action_report_name: "hifiasm.asm.p_ctg.4932.fcs_gx_report.txt" # here you must change only the number to the tax id of your organism to match ncbi_tax_id
 
 # Set this to False if you want to skip purge_dups steps:
 include_purge_dups: True
@@ -72,6 +75,6 @@ arima:
 
 # Customisable parameters for yahs
 yahs:
-  o: "hifiasm_p_purged_yahs" # output prefix
+#  o: "hifiasm_p_purged_yahs" # output prefix #use of this needs evaluation
   optional_params: 
     "-e": "GATC" # you can specify the restriction enzyme(s) used by the Hi-C experiment
