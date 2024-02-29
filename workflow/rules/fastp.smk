@@ -2,7 +2,7 @@
 
 import glob
 
-rule run_fastp:
+rule fastp:
     input:
         forward_in = expand("{hic_path}{sample}_1.fastq.gz", hic_path=config["hic_path"], sample=glob_wildcards(config["hic_path"] + "{sample}_1.fastq.gz").sample),
         reverse_in = expand("{hic_path}{sample}_2.fastq.gz", hic_path=config["hic_path"], sample=glob_wildcards(config["hic_path"] + "{sample}_2.fastq.gz").sample)
