@@ -14,7 +14,7 @@ rule fcsgx:
         clean_fasta="results/ncbi_fcsgx/hifiasm.asm.p_ctg_clean.fa",
     threads: config["hifiasm"]["t"]
     log:
-        "logs/hifiasm.log",
+        "logs/fcsgx.log",
     conda:
         "../envs/fcsgx.yaml"
     shell:
