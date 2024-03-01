@@ -7,18 +7,19 @@
 # include common.smk to use get_bwa_index_inputs
 include: "common.smk"
 
+
 rule two_read_bam_combiner:
     input:
         bam1_filt="results/arima_mapping_pipeline/FILT_DIR/{sample}_1.bam",
         bam2_filt="results/arima_mapping_pipeline/FILT_DIR/{sample}_2.bam",
-        REF = get_bwa_index_inputs()
+        REF=get_bwa_index_inputs(),
     output:
-        tmp_bam="results/arima_mapping_pipeline/TMP_DIR/{sample}.bam"
-    threads: config['arima']['CPU']
+        tmp_bam="results/arima_mapping_pipeline/TMP_DIR/{sample}.bam",
+    threads: config["arima"]["CPU"]
     params:
-        MAPQ_FILTER = config['arima']['MAPQ_FILTER']
+        MAPQ_FILTER=config["arima"]["MAPQ_FILTER"],
     log:
-        "logs/{sample}_two_read_bam_combiner.log"
+        "logs/{sample}_two_read_bam_combiner.log",
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:

@@ -4,17 +4,17 @@
 
 rule fcsgx:
     input:
-        fasta = "results/hifiasm/hifiasm.asm.p_ctg.fa"
+        fasta="results/hifiasm/hifiasm.asm.p_ctg.fa",
     params:
-        ncbi_tax_id = config["fcsgx"]["ncbi_tax_id"],
-        action_report_name = config["fcsgx"]["action_report_name"],
-        path_to_gx_db = config["fcsgx"]["path_to_gx_db"],
-        contaminants_output_name = config["fcsgx"]["contaminants_output_name"]
+        ncbi_tax_id=config["fcsgx"]["ncbi_tax_id"],
+        action_report_name=config["fcsgx"]["action_report_name"],
+        path_to_gx_db=config["fcsgx"]["path_to_gx_db"],
+        contaminants_output_name=config["fcsgx"]["contaminants_output_name"],
     output:
-        clean_fasta="results/ncbi_fcsgx/hifiasm.asm.p_ctg_clean.fa"
-    threads: config['hifiasm']['t']
+        clean_fasta="results/ncbi_fcsgx/hifiasm.asm.p_ctg_clean.fa",
+    threads: config["hifiasm"]["t"]
     log:
-        "logs/hifiasm.log"
+        "logs/hifiasm.log",
     conda:
         "../envs/fcsgx.yaml"
     shell:

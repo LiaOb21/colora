@@ -1,31 +1,33 @@
 # This rule uses purge_dups purge haplotigs and overlaps from the primary assembly produced by hifiasm
 
-# include common.smk to use get_purge_dups_inputs 
+
+# include common.smk to use get_purge_dups_inputs
 include: "common.smk"
+
 
 rule run_purge_dups:
     input:
-        reads = "results/reads/hifi/hifi.fastq.gz",
-        fasta = get_purge_dups_inputs()
+        reads="results/reads/hifi/hifi.fastq.gz",
+        fasta=get_purge_dups_inputs(),
     output:
-        paf = "results/purge_dups/hifi_vs_hifiasm_contigs.paf.gz",
-        calcuts_log = "results/purge_dups/calcuts.log",
-        cutoffs = "results/purge_dups/cutoffs",
-        pcbstat_stat = "results/purge_dups/PB.stat",
-        pcbstat_cov = "results/purge_dups/PB.base.cov",
-        pcbstat_cov_wig = "results/purge_dups/PB.cov.wig",
-        split_fa = "results/purge_dups/hifiasm.asm.split",
-        self_paf = "results/purge_dups/hifiasm.split.self.paf.gz",
-        dups_bed = "results/purge_dups/dups.bed",
-        log = "results/purge_dups/purge_dups.log",
-        hap_fa = "results/purge_dups/hap.fa",
-        purged_fasta = "results/purge_dups/hifiasm_p_purged.fa",
-        hist_plot = "results/purge_dups/hist.out.png"
-    threads: config['minimap2']['t']
+        paf="results/purge_dups/hifi_vs_hifiasm_contigs.paf.gz",
+        calcuts_log="results/purge_dups/calcuts.log",
+        cutoffs="results/purge_dups/cutoffs",
+        pcbstat_stat="results/purge_dups/PB.stat",
+        pcbstat_cov="results/purge_dups/PB.base.cov",
+        pcbstat_cov_wig="results/purge_dups/PB.cov.wig",
+        split_fa="results/purge_dups/hifiasm.asm.split",
+        self_paf="results/purge_dups/hifiasm.split.self.paf.gz",
+        dups_bed="results/purge_dups/dups.bed",
+        log="results/purge_dups/purge_dups.log",
+        hap_fa="results/purge_dups/hap.fa",
+        purged_fasta="results/purge_dups/hifiasm_p_purged.fa",
+        hist_plot="results/purge_dups/hist.out.png",
+    threads: config["minimap2"]["t"]
     conda:
         "../envs/purge_dups.yaml"
     log:
-        "logs/purge_dups.log"
+        "logs/purge_dups.log",
     shell:
         """
         minimap2 -xasm20 {input.fasta} {input.reads} -t {threads} | gzip -c - > hifi_vs_hifiasm_contigs.paf.gz 

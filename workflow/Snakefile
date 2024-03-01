@@ -6,14 +6,17 @@
 
 # Main Snakefile
 
+
 # set config file where you can specify your inputs
 configfile: "config/config.yaml"
 
-# import glob to read {sample}
-import glob 
 
-#set {samples} wildcard
+# import glob to read {sample}
+import glob
+
+# set {samples} wildcard
 samples = glob_wildcards(config["hic_path"] + "{sample}_1.fastq.gz").sample
+
 
 # Include the hifi_prep rule
 include: "rules/hifi_prep.smk"
@@ -28,7 +31,7 @@ include: "rules/oatk.smk"
 # Include the hifiasm rule
 include: "rules/hifiasm.smk"
 # Include the ncbi_fcsgx rule
-include: "rules/ncbi_fcsgx.smk" # to add if eventually I manage to integrate fcsgx
+include: "rules/ncbi_fcsgx.smk"  # to add if eventually I manage to integrate fcsgx
 # Include the purge_dups rule
 include: "rules/purge_dups.smk"
 # Include the purge_dups2 rule for alternate assembly
@@ -54,4 +57,5 @@ include: "rules/common.smk"
 # Define the rule all, which is the default rule that Snakemake runs when no specific rule or target is specified
 # input files are defined in the common.smk file
 rule all:
-    input: get_all_inputs()
+    input:
+        get_all_inputs(),

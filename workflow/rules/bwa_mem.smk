@@ -8,18 +8,19 @@
 # get_bwa_index_outputs is used to locate the index files
 include: "common.smk"
 
+
 rule bwa_mem:
     input:
-        REF = get_bwa_index_inputs(),
-        index = get_bwa_index_outputs()[0],
-        forward_hic = "results/fastp/{sample}_trim_1.fastq.gz",
-        reverse_hic = "results/fastp/{sample}_trim_2.fastq.gz"
+        REF=get_bwa_index_inputs(),
+        index=get_bwa_index_outputs()[0],
+        forward_hic="results/fastp/{sample}_trim_1.fastq.gz",
+        reverse_hic="results/fastp/{sample}_trim_2.fastq.gz",
     output:
         bam1="results/arima_mapping_pipeline/RAW_DIR/{sample}_1.bam",
-        bam2="results/arima_mapping_pipeline/RAW_DIR/{sample}_2.bam"
-    threads: config['arima']['CPU']
+        bam2="results/arima_mapping_pipeline/RAW_DIR/{sample}_2.bam",
+    threads: config["arima"]["CPU"]
     log:
-        "logs/{sample}_bwa_mem.log"
+        "logs/{sample}_bwa_mem.log",
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:

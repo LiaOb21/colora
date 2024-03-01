@@ -2,23 +2,25 @@
 
 import glob
 
+
 # include common.smk to use get_bwa_index_inputs
 include: "common.smk"
 
+
 rule yahs:
     input:
-        REF = get_bwa_index_inputs(),
-        bam="results/arima_mapping_pipeline/REP_DIR/{sample}_rep1.bam"
+        REF=get_bwa_index_inputs(),
+        bam="results/arima_mapping_pipeline/REP_DIR/{sample}_rep1.bam",
     output:
-        scaffolds="results/yahs/hifiasm_yahs_{sample}_scaffolds_final.fa"
+        scaffolds="results/yahs/hifiasm_yahs_{sample}_scaffolds_final.fa",
     log:
-        "logs/yahs_{sample}.log"
+        "logs/yahs_{sample}.log",
     conda:
         "../envs/yahs.yaml"
     params:
         optional_params=" ".join(
             f"{k} {v}" for k, v in config["yahs"]["optional_params"].items() if v
-        )
+        ),
     shell:
         """
         samtools faidx {input.REF} 

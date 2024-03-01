@@ -1,30 +1,31 @@
 # This rule uses purge_dups purge haplotigs and overlaps from the alternate assembly produced by hifiasm
 
+
 rule purge_dups_alt:
     input:
-        reads = "results/reads/hifi/hifi.fastq.gz",
-        fasta = "results/hifiasm/hifiasm.asm.a_ctg.fa",
-        hap_fa_in = "results/purge_dups/hap.fa"
+        reads="results/reads/hifi/hifi.fastq.gz",
+        fasta="results/hifiasm/hifiasm.asm.a_ctg.fa",
+        hap_fa_in="results/purge_dups/hap.fa",
     output:
-        merged_fasta = "results/purge_dups_alt/merged.fa",
-        paf = "results/purge_dups_alt/hifi_vs_hifiasm_contigs.paf.gz",
-        calcuts_log = "results/purge_dups_alt/calcuts.log",
-        cutoffs = "results/purge_dups_alt/cutoffs",
-        pcbstat_stat = "results/purge_dups_alt/PB.stat",
-        pcbstat_cov = "results/purge_dups_alt/PB.base.cov",
-        pcbstat_cov_wig = "results/purge_dups_alt/PB.cov.wig",
-        split_fa = "results/purge_dups_alt/hifiasm.asm.split",
-        self_paf = "results/purge_dups_alt/hifiasm.split.self.paf.gz",
-        dups_bed = "results/purge_dups_alt/dups.bed",
-        log = "results/purge_dups_alt/purge_dups.log",
-        hap_fa = "results/purge_dups_alt/hap.fa",
-        purged_fasta = "results/purge_dups_alt/hifiasm_a_purged.fa",
-        hist_plot = "results/purge_dups_alt/hist.out.png"
-    threads: config['minimap2']['t']
+        merged_fasta="results/purge_dups_alt/merged.fa",
+        paf="results/purge_dups_alt/hifi_vs_hifiasm_contigs.paf.gz",
+        calcuts_log="results/purge_dups_alt/calcuts.log",
+        cutoffs="results/purge_dups_alt/cutoffs",
+        pcbstat_stat="results/purge_dups_alt/PB.stat",
+        pcbstat_cov="results/purge_dups_alt/PB.base.cov",
+        pcbstat_cov_wig="results/purge_dups_alt/PB.cov.wig",
+        split_fa="results/purge_dups_alt/hifiasm.asm.split",
+        self_paf="results/purge_dups_alt/hifiasm.split.self.paf.gz",
+        dups_bed="results/purge_dups_alt/dups.bed",
+        log="results/purge_dups_alt/purge_dups.log",
+        hap_fa="results/purge_dups_alt/hap.fa",
+        purged_fasta="results/purge_dups_alt/hifiasm_a_purged.fa",
+        hist_plot="results/purge_dups_alt/hist.out.png",
+    threads: config["minimap2"]["t"]
     conda:
         "../envs/purge_dups.yaml"
     log:
-        "logs/purge_dups_alt.log"
+        "logs/purge_dups_alt.log",
     shell:
         """
         cat {input.fasta} {input.hap_fa_in} > merged.fa 
