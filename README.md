@@ -44,6 +44,15 @@ Test the pipeline:
 
 - 1. Download test data
 - 2. Download oatk DB
+
+```
+git clone https://github.com/c-zhou/OatkDB.git
+cd colora/resources
+mkdir oatkDB
+cp path/to/where/you/cloned/OatkDB/v20230921/dikarya* oatkDB/
+```
+
+
 - 3. Download FCS-GX test database 
 
 You can skip this step if you are not going to run the decontamination step with FCS-GX
@@ -53,8 +62,7 @@ mamba activate ncbi_fcsgx
 cd colora/resources
 mkdir gx_test_db
 cd gx_test_db
-sync_files.py get --mft https://ftp.ncbi.nlm.nih.gov/genomes/TOOLS/FCS/database/test-only/test-only.manifest --d
-ir ./test-only
+sync_files.py get --mft https://ftp.ncbi.nlm.nih.gov/genomes/TOOLS/FCS/database/test-only/test-only.manifest --dir ./test-only
 ```
 
 - 4. Run the test pipeline
@@ -82,7 +90,7 @@ snakemake --configfile config/config_test.yaml --software-deployment-method cond
 - [ ] add singularity and docker as option for environment management
 - [x] implement ncbi `FCS` (decontamination) as optional rule (orange path in the scheme above)
 - [x] make purging steps optional 
-- [ ] slurm integration (profile)
+- [x] slurm integration (profile)
 - [ ] setting of resources for each rule
 - [x] Rule `purge_dups.smk` and `purge_dups_alt.smk`: redirecting outputs 
 - [ ] implement `assemblyQC` - waiting for new Merqury release to make a new conda recipe (light green path above)
