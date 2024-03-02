@@ -1,4 +1,4 @@
-# config.yaml
+# config file for test data
 
 # Path to hifi reads
 hifi_path: "resources/raw_hifi/"
@@ -6,13 +6,19 @@ hifi_path: "resources/raw_hifi/"
 # Path to hic reads
 hic_path: "resources/raw_hic/"
 
+# Customisable parameters for hifi_prep
+hifi_prep:
+  mem_mb: 100 # memory in MB
+
 # Customisable parameters for nanoplot
 nanoplot:
   t: 4 # number of threads
+  mem_mb: 300 # memory in MB
 
 # Customisable parameters for fastp 
 fastp:
   t: 4 # number of threads
+  mem_mb: 2000 # memory in MB
   cut_window_size: 4
   cut_mean_quality: 20
   optional_params: 
@@ -23,6 +29,7 @@ fastp:
 
 # Customisable parameters for kmc
 kmc:
+  mem_mb: 1000 # memory in MB
   k: 21 # kmer size, it will be the same used for genomescope2
   t: 4 # number of threads
   ci: 1 # exclude k-mers occurring less than <value> times (default: 2)
@@ -32,8 +39,13 @@ kmc:
 kmc_tools:
   cx: 100000 # exclude k-mers occurring more of than <value> times
 
+# Customisable parameters for genomescope2
+genomescope2:
+  mem_mb: 300 # memory in MB
+
 # Customisable parameters for oatk
 oatk:
+  mem_mb: 32000 # memory in MB
   k: 1001 # kmer size [1001]
   c: 150 #  minimum kmer coverage [3]
   t: 4  # number of threads [1]
@@ -48,6 +60,7 @@ minimap2:
 # Customisable parameters for hifiasm
 hifiasm:
   t: 4  # number of threads
+  mem_mb: 1000 # memory in MB
   optional_params: 
     "-f": "0" # used for small datasets
     "-l": "" # purge level. 0: no purging; 1: light; 2/3: aggressive [0 for trio; 3 for unzip]
@@ -60,6 +73,7 @@ include_fcsgx: True #inlcude this rule only if you have preiously downloaded the
 
 # Customisable parameters for fcsgx
 fcsgx:
+  mem_mb: 5000 # memory in MB
   ncbi_tax_id: 4932
   path_to_gx_db: "resources/gx_test_db/test-only"
   contaminants_output_name: "contaminants.fa"
@@ -68,13 +82,19 @@ fcsgx:
 # Set this to False if you want to skip purge_dups steps:
 include_purge_dups: True
 
+# Customisable parameters for purge_dups
+purge_dups:
+  mem_mb: 300 # memory in MB
+
 # Customisable parameters for arima mapping pipeline:
 arima:
   MAPQ_FILTER: 10
   CPU: 4
+  mem_mb: 8000
 
 # Customisable parameters for yahs
 yahs:
+  mem_mb: 100 # memory in MB
 #  o: "hifiasm_p_purged_yahs" # output prefix #use of this needs evaluation
   optional_params: 
     "-e": "GATC" # you can specify the restriction enzyme(s) used by the Hi-C experiment

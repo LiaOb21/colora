@@ -1,4 +1,4 @@
-# config.yaml
+# config.yaml for real data
 
 # Path to hifi reads
 hifi_path: "resources/raw_hifi/"
@@ -6,13 +6,19 @@ hifi_path: "resources/raw_hifi/"
 # Path to hic reads
 hic_path: "resources/raw_hic/"
 
+# Customisable parameters for hifi_prep
+hifi_prep:
+  mem_mb: 204800 # memory in MB
+
 # Customisable parameters for nanoplot
 nanoplot:
-  t: 4 # number of threads
+  t: 20 # number of threads
+  mem_mb: 204800 # memory in MB
 
 # Customisable parameters for fastp 
 fastp:
-  t: 4 # number of threads
+  t: 20 # number of threads
+  mem_mb: 512000 # memory in MB
   cut_window_size: 4
   cut_mean_quality: 20
   optional_params: 
@@ -23,33 +29,40 @@ fastp:
 
 # Customisable parameters for kmc
 kmc:
+  mem_mb: 512000 # memory in MB
   k: 21 # kmer size, it will be the same used for genomescope2
-  t: 4 # number of threads
+  t: 20 # number of threads
   ci: 1 # exclude k-mers occurring less than <value> times (default: 2)
-  cs: 100000 #maximal value of a counter (default: 255)
+  cs: 1000000 #maximal value of a counter (default: 255)
 
 # Customisable parameters for kmc_tools transform
 kmc_tools:
-  cx: 100000 # exclude k-mers occurring more of than <value> times
+  cx: 1000000 # exclude k-mers occurring more of than <value> times
+
+# Customisable parameters for genomescope2
+genomescope2:
+  mem_mb: 204800 # memory in MB
 
 # Customisable parameters for oatk
 oatk:
+  mem_mb: 512000 # memory in MB
   k: 1001 # kmer size [1001]
   c: 150 #  minimum kmer coverage [3]
-  t: 4  # number of threads [1]
-  m: "resources/oatkDB/dikarya_mito.fam" # mitochondria gene annotation HMM profile database [NULL]
+  t: 20  # number of threads [1]
+  m: "resources/oatkDB/embryophyta_mito.fam" # mitochondria gene annotation HMM profile database [NULL]
   optional_params: 
-    "-p": "" # to use for species that have a plastid db
+    "-p": "resources/oatkDB/embryophyta_pltd.fam" # to use for species that have a plastid db
 
 # Customisable parameters for minimap2
 minimap2:
-  t: 4  # number of threads
+  t: 50  # number of threads
 
 # Customisable parameters for hifiasm
 hifiasm:
-  t: 4  # number of threads
+  t: 50  # number of threads
+  mem_mb: 512000 # memory in MB
   optional_params: 
-    "-f": "0" # used for small datasets
+    "-f": "" # used for small datasets
     "-l": "" # purge level. 0: no purging; 1: light; 2/3: aggressive [0 for trio; 3 for unzip]
     "--ul": "" # use this if you have also ont data yu want to integrate in your assembly
     "--h1": ""
@@ -60,21 +73,28 @@ include_fcsgx: True #inlcude this rule only if you have preiously downloaded the
 
 # Customisable parameters for fcsgx
 fcsgx:
-  ncbi_tax_id: 4932
-  path_to_gx_db: "resources/gx_test_db/test-only"
+  mem_mb: 512000 # memory in MB
+  ncbi_tax_id: 4513
+  path_to_gx_db: "path/to/fcsgx/gxdb"
   contaminants_output_name: "contaminants.fa"
-  action_report_name: "hifiasm.asm.p_ctg.4932.fcs_gx_report.txt" # here you must change only the number to the tax id of your organism to match ncbi_tax_id
+  action_report_name: "hifiasm.asm.p_ctg.4513.fcs_gx_report.txt" # here you must change only the number to the tax id of your organism to match ncbi_tax_id
 
 # Set this to False if you want to skip purge_dups steps:
 include_purge_dups: True
 
+# Customisable parameters for purge_dups
+purge_dups:
+  mem_mb: 512000 # memory in MB
+
 # Customisable parameters for arima mapping pipeline:
 arima:
   MAPQ_FILTER: 10
-  CPU: 4
+  CPU: 50
+  mem_mb: 512000
 
 # Customisable parameters for yahs
 yahs:
+  mem_mb: 204800 # memory in MB
 #  o: "hifiasm_p_purged_yahs" # output prefix use of this needs evaluation
   optional_params: 
-    "-e": "GATC" # you can specify the restriction enzyme(s) used by the Hi-C experiment
+    "-e": "" # you can specify the restriction enzyme(s) used by the Hi-C experiment
