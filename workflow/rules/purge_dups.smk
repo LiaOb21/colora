@@ -5,7 +5,7 @@
 include: "common.smk"
 
 
-rule run_purge_dups:
+rule purge_dups:
     input:
         reads="results/reads/hifi/hifi.fastq.gz",
         fasta=get_purge_dups_inputs(),
@@ -24,10 +24,12 @@ rule run_purge_dups:
         purged_fasta="results/purge_dups/hifiasm_p_purged.fa",
         hist_plot="results/purge_dups/hist.out.png",
     threads: config["minimap2"]["t"]
-    conda:
-        "../envs/purge_dups.yaml"
     log:
         "logs/purge_dups.log",
+    resources:
+        mem_mb=config['purge_dups']['mem_mb'],  # access memory from config
+    conda:
+        "../envs/purge_dups.yaml"
     shell:
         """
         minimap2 -xasm20 {input.fasta} {input.reads} -t {threads} | gzip -c - > hifi_vs_hifiasm_contigs.paf.gz 

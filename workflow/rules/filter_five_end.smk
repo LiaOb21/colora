@@ -13,6 +13,8 @@ rule fiter_five_end:
         bam2_filt="results/arima_mapping_pipeline/FILT_DIR/{sample}_2.bam",
     log:
         "logs/{sample}_fiter_five_end.log",
+    resources:
+        mem_mb=config['arima']['mem_mb'],  # access memory from config    
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:

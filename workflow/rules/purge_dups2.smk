@@ -22,10 +22,12 @@ rule purge_dups_alt:
         purged_fasta="results/purge_dups_alt/hifiasm_a_purged.fa",
         hist_plot="results/purge_dups_alt/hist.out.png",
     threads: config["minimap2"]["t"]
-    conda:
-        "../envs/purge_dups.yaml"
     log:
         "logs/purge_dups_alt.log",
+    resources:
+        mem_mb=config['purge_dups']['mem_mb'],  # access memory from config
+    conda:
+        "../envs/purge_dups.yaml"
     shell:
         """
         cat {input.fasta} {input.hap_fa_in} > merged.fa 

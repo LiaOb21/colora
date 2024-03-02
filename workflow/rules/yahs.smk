@@ -15,6 +15,8 @@ rule yahs:
         scaffolds="results/yahs/hifiasm_yahs_{sample}_scaffolds_final.fa",
     log:
         "logs/yahs_{sample}.log",
+    resources:
+        mem_mb=config['arima']['mem_mb'],  # access memory from config
     conda:
         "../envs/yahs.yaml"
     params:

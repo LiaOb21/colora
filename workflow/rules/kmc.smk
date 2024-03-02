@@ -16,6 +16,8 @@ rule kmc:
         cx=config["kmc_tools"]["cx"],
     log:
         "logs/kmc.log",
+    resources:
+        mem_mb=config['kmc']['mem_mb'],  # access memory from config
     conda:
         "../envs/kmc.yaml"
     shell:

@@ -21,6 +21,8 @@ rule bwa_mem:
     threads: config["arima"]["CPU"]
     log:
         "logs/{sample}_bwa_mem.log",
+    resources:
+        mem_mb=config['arima']['mem_mb'],  # access memory from config    
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:

@@ -9,6 +9,8 @@ rule nanoplot:
     threads: config["nanoplot"]["t"]
     log:
         "logs/nanoplot.log",
+    resources:
+        mem_mb=config['nanoplot']['mem_mb'],  # access memory from config
     conda:
         "../envs/nanoplot.yaml"
     shell:

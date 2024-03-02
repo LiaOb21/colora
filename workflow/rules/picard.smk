@@ -14,6 +14,8 @@ rule picard:
         stats="results/arima_mapping_pipeline/REP_DIR/{sample}_rep1.bam.stats",
     log:
         "logs/{sample}_picard.log",
+    resources:
+        mem_mb=config['arima']['mem_mb'],  # access memory from config
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:

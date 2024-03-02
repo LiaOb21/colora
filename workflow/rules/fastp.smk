@@ -29,6 +29,8 @@ rule fastp:
     threads: config["fastp"]["t"]
     log:
         "logs/{sample}_fastp.log",
+    resources:
+        mem_mb=config['fastp']['mem_mb'],  # access memory from config
     conda:
         "../envs/fastp.yaml"
     shell:

@@ -13,6 +13,8 @@ rule hifiasm:
     threads: config["hifiasm"]["t"]
     log:
         "logs/hifiasm.log",
+    resources:
+        mem_mb=config['hifiasm']['mem_mb'],  # access memory from config
     conda:
         "../envs/hifiasm.yaml"
     params:

@@ -10,6 +10,8 @@ rule genomescope2:
         k=config["kmc"]["k"],
     log:
         "logs/genomescope2.log",
+    resources:
+        mem_mb=config['arima']['mem_mb'],  # access memory from config    
     conda:
         "../envs/genomescope2.yaml"
     shell:

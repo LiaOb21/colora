@@ -15,6 +15,8 @@ rule fcsgx:
     threads: config["hifiasm"]["t"]
     log:
         "logs/fcsgx.log",
+    resources:
+        mem_mb=config['fcsgx']['mem_mb'],  # access memory from config
     conda:
         "../envs/fcsgx.yaml"
     shell:

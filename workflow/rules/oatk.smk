@@ -6,11 +6,13 @@ rule oatk:
         "results/reads/hifi/hifi.fastq.gz",
     output:
         mito="results/oatk/oatk.asm.mito.ctg.fasta",
+    threads: config["oatk"]["t"]
     log:
         "logs/oatk.log",
     conda:
         "../envs/oatk.yaml"
-    threads: config["oatk"]["t"]
+    resources:
+        mem_mb=config['oatk']['mem_mb'],  # access memory from config
     params:
         k=config["oatk"]["k"],
         c=config["oatk"]["c"],

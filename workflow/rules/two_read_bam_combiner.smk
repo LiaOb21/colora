@@ -20,6 +20,8 @@ rule two_read_bam_combiner:
         MAPQ_FILTER=config["arima"]["MAPQ_FILTER"],
     log:
         "logs/{sample}_two_read_bam_combiner.log",
+    resources:
+        mem_mb=config['arima']['mem_mb'],  # access memory from config
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:

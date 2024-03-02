@@ -18,6 +18,8 @@ rule hifi_prep:
         num_files=len(glob.glob(config["hifi_path"] + "*.fastq.gz")),
     log:
         "logs/hifi_prep.log",
+    resources:
+        mem_mb=config['hifi_prep']['mem_mb'],  # access memory from config
     conda:
         "../envs/basic.yaml"
     shell:

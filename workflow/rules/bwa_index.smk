@@ -15,6 +15,8 @@ rule bwa_index:
         get_bwa_index_outputs(),
     log:
         "logs/bwa_index.log",
+    resources:
+        mem_mb=config['arima']['mem_mb'],  # access memory from config
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
