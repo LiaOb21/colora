@@ -91,7 +91,7 @@ snakemake --configfile config/config_test.yaml --software-deployment-method cond
 - [x] implement ncbi `FCS` (decontamination) as optional rule (orange path in the scheme above)
 - [x] make purging steps optional 
 - [x] slurm integration (profile)
-- [ ] setting of resources for each rule
+- [x] setting of resources for each rule
 - [x] Rule `purge_dups.smk` and `purge_dups_alt.smk`: redirecting outputs 
 - [ ] implement `assemblyQC` - waiting for new Merqury release to make a new conda recipe (light green path above)
 - [x] Formatting and linting to be fixed according to snakemake requirements
