@@ -14,6 +14,7 @@ rule hifi_prep:
         ),
     output:
         hifi="results/reads/hifi/hifi.fastq.gz",
+    threads: config["hifi_prep"]["t"]
     params:
         num_files=len(glob.glob(config["hifi_path"] + "*.fastq.gz")),
     log:
@@ -21,12 +22,12 @@ rule hifi_prep:
     resources:
         mem_mb=config['hifi_prep']['mem_mb'],  # access memory from config
     conda:
-        "../envs/basic.yaml"
+        "../envs/pigz.yaml"
     shell:
         """
         {{
             if [ {params.num_files} -gt 1 ]; then
-                zcat {input.files} | gzip > {output.hifi}
+                pigz -dc {input.files} | pigz -p{threads} > {output.hifi}
             else
                 cp {input.files[0]} {output.hifi}
         fi
