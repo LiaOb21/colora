@@ -89,6 +89,16 @@ def get_all_inputs():
     return inputs
 
 
+# create a function to read the outputs of oatk rule dynamically (if the plastid database is provided or not)
+def get_oatk_outputs():
+    if config["oatk"]["optional_params"]["-p"]:
+        return [
+            "results/oatk/oatk.asm.mito.ctg.fasta",
+            "results/oatk/oatk.asm.pltd.ctg.fasta",
+        ]
+    else:
+        return "results/oatk/oatk.asm.mito.ctg.fasta"
+
 # create a function to read the inputs of purge_dups rule dynamically
 def get_purge_dups_inputs():
     if config["include_fcsgx"] == True:
