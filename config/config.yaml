@@ -8,6 +8,7 @@ hic_path: "resources/raw_hic/"
 
 # Customisable parameters for hifi_prep
 hifi_prep:
+  t: 20 # number of threads
   mem_mb: 204800 # memory in MB
 
 # Customisable parameters for nanoplot
