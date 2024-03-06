@@ -1,21 +1,14 @@
-# Main entrypoint of the workflow.
-# Please follow the best practices:
+# Main Snakefile and entry point of the workflow.
+# Please see the best practices:
 # https://snakemake.readthedocs.io/en/stable/snakefiles/best_practices.html,
 # in particular regarding the standardized folder structure mentioned there.
-
-
-# Main Snakefile
-
 
 # set config file where you can specify your inputs
 configfile: "config/config.yaml"
 
-
-# import glob to read {sample}
-import glob
-
 # set {samples} wildcard
-samples = glob_wildcards(config["hic_path"] + "{sample}_1.fastq.gz").sample
+samples_in_pattern = "{sample}_1.fastq.gz"
+samples = glob_wildcards(config["hic_path"] + samples_in_pattern).sample
 
 
 # Include the hifi_prep rule
@@ -58,4 +51,4 @@ include: "rules/common.smk"
 # input files are defined in the common.smk file
 rule all:
     input:
-        get_all_inputs(),
+        get_all_inputs
