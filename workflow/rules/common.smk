@@ -1,8 +1,14 @@
 # Define function for the inputs to rule_all
 # this rule just defines the inputs to the final rule
 
+def get_all_inputs(wc=None):
+    if not samples:
+        # Show the user a meaningful error message
+        logger.error(f"No files matching {samples_in_pattern} were found in"
+                     f" {config.get('hic_path')}. Please check your config file.")
+        logger.error(f"Exiting.")
+        sys.exit(1)
 
-def get_all_inputs():
     inputs = [
         "results/reads/hifi/hifi.fastq.gz",  # output of hifi_prep rule
         "results/nanoplot/NanoPlot-report.html",  # nanoplot report
