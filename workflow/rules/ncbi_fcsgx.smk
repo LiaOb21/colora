@@ -1,20 +1,19 @@
 # This rule runs the decontamination pipeline fcs-gx on the hifiasm primary assembly
 # Github page of the pipeline: https://github.com/ncbi/fcs
 
-
 rule fcsgx:
     input:
-        fasta="results/hifiasm/hifiasm.asm.p_ctg.fa",
+        fasta="results/hifiasm/asm.{hap}.fa",
     params:
         ncbi_tax_id=config["fcsgx"]["ncbi_tax_id"],
         action_report_name=config["fcsgx"]["action_report_name"],
         path_to_gx_db=config["fcsgx"]["path_to_gx_db"],
         contaminants_output_name=config["fcsgx"]["contaminants_output_name"],
     output:
-        clean_fasta="results/ncbi_fcsgx/hifiasm.asm.p_ctg_clean.fa",
+        clean_fasta="results/ncbi_fcsgx/asm.{hap}_clean.fa",
     threads: config["hifiasm"]["t"]
     log:
-        "logs/fcsgx.log",
+        "logs/fcsgx_{hap}.log",
     resources:
         mem_mb=config['fcsgx']['mem_mb'],  # access memory from config
     conda:

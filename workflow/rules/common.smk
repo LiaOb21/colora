@@ -1,6 +1,12 @@
 # Define function for the inputs to rule_all
 # this rule just defines the inputs to the final rule
 
+
+wildcard_contraints:
+    hap = "primary|alternate|hap1|hap2"
+    hap_1 = "primary|hap1"
+    hap_2 = "alternate|hap2"
+
 def get_all_inputs(wc=None):
     if not samples:
         # Show the user a meaningful error message
@@ -15,8 +21,6 @@ def get_all_inputs(wc=None):
         "results/kmc/out.hist",  # output of kmc rule
         "results/genomescope",  # output directory of genomescope
         "results/oatk/oatk.asm.mito.ctg.fasta",  # mitochondrion fasta from oatk
-        "results/hifiasm/hifiasm.asm.p_ctg.gfa",  # draft hifiasm assembly.gfa
-        "results/hifiasm/hifiasm.asm.p_ctg.fa",  # draft hifiasm assembly.fa
         expand(
             "results/fastp/{sample}_report_fastp.HiC.html", sample=samples
         ),  # fastp report for HiC reads pre-processing
@@ -53,6 +57,22 @@ def get_all_inputs(wc=None):
             "results/yahs/hifiasm_yahs_{sample}_scaffolds_final.fa", sample=samples
         ),  # final scaffolded assembly
     ]
+
+     if "--h1" in config["hifiasm"]["optional_params"] and "--h2" in config["hifiasm"]["optional_params"]:
+        inputs.extend([
+            "results/hifiasm/asm.hap1.gfa",
+            "results/hifiasm/asm.hap1.fa",
+            "results/hifiasm/asm.hap2.gfa",
+            "results/hifiasm/asm.hap2.fa"
+        ])
+    else:
+        inputs.extend([
+            "results/hifiasm/asm.primary.gfa",
+            "results/hifiasm/asm.primary.fa",
+            "results/hifiasm/asm.alternate.gfa",
+            "results/hifiasm/asm.alternate.fa"
+        ])   
+
     if config["oatk"]["optional_params"]["-p"]:
         inputs.append(
             "results/oatk/oatk.asm.pltd.ctg.fasta"
