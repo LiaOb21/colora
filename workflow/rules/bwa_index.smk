@@ -4,22 +4,24 @@
 # colora doesn't contain the codes to handle technical and biological replicates of hic reads, refer to the original pipeline for that
 
 
-# include common.smk to use get_bwa_index_inputs and get_bwa_index_outputs functions
+# include common.smk to use wildcards
 include: "common.smk"
-
 
 rule bwa_index:
     input:
-        REF=get_bwa_index_inputs(),
+        get_bwa_index_inputs
     output:
-        get_bwa_index_outputs(),
+        dir = directory("results/bwa_index_{hap}"),
+        asm = "results/bwa_index_{hap}/asm.fa"
     log:
-        "logs/bwa_index.log",
+        "logs/bwa_index_{hap}.log",
     resources:
         mem_mb=config['arima']['mem_mb'],  # access memory from config
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
-        bwa index -a bwtsw {input.REF} >> {log} 2>&1
+        ln -srn {input} {output.asm}
+        cd {output.dir}
+        bwa index -a bwtsw {output.asm} >> {log} 2>&1
         """

@@ -6,20 +6,20 @@
 
 rule fiter_five_end:
     input:
-        bam1="results/arima_mapping_pipeline/RAW_DIR/{sample}_1.bam",
-        bam2="results/arima_mapping_pipeline/RAW_DIR/{sample}_2.bam",
+        bam1="results/arima_mapping_pipeline_{hap}/RAW_DIR/{sample}_1.bam",
+        bam2="results/arima_mapping_pipeline_{hap}/RAW_DIR/{sample}_2.bam",
     output:
-        bam1_filt="results/arima_mapping_pipeline/FILT_DIR/{sample}_1.bam",
-        bam2_filt="results/arima_mapping_pipeline/FILT_DIR/{sample}_2.bam",
+        bam1_filt="results/arima_mapping_pipeline_{hap}/FILT_DIR/{sample}_1.bam",
+        bam2_filt="results/arima_mapping_pipeline_{hap}/FILT_DIR/{sample}_2.bam",
     log:
-        "logs/{sample}_fiter_five_end.log",
+        "logs/fiter_five_end_{hap}_{sample}.log",
     resources:
         mem_mb=config['arima']['mem_mb'],  # access memory from config    
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
-        mkdir -p results/arima_mapping_pipeline/FILT_DIR
+        mkdir -p results/arima_mapping_pipeline_{wildcards.hap}/FILT_DIR
         samtools view -h {input.bam1} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam1_filt} 
         samtools view -h {input.bam2} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam2_filt} 
         """
