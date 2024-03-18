@@ -24,8 +24,8 @@ rule hifiasm:
     shell:
         """
         hifiasm {input} -t {threads} -o results/hifiasm/asm --primary {params.optional_params} >> {log} 2>&1
-        mv asm.p_ctg.gfa {output.gfa}
-        mv asm.a_ctg.gfa {output.gfa_alt}       
+        mv results/hifiasm/asm.p_ctg.gfa {output.gfa}
+        mv results/hifiasm/asm.a_ctg.gfa {output.gfa_alt}       
         awk -f scripts/gfa_to_fasta.awk < {output.gfa} > {output.fasta}
         awk -f scripts/gfa_to_fasta.awk < {output.gfa_alt} > {output.fasta_alt}
         """
@@ -53,8 +53,8 @@ rule hifiasm_het:
     shell:
         """
         hifiasm {input} -t {threads} -o results/hifiasm/asm {params.optional_params} >> {log} 2>&1
-        mv asm.hic.hap1.p_ctg.gfa {output.gfa}
-        mv asm.hic.hap2.p_ctg.gfa {output.gfa_alt}
+        mv results/hifiasm/asm.hic.hap1.p_ctg.gfa {output.gfa}
+        mv results/hifiasm/asm.hic.hap2.p_ctg.gfa {output.gfa_alt}
         awk -f scripts/gfa_to_fasta.awk < {output.gfa} > {output.fasta}
         awk -f scripts/gfa_to_fasta.awk < {output.gfa_alt} > {output.fasta_alt}
         """

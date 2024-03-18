@@ -62,7 +62,7 @@ def get_purge_dups_inputs():
 def get_bwa_index_inputs(wildcards):
     hap = wildcards.hap
     if config["include_purge_dups"] == True:
-        return "results/purge_dups/asm.primary_purged.fa"
+        return "results/purge_dups/asm.{hap}_purged.fa"
     elif config["include_fcsgx"] == True:
         return f"results/ncbi_fcsgx_{hap}/asm_clean.fa"
     else:

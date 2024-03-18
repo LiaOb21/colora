@@ -22,6 +22,5 @@ rule bwa_index:
     shell:
         """
         ln -srn {input} {output.asm}
-        cd {output.dir}
         bwa index -a bwtsw {output.asm} >> {log} 2>&1
         """

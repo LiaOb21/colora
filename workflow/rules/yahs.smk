@@ -25,6 +25,5 @@ rule yahs:
         ),
     shell:
         """ 
-        mkdir -p results/yahs 
-        yahs {input.REF} {input.bam} -o {output.scaffolds} {params.optional_params} >> {log} 2>&1
+        yahs {input.REF} {input.bam} -o results/yahs_{wildcards.hap}/asm_yahs_{wildcards.sample} {params.optional_params} >> {log} 2>&1
         """
