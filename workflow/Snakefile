@@ -6,13 +6,12 @@
 # set config file where you can specify your inputs
 configfile: "config/config.yaml"
 
-# set {samples} global variable
+# set {samples} global variable - used to read Hi-C files
 samples_in_pattern = "{sample}_1.fastq.gz"
 samples = glob_wildcards(config["hic_path"] + samples_in_pattern).sample
 
-#set 
+# set {diploid_mode} global variable - used to run hifiasm_het rather than hifiasm
 diploid_mode=config["hifiasm"]["optional_params"]["--h1"] and config["hifiasm"]["optional_params"]["--h2"]
-
 
 # Include the hifi_prep rule
 include: "rules/hifi_prep.smk"
