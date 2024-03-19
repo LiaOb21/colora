@@ -21,8 +21,6 @@ rule picard:
     shell:
         """
         PICARD=${{CONDA_PREFIX}}/share/picard-*/picard.jar
-        mkdir -p results/arima_mapping_pipeline_{wildcards.hap}/PAIR_DIR/
-        mkdir -p results/arima_mapping_pipeline_{wildcards.hap}/REP_DIR/
         java -Xmx4G -Djava.io.tmpdir=temp/ -jar ${{PICARD}} AddOrReplaceReadGroups INPUT={input.tmp_bam} OUTPUT={output.bam_paired} ID={wildcards.sample} LB={wildcards.sample} SM={wildcards.sample} PL=ILLUMINA PU=none 
         java -Xmx30G -XX:-UseGCOverheadLimit -Djava.io.tmpdir=temp/ -jar ${{PICARD}} MarkDuplicates INPUT={output.bam_paired} OUTPUT={output.mark_dup} METRICS_FILE={output.metrics} TMP_DIR=results/arima_mapping_pipeline_{wildcards.hap}/TMP_DIR ASSUME_SORTED=TRUE VALIDATION_STRINGENCY=LENIENT REMOVE_DUPLICATES=TRUE
         samtools index {output.mark_dup}
