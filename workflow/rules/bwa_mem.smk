@@ -22,7 +22,6 @@ rule bwa_mem:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
-        mkdir -p results/arima_mapping_pipeline_{wildcards.hap}/RAW_DIR
         bwa mem -M -t {threads} {input.REF} {input.forward_hic} | samtools view -@ {threads} -Sb - > {output.bam1} 
         bwa mem -M -t {threads} {input.REF} {input.reverse_hic} | samtools view -@ {threads} -Sb - > {output.bam2} 
         """
