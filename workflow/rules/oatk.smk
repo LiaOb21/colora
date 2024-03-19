@@ -9,7 +9,8 @@ rule oatk:
     input:
         "results/reads/hifi/hifi.fastq.gz",
     output:
-        get_oatk_outputs()
+        mito = "results/oatk/oatk.asm.mito.ctg.fasta",
+        pltd = "results/oatk/oatk.asm.pltd.ctg.fasta"
     threads: config["oatk"]["t"]
     log:
         "logs/oatk.log",
