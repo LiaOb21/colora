@@ -79,7 +79,7 @@ fcsgx:
   path_to_gx_db: "resources/gx_test_db/test-only"
 
 # Set this to False if you want to skip purge_dups steps:
-include_purge_dups: False
+include_purge_dups: True
 
 # Customisable parameters for purge_dups
 purge_dups:
