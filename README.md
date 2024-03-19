@@ -99,6 +99,7 @@ snakemake --configfile config/config_test.yaml --software-deployment-method cond
 - [ ] packages versions: create stable yaml files with conda export
 - [ ] add singularity and docker as option for environment management
 - [ ] check if there is a better way to define oatk output
+- [ ] set up GitHub actions
 
 
 
