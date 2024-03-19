@@ -4,9 +4,6 @@
 # colora doesn't contain the codes to handle technical and biological replicates of hic reads, refer to the original pipeline for that
 
 
-# include common.smk to use get_bwa_index_inputs
-include: "common.smk"
-
 
 rule two_read_bam_combiner:
     input:
