@@ -22,12 +22,12 @@ rule hifi_prep:
     resources:
         mem_mb=config['hifi_prep']['mem_mb'],  # access memory from config
     conda:
-        "../envs/pigz.yaml"
+        "../envs/basic.yaml"
     shell:
         """
         {{
             if [ {params.num_files} -gt 1 ]; then
-                pigz -dc {input.files} | pigz -p{threads} > {output.hifi}
+                cat {input.files} > {output.hifi}
             else
                 cp {input.files[0]} {output.hifi}
         fi
