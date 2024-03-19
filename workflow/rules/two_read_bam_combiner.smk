@@ -26,7 +26,6 @@ rule two_read_bam_combiner:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
-        mkdir -p results/arima_mapping_pipeline_{wildcards.hap}/TMP_DIR
         samtools faidx {input.REF}
         perl scripts/two_read_bam_combiner.pl {input.bam1_filt} {input.bam2_filt} samtools {params.MAPQ_FILTER} | samtools view -bS -t {input.REF}.fai - | samtools sort -@ {threads} -o {output.tmp_bam} - 
         """
