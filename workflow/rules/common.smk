@@ -40,6 +40,10 @@ def get_all_inputs(wc=None):
             "results/yahs_{hap}/asm_yahs_{sample}_scaffolds_final.fa", sample=samples, hap=hap
         ))  # final scaffolded assembly
 
+    # If not in diploid mode, add asm.alternate.fa as an input
+    if not diploid_mode:
+        inputs.append("results/purge_dups_alt/asm.alternate_purged.fa")
+
     return inputs
 
 
