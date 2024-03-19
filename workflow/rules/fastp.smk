@@ -21,8 +21,6 @@ rule fastp:
         json="results/fastp/{sample}_report_fastp.HiC.json",
         html="results/fastp/{sample}_report_fastp.HiC.html",
     params:
-        cut_window_size=config["fastp"]["cut_window_size"],
-        cut_mean_quality=config["fastp"]["cut_mean_quality"],
         optional_params=" ".join(
             f"{k} {v}" for k, v in config["fastp"]["optional_params"].items() if v
         ),
@@ -35,5 +33,5 @@ rule fastp:
         "../envs/fastp.yaml"
     shell:
         """
-        fastp -p -i {input.forward_in} -I {input.reverse_in} -o {output.forward_out} -O {output.reverse_out} --cut_window_size {params.cut_window_size} --cut_mean_quality {params.cut_mean_quality} --json {output.json} --html {output.html} --thread {threads} {params.optional_params} >> {log} 2>&1
+        fastp -p -i {input.forward_in} -I {input.reverse_in} -o {output.forward_out} -O {output.reverse_out} --json {output.json} --html {output.html} --thread {threads} {params.optional_params} >> {log} 2>&1
         """
