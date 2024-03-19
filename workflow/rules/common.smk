@@ -24,8 +24,17 @@ def get_all_inputs(wc=None):
         "results/nanoplot/NanoPlot-report.html",  # nanoplot report
         "results/kmc/out.hist",  # output of kmc rule
         "results/genomescope",  # output directory of genomescope
-        "results/oatk/oatk.asm.mito.ctg.fasta",  # mitochondrion fasta from oatk
     ]
+
+    # Get the OATK outputs
+    oatk_outputs = get_oatk_outputs()
+
+    # If the OATK outputs is a string, convert it to a list
+    if isinstance(oatk_outputs, str):
+        oatk_outputs = [oatk_outputs]
+
+    # Extend the list of inputs with the OATK outputs
+    inputs.extend(oatk_outputs)
 
     inputs.extend(expand(
             "results/yahs_{hap}/asm_yahs_{sample}_scaffolds_final.fa", sample=samples, hap=hap
