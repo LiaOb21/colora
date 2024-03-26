@@ -79,7 +79,7 @@ fcsgx:
   path_to_gx_db: "resources/gx_test_db/test-only"
 
 # Set this to False if you want to skip purge_dups steps:
-include_purge_dups: True
+include_purge_dups: False
 
 # Customisable parameters for purge_dups
 purge_dups:
@@ -97,3 +97,19 @@ yahs:
 #  o: "hifiasm_p_purged_yahs" # output prefix #use of this needs evaluation
   optional_params: 
     "-e": "GATC" # you can specify the restriction enzyme(s) used by the Hi-C experiment
+
+# Customisable parameters for quast
+quast:
+  t: 4 # number of threads
+  mem_mb: 1000 # memory in MB
+  optional_params: 
+    "--fragmented": ""
+    "--large": ""
+#    "-r": "resources/reference_genomes/yeast/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa"
+#    "-g": "resources/reference_genomes/yeast/Saccharomyces_cerevisiae.R64-1-1.101.gff3"
+
+# Customisable parameters for busco
+busco:
+  t: 4 # number of threads
+  mem_mb: 1000 # memory in MB
+  lineage: "resources/saccharomycetes_odb10" # lineage to be used for busco analysis
