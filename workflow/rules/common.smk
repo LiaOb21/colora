@@ -8,9 +8,9 @@ wildcard_constraints:
 
 def get_all_inputs(wc=None):
     if diploid_mode: 
-        hap= ["hap1", "hap2"]
+        hap = ["hap1", "hap2"]
     else:
-        hap = ["primary"]
+        hap = ["primary"]    
     if not samples:
         # Show the user a meaningful error message
         logger.error(f"No files matching {samples_in_pattern} were found in"
@@ -24,6 +24,7 @@ def get_all_inputs(wc=None):
         "results/nanoplot/NanoPlot-report.html",  # nanoplot report
         "results/kmc/out.hist",  # output of kmc rule
         "results/genomescope",  # output directory of genomescope
+        "results/quast/report.html"
     ]
 
     # Get the OATK outputs
@@ -43,6 +44,11 @@ def get_all_inputs(wc=None):
     # If not in diploid mode, add asm.alternate.fa as an input
     if not diploid_mode:
         inputs.append("results/purge_dups_alt/asm.alternate_purged.fa")
+
+    # Extend list of inputs with busco directories
+    inputs.extend(expand(
+        "results/busco/{file}.fa_busco", file=assembly_files
+    ))
 
     return inputs
 
@@ -75,10 +81,17 @@ def get_purge_dups_inputs():
 def get_bwa_index_inputs(wildcards):
     hap = wildcards.hap
     if config["include_purge_dups"] == True:
-        return "results/purge_dups/asm.{hap}_purged.fa"
+        return f"results/purge_dups/asm.{hap}_purged.fa"
     elif config["include_fcsgx"] == True:
         return f"results/ncbi_fcsgx_{hap}/asm_clean.fa"
     else:
         return f"results/hifiasm/asm.{hap}.fa"
 
-
+def get_yahs_output():
+    if diploid_mode:
+        return [
+            expand("results/yahs_hap1/asm_yahs_{sample}_scaffolds_final.fa", sample=samples),
+            expand("results/yahs_hap2/asm_yahs_{sample}_scaffolds_final.fa", sample=samples)
+        ]
+    else:
+        return expand("results/yahs_primary/asm_yahs_{sample}_scaffolds_final.fa", sample=samples)

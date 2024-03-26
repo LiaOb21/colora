@@ -1,14 +1,10 @@
 # This rule uses purge_dups purge haplotigs and overlaps from the primary assembly produced by hifiasm
 
-
-# include common.smk to use get_purge_dups_inputs
-include: "common.smk"
-
-
 rule purge_dups:
     input:
-        reads="results/reads/hifi/hifi.fastq.gz",
-        fasta=get_purge_dups_inputs(),
+        reads = "results/reads/hifi/hifi.fastq.gz",
+        fasta = get_purge_dups_inputs(),
+        asm_dir = "results/assemblies"
     output:
         paf="results/purge_dups/hifi_vs_primary_contigs.paf.gz",
         calcuts_log="results/purge_dups/calcuts.log",
@@ -23,6 +19,7 @@ rule purge_dups:
         hap_fa="results/purge_dups/hap.fa",
         purged_fasta="results/purge_dups/asm.primary_purged.fa",
         hist_plot="results/purge_dups/hist.out.png",
+        link="results/assemblies/purged_primary.fa"
     threads: config["minimap2"]["t"]
     log:
         "logs/purge_dups.log",
@@ -55,4 +52,6 @@ rule purge_dups:
         mv hap.fa {output.hap_fa}
         mv purged.fa {output.purged_fasta}
         mv hist.out.png {output.hist_plot}
+
+        ln -srn {output.purged_fasta} {output.link}
         """

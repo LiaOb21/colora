@@ -3,10 +3,6 @@
 # For more info: https://github.com/ArimaGenomics/mapping_pipeline
 # colora doesn't contain the codes to handle technical and biological replicates of hic reads, refer to the original pipeline for that
 
-
-# include common.smk to use wildcards
-include: "common.smk"
-
 rule bwa_index:
     input:
         get_bwa_index_inputs

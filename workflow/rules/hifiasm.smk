@@ -4,12 +4,16 @@
 
 rule hifiasm:
     input:
-        "results/reads/hifi/hifi.fastq.gz",
+        reads = "results/reads/hifi/hifi.fastq.gz",
+        asm_dir = "results/assemblies"
     output:
         gfa="results/hifiasm/asm.primary.gfa",
         gfa_alt="results/hifiasm/asm.alternate.gfa",
         fasta="results/hifiasm/asm.primary.fa",
         fasta_alt="results/hifiasm/asm.alternate.fa",
+        asm_dir = directory("results/assemblies"),
+        link_primary = "results/assemblies/asm.primary.fa",
+        link_alternate = "results/assemblies/asm.alternate.fa"
     threads: config["hifiasm"]["t"]
     log:
         "logs/hifiasm.log",
@@ -23,22 +27,30 @@ rule hifiasm:
         ),
     shell:
         """
-        hifiasm {input} -t {threads} -o results/hifiasm/asm --primary {params.optional_params} >> {log} 2>&1
+        hifiasm {input.reads} -t {threads} -o results/hifiasm/asm --primary {params.optional_params} >> {log} 2>&1
         mv results/hifiasm/asm.p_ctg.gfa {output.gfa}
         mv results/hifiasm/asm.a_ctg.gfa {output.gfa_alt}       
         awk -f scripts/gfa_to_fasta.awk < {output.gfa} > {output.fasta}
         awk -f scripts/gfa_to_fasta.awk < {output.gfa_alt} > {output.fasta_alt}
+
+        # all the assemblies produced by the workflow will be symlinked to results/assemblies
+
+        ln -srn {output.fasta} {output.link_primary}
+        ln -srn {output.fasta_alt} {output.link_alternate}
         """
 
 
 rule hifiasm_het:
     input:
-        "results/reads/hifi/hifi.fastq.gz",
+        reads = "results/reads/hifi/hifi.fastq.gz",
     output:
-        gfa="results/hifiasm/asm.hap1.gfa",
-        gfa_alt="results/hifiasm/asm.hap2.gfa",
-        fasta="results/hifiasm/asm.hap1.fa",
-        fasta_alt="results/hifiasm/asm.hap2.fa",
+        gfa_hap1="results/hifiasm/asm.hap1.gfa",
+        gfa_hap2="results/hifiasm/asm.hap2.gfa",
+        fasta_hap1="results/hifiasm/asm.hap1.fa",
+        fasta_hap2="results/hifiasm/asm.hap2.fa",
+        asm_dir = directory("results/assemblies"),
+        link_hap1 = "results/assemblies/asm.hap1.fa",
+        link_hap2 = "results/assemblies/asm.hap2.fa"
     threads: config["hifiasm"]["t"]
     log:
         "logs/hifiasm.log",
@@ -52,9 +64,14 @@ rule hifiasm_het:
         ),
     shell:
         """
-        hifiasm {input} -t {threads} -o results/hifiasm/asm {params.optional_params} >> {log} 2>&1
-        mv results/hifiasm/asm.hic.hap1.p_ctg.gfa {output.gfa}
-        mv results/hifiasm/asm.hic.hap2.p_ctg.gfa {output.gfa_alt}
-        awk -f scripts/gfa_to_fasta.awk < {output.gfa} > {output.fasta}
-        awk -f scripts/gfa_to_fasta.awk < {output.gfa_alt} > {output.fasta_alt}
+        hifiasm {input.reads} -t {threads} -o results/hifiasm/asm {params.optional_params} >> {log} 2>&1
+        mv results/hifiasm/asm.hic.hap1.p_ctg.gfa {output.gfa_hap1}
+        mv results/hifiasm/asm.hic.hap2.p_ctg.gfa {output.gfa_hap2}
+        awk -f scripts/gfa_to_fasta.awk < {output.gfa_hap1} > {output.fasta_hap1}
+        awk -f scripts/gfa_to_fasta.awk < {output.gfa_hap2} > {output.fasta_hap2}
+
+        # all the assemblies produced by the workflow will be symlinked to results/assemblies
+
+        ln -srn {output.fasta_hap1} {output.link_hap1}
+        ln -srn {output.fasta_hap2} {output.link_hap2}       
         """

@@ -6,6 +6,7 @@ rule purge_dups_alt:
         reads="results/reads/hifi/hifi.fastq.gz",
         fasta="results/hifiasm/asm.alternate.fa",
         hap_fa_in="results/purge_dups/hap.fa",
+        asm_dir = "results/assemblies"
     output:
         merged_fasta="results/purge_dups_alt/merged.fa",
         paf="results/purge_dups_alt/hifi_vs_alternate_contigs.paf.gz",
@@ -21,6 +22,7 @@ rule purge_dups_alt:
         hap_fa="results/purge_dups_alt/hap.fa",
         purged_fasta="results/purge_dups_alt/asm.alternate_purged.fa",
         hist_plot="results/purge_dups_alt/hist.out.png",
+        link="results/assemblies/purged_alternate.fa"
     threads: config["minimap2"]["t"]
     log:
         "logs/purge_dups_alt.log",
@@ -55,4 +57,6 @@ rule purge_dups_alt:
         mv hap.fa {output.hap_fa}
         mv purged.fa {output.purged_fasta}
         mv hist.out.png {output.hist_plot}
+
+        ln -srn {output.purged_fasta} {output.link}
         """
