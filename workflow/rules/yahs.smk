@@ -2,11 +2,6 @@
 
 import glob
 
-
-# include common.smk to use get_bwa_index_inputs
-include: "common.smk"
-
-
 rule yahs:
     input:
         REF="results/bwa_index_{hap}/asm.fa",

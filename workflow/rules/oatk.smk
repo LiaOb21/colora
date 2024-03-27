@@ -1,9 +1,5 @@
 # This rule runs oatk to extract organelles reads from the hifi reads.
 
-# include common.smk to use get_oatk_outputs function
-# get_oatk_outputs is used to dynamically decide the outputs of oatk
-include: "common.smk"
-
 
 rule oatk:
     input:

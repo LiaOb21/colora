@@ -1,10 +1,5 @@
 # This rule uses purge_dups purge haplotigs and overlaps from the primary assembly produced by hifiasm
 
-
-# include common.smk to use get_purge_dups_inputs
-include: "common.smk"
-
-
 rule purge_dups:
     input:
         reads="results/reads/hifi/hifi.fastq.gz",
