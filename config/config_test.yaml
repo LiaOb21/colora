@@ -66,11 +66,11 @@ hifiasm:
     "-f": "0" # used for small datasets
     "-l": "" # purge level. 0: no purging; 1: light; 2/3: aggressive [0 for trio; 3 for unzip]
     "--ul": "" # use this if you have also ont data you want to integrate in your assembly
-    "--h1": "resources/raw_hic/sorted_hic_test_YBP2_SRR27548905_PRJNA1013711_1.fastq.gz" # here you must set the path to your raw Hi-C_1 data if you want to produce a phased assembly
-    "--h2": "resources/raw_hic/sorted_hic_test_YBP2_SRR27548905_PRJNA1013711_1.fastq.gz" # here you must set the path to your raw Hi-C_2 data if you want to produce a phased assembly
+#    "--h1": "resources/raw_hic/sorted_hic_test_YBP2_SRR27548905_PRJNA1013711_1.fastq.gz" # here you must set the path to your raw Hi-C_1 data if you want to produce a phased assembly
+#    "--h2": "resources/raw_hic/sorted_hic_test_YBP2_SRR27548905_PRJNA1013711_1.fastq.gz" # here you must set the path to your raw Hi-C_2 data if you want to produce a phased assembly
 
 #Set this to False if you want to skip the fcsgx step:
-include_fcsgx: True #inlcude this rule only if you have preiously downloaded the database (recommended to run fcsgx only on a HPC. It requires around 500 GB of space on your disk and a large RAM)
+include_fcsgx: False #inlcude this rule only if you have preiously downloaded the database (recommended to run fcsgx only on a HPC. It requires around 500 GB of space on your disk and a large RAM)
 
 # Customisable parameters for fcsgx
 fcsgx:

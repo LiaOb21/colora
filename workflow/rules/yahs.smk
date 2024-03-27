@@ -6,7 +6,6 @@ rule yahs:
     input:
         REF="results/bwa_index_{hap}/asm.fa",
         bam="results/arima_mapping_pipeline_{hap}/REP_DIR/{sample}_rep1.bam",
-        asm_dir = "results/assemblies"
     output:
         scaffolds="results/yahs_{hap}/asm_yahs_{sample}_scaffolds_final.fa",
         link="results/assemblies/yahs_{hap}_{sample}.fa",

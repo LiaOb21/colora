@@ -4,7 +4,6 @@
 rule fcsgx:
     input:
         fasta = "results/hifiasm/asm.{hap}.fa",
-        asm_dir ="results/assemblies"
     params:
         ncbi_tax_id=config["fcsgx"]["ncbi_tax_id"],
         path_to_gx_db=config["fcsgx"]["path_to_gx_db"], 

@@ -2,7 +2,7 @@
 
 rule quast:
     input:
-        completion = "results/yahs_all_done.txt",
+        completion = checkpoints.yahs_completed.get().completion_marker,
         assemblies = expand("results/assemblies/{file}.fa", file=assembly_files)
     output:
         "results/quast/report.html",

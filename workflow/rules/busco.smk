@@ -2,7 +2,7 @@
 
 rule busco:
     input:
-        completion = "results/yahs_all_done.txt",
+        completion = checkpoints.yahs_completed.get().completion_marker,
         assemblies = "results/assemblies/{file}.fa"
     output:
         dir = directory("results/busco/{file}.fa_busco"),
@@ -10,7 +10,7 @@ rule busco:
         lineage=config["busco"]["lineage"],
     threads: config["busco"]["t"]
     log:
-        "logs/busco{file}.log"
+        "logs/busco_{file}.log"
     resources:
         mem_mb=config['busco']['mem_mb'],  # access memory from config
     conda:
@@ -18,5 +18,6 @@ rule busco:
     shell:
         """
         # run busco on each assembly
-		busco -i {input.assemblies} -o {output.dir} -m genome -l {params.lineage} -f -c {threads}
+        #assembly_name=$(basename {input.assemblies})
+		busco -i {input.assemblies} -o {output.dir}/{wildcards.file}_busco -m genome -l {params.lineage} -f -c {threads}
         """

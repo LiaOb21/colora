@@ -5,13 +5,11 @@
 rule hifiasm:
     input:
         reads = "results/reads/hifi/hifi.fastq.gz",
-        asm_dir = "results/assemblies"
     output:
         gfa="results/hifiasm/asm.primary.gfa",
         gfa_alt="results/hifiasm/asm.alternate.gfa",
         fasta="results/hifiasm/asm.primary.fa",
         fasta_alt="results/hifiasm/asm.alternate.fa",
-        asm_dir = directory("results/assemblies"),
         link_primary = "results/assemblies/asm.primary.fa",
         link_alternate = "results/assemblies/asm.alternate.fa"
     threads: config["hifiasm"]["t"]
@@ -48,7 +46,6 @@ rule hifiasm_het:
         gfa_hap2="results/hifiasm/asm.hap2.gfa",
         fasta_hap1="results/hifiasm/asm.hap1.fa",
         fasta_hap2="results/hifiasm/asm.hap2.fa",
-        asm_dir = directory("results/assemblies"),
         link_hap1 = "results/assemblies/asm.hap1.fa",
         link_hap2 = "results/assemblies/asm.hap2.fa"
     threads: config["hifiasm"]["t"]
