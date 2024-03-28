@@ -6,13 +6,13 @@
 
 rule fiter_five_end:
     input:
-        bam1="results/arima_mapping_pipeline_{hap}/RAW_DIR/{sample}_1.bam",
-        bam2="results/arima_mapping_pipeline_{hap}/RAW_DIR/{sample}_2.bam",
+        bam1="results/arima_mapping_pipeline_{hap}/RAW_DIR/hic_vs_contigs_1.bam",
+        bam2="results/arima_mapping_pipeline_{hap}/RAW_DIR/hic_vs_contigs_2.bam",
     output:
-        bam1_filt="results/arima_mapping_pipeline_{hap}/FILT_DIR/{sample}_1.bam",
-        bam2_filt="results/arima_mapping_pipeline_{hap}/FILT_DIR/{sample}_2.bam",
+        bam1_filt="results/arima_mapping_pipeline_{hap}/FILT_DIR/hic_vs_contigs_filt_1.bam",
+        bam2_filt="results/arima_mapping_pipeline_{hap}/FILT_DIR/hic_vs_contigs_filt_2.bam",
     log:
-        "logs/fiter_five_end_{hap}_{sample}.log",
+        "logs/fiter_five_end_{hap}.log",
     resources:
         mem_mb=config['arima']['mem_mb'],  # access memory from config    
     conda:

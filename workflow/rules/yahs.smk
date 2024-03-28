@@ -5,12 +5,12 @@ import glob
 rule yahs:
     input:
         REF="results/bwa_index_{hap}/asm.fa",
-        bam="results/arima_mapping_pipeline_{hap}/REP_DIR/{sample}_rep1.bam",
+        bam="results/arima_mapping_pipeline_{hap}/REP_DIR/paired_mark_dups_final.bam",
     output:
-        scaffolds="results/yahs_{hap}/asm_yahs_{sample}_scaffolds_final.fa",
-        link="results/assemblies/yahs_{hap}_{sample}.fa",
+        scaffolds="results/yahs_{hap}/asm_yahs_scaffolds_final.fa",
+        link="results/assemblies/yahs_{hap}.fa"
     log:
-        "logs/yahs_{hap}_{sample}.log",
+        "logs/yahs_{hap}.log",
     resources:
         mem_mb=config['arima']['mem_mb'],  # access memory from config
     conda:
@@ -21,6 +21,6 @@ rule yahs:
         ),
     shell:
         """ 
-        yahs {input.REF} {input.bam} -o results/yahs_{wildcards.hap}/asm_yahs_{wildcards.sample} {params.optional_params} >> {log} 2>&1
+        yahs {input.REF} {input.bam} -o results/yahs_{wildcards.hap}/asm_yahs {params.optional_params} >> {log} 2>&1
         ln -srn {output.scaffolds} {output.link}
         """

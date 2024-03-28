@@ -8,13 +8,11 @@ configfile: "config/config.yaml"
 
 # set {samples} global variable - used to read Hi-C files
 samples_in_pattern = "{sample}_1.fastq.gz"
-samples = glob_wildcards(config["hic_path"] + samples_in_pattern).sample
+sample, = glob_wildcards(config["hic_path"] + samples_in_pattern).sample
 
 # set {diploid_mode} global variable - used to run hifiasm_het rather than hifiasm
 diploid_mode=config["hifiasm"]["optional_params"]["--h1"] and config["hifiasm"]["optional_params"]["--h2"]
 
-# set {file} in the assemblies directory as global variable
-# assembly_files = glob_wildcards("results/assemblies/{file}.fa")
 
 # Include the common rule, where the inputs for rule_all are defined
 include: "rules/common.smk"
@@ -50,12 +48,10 @@ include: "rules/two_read_bam_combiner.smk"
 include: "rules/picard.smk"
 # Include the yahs rule
 include: "rules/yahs.smk"
-# include yahs checkpoint - to start the QC after yahs is done
-#include: "rules/yahs_completed.smk"
 # Include the quast rule
-#include: "rules/quast.smk"
+include: "rules/quast.smk"
 # Include the busco rule
-#include: "rules/busco.smk"
+include: "rules/busco.smk"
 
 # Define the rule all, which is the default rule that Snakemake runs when no specific rule or target is specified
 # input files are defined in the common.smk file

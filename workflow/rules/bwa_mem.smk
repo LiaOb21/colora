@@ -8,14 +8,14 @@
 rule bwa_mem:
     input:
         REF="results/bwa_index_{hap}/asm.fa",
-        forward_hic="results/fastp/{sample}_trim_1.fastq.gz",
-        reverse_hic="results/fastp/{sample}_trim_2.fastq.gz",
+        forward_hic="results/fastp/hic_trim_1.fastq.gz",
+        reverse_hic="results/fastp/hic_trim_2.fastq.gz",
     output:
-        bam1="results/arima_mapping_pipeline_{hap}/RAW_DIR/{sample}_1.bam",
-        bam2="results/arima_mapping_pipeline_{hap}/RAW_DIR/{sample}_2.bam",
+        bam1="results/arima_mapping_pipeline_{hap}/RAW_DIR/hic_vs_contigs_1.bam",
+        bam2="results/arima_mapping_pipeline_{hap}/RAW_DIR/hic_vs_contigs_2.bam",
     threads: config["arima"]["CPU"]
     log:
-        "logs/bwa_mem_{hap}_{sample}.log",
+        "logs/bwa_mem_{hap}.log",
     resources:
         mem_mb=config['arima']['mem_mb'],  # access memory from config    
     conda:

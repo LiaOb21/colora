@@ -1,12 +1,12 @@
 # add a checkpoint to run the QC after all the assemblies have been symlinked to results/assemblies
 
-checkpoint symlinks:
+checkpoint yahs_done:
     input:
-        expand("results/assemblies/yahs_{hap}_{sample}.fa", sample=samples, hap=hap)
+        get_yahs_output()
     output:
-        completion_marker = "results/yahs_all_done.txt"
+        completion_marker = "results/yahs_completed.txt"
     log:
-        "logs/all_yahs_completed.log",
+        "logs/yahs_completed.log",
     conda:
         "../envs/basic.yaml"
     shell:

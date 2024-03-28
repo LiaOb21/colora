@@ -5,28 +5,20 @@ import glob
 
 rule fastp:
     input:
-        forward_in=expand(
-            "{hic_path}{sample}_1.fastq.gz",
-            hic_path=config["hic_path"],
-            sample=glob_wildcards(config["hic_path"] + "{sample}_1.fastq.gz").sample,
-        ),
-        reverse_in=expand(
-            "{hic_path}{sample}_2.fastq.gz",
-            hic_path=config["hic_path"],
-            sample=glob_wildcards(config["hic_path"] + "{sample}_2.fastq.gz").sample,
-        ),
+        forward_in=f"{config["hic_path"]}{sample}_1.fastq.gz",
+        reverse_in=f"{config["hic_path"]}{sample}_2.fastq.gz",
     output:
-        forward_out="results/fastp/{sample}_trim_1.fastq.gz",
-        reverse_out="results/fastp/{sample}_trim_2.fastq.gz",
-        json="results/fastp/{sample}_report_fastp.HiC.json",
-        html="results/fastp/{sample}_report_fastp.HiC.html",
+        forward_out="results/fastp/hic_trim_1.fastq.gz",
+        reverse_out="results/fastp/hic_trim_2.fastq.gz",
+        json="results/fastp/hic_report_fastp.HiC.json",
+        html="results/fastp/hic_report_fastp.HiC.html",
     params:
         optional_params=" ".join(
             f"{k} {v}" for k, v in config["fastp"]["optional_params"].items() if v
         ),
     threads: config["fastp"]["t"]
     log:
-        "logs/{sample}_fastp.log",
+        "logs/fastp.log",
     resources:
         mem_mb=config['fastp']['mem_mb'],  # access memory from config
     conda:

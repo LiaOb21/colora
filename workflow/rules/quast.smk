@@ -2,10 +2,9 @@
 
 rule quast:
     input:
-        completion = checkpoints.yahs_completed.get().completion_marker,
-        assemblies = expand("results/assemblies/{file}.fa", file=assembly_files)
+        unpack(get_assemblies_QC)
     output:
-        "results/quast/report.html",
+        directory("results/quast"),
     threads: config["quast"]["t"]
     log:
         "logs/quast.log",
@@ -17,7 +16,8 @@ rule quast:
         optional_params=" ".join(
             f"{k} {v}" for k, v in config["quast"]["optional_params"].items() if v
         ),
+        labels = ",".join(get_assemblies_QC().keys())
     shell:
-        """ 
-        quast {input.assemblies} -o results/quast  -t {threads} {params.optional_params}
+        """
+        quast {input} -l {params.labels} -o {output}  -t {threads} {params.optional_params} >> {log} 2>&1
         """

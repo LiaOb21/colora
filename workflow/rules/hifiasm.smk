@@ -10,8 +10,7 @@ rule hifiasm:
         gfa_alt="results/hifiasm/asm.alternate.gfa",
         fasta="results/hifiasm/asm.primary.fa",
         fasta_alt="results/hifiasm/asm.alternate.fa",
-        link_primary = "results/assemblies/asm.primary.fa",
-        link_alternate = "results/assemblies/asm.alternate.fa"
+        link_primary = "results/assemblies/asm_primary.fa",
     threads: config["hifiasm"]["t"]
     log:
         "logs/hifiasm.log",
@@ -34,7 +33,6 @@ rule hifiasm:
         # all the assemblies produced by the workflow will be symlinked to results/assemblies
 
         ln -srn {output.fasta} {output.link_primary}
-        ln -srn {output.fasta_alt} {output.link_alternate}
         """
 
 
@@ -46,8 +44,8 @@ rule hifiasm_het:
         gfa_hap2="results/hifiasm/asm.hap2.gfa",
         fasta_hap1="results/hifiasm/asm.hap1.fa",
         fasta_hap2="results/hifiasm/asm.hap2.fa",
-        link_hap1 = "results/assemblies/asm.hap1.fa",
-        link_hap2 = "results/assemblies/asm.hap2.fa"
+        link_hap1 = "results/assemblies/asm_hap1.fa",
+        link_hap2 = "results/assemblies/asm_hap2.fa"
     threads: config["hifiasm"]["t"]
     log:
         "logs/hifiasm.log",
