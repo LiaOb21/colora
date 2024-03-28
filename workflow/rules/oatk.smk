@@ -1,5 +1,5 @@
 # This rule runs oatk to extract organelles reads from the hifi reads.
-
+# get_oatk_outputs is used to dynamically decide the outputs of oatk
 
 rule oatk:
     input:

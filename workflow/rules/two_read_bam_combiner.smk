@@ -7,16 +7,16 @@
 
 rule two_read_bam_combiner:
     input:
-        bam1_filt="results/arima_mapping_pipeline_{hap}/FILT_DIR/{sample}_1.bam",
-        bam2_filt="results/arima_mapping_pipeline_{hap}/FILT_DIR/{sample}_2.bam",
+        bam1_filt="results/arima_mapping_pipeline_{hap}/FILT_DIR/hic_vs_contigs_filt_1.bam",
+        bam2_filt="results/arima_mapping_pipeline_{hap}/FILT_DIR/hic_vs_contigs_filt_2.bam",
         REF="results/bwa_index_{hap}/asm.fa",
     output:
-        tmp_bam="results/arima_mapping_pipeline_{hap}/TMP_DIR/{sample}.bam",
+        tmp_bam="results/arima_mapping_pipeline_{hap}/TMP_DIR/hic_vs_contigs_filt_paired.bam",
     threads: config["arima"]["CPU"]
     params:
         MAPQ_FILTER=config["arima"]["MAPQ_FILTER"],
     log:
-        "logs/two_read_bam_combiner_{hap}_{sample}.log",
+        "logs/two_read_bam_combiner_{hap}.log",
     resources:
         mem_mb=config['arima']['mem_mb'],  # access memory from config
     conda:

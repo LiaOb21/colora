@@ -4,14 +4,14 @@
 import os
 
 wildcard_constraints:
-    hap = "primary|hap1|hap2"
+    hap = "primary|hap1|hap2",
 
 def get_all_inputs(wc=None):
     if diploid_mode: 
-        hap= ["hap1", "hap2"]
+        hap = ["hap1", "hap2"]
     else:
-        hap = ["primary"]
-    if not samples:
+        hap = ["primary"]      
+    if not sample:
         # Show the user a meaningful error message
         logger.error(f"No files matching {samples_in_pattern} were found in"
                      f" {config.get('hic_path')}. Please check your config file.")
@@ -24,6 +24,8 @@ def get_all_inputs(wc=None):
         "results/nanoplot/NanoPlot-report.html",  # nanoplot report
         "results/kmc/out.hist",  # output of kmc rule
         "results/genomescope",  # output directory of genomescope
+        "results/quast", # output directory of quast
+        "results/busco", # output directory of busco
     ]
 
     # Get the OATK outputs
@@ -37,12 +39,14 @@ def get_all_inputs(wc=None):
     inputs.extend(oatk_outputs)
 
     inputs.extend(expand(
-            "results/yahs_{hap}/asm_yahs_{sample}_scaffolds_final.fa", sample=samples, hap=hap
+            "results/yahs_{hap}/asm_yahs_scaffolds_final.fa", hap=hap
         ))  # final scaffolded assembly
 
     # If not in diploid mode, add asm.alternate.fa as an input
     if not diploid_mode and config["include_purge_dups"] == True:
         inputs.append("results/purge_dups_alt/asm.alternate_purged.fa")
+
+#    inputs.extend(expand("results/busco/{tool}_{hap}_busco", tool=tool, hap=hap))
 
     return inputs
 
@@ -82,3 +86,17 @@ def get_bwa_index_inputs(wildcards):
         return f"results/hifiasm/asm.{hap}.fa"
 
 
+def get_assemblies_QC(wildcards=None):
+    if diploid_mode: 
+        haps = ["hap1", "hap2"]
+    else:
+        haps = ["primary"]
+    results = {}
+    for hap in haps:
+        results[f"asm_{hap}"] = f"results/assemblies/asm_{hap}.fa"
+        results[f"yahs_{hap}"] = f"results/assemblies/yahs_{hap}.fa"
+        if config["include_purge_dups"]:
+            results[f"purged_{hap}"] = f"results/assemblies/purged_{hap}.fa"  
+        if config["include_fcsgx"]:
+            results[f"fcsgx_{hap}"] = f"results/assemblies/fcsgx_{hap}.fa"
+    return results
