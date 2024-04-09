@@ -11,8 +11,10 @@ samples_in_pattern = "{sample}_1.fastq.gz"
 sample, = glob_wildcards(config["hic_path"] + samples_in_pattern).sample
 
 # set {diploid_mode} global variable - used to run hifiasm_het rather than hifiasm
-diploid_mode=config["hifiasm"]["optional_params"]["--h1"] and config["hifiasm"]["optional_params"]["--h2"]
+diploid_mode=config["hifiasm"]["phased_assembly"] == True
 
+# set {pltd} global variable - used to run oatk_pltd rather than oatk
+pltd=config["oatk"]["optional_params"]["-p"]
 
 # Include the common rule, where the inputs for rule_all are defined
 include: "rules/common.smk"
@@ -52,6 +54,8 @@ include: "rules/yahs.smk"
 include: "rules/quast.smk"
 # Include the busco rule
 include: "rules/busco.smk"
+# Include bandage rule
+include: "rules/bandage.smk"
 
 # Define the rule all, which is the default rule that Snakemake runs when no specific rule or target is specified
 # input files are defined in the common.smk file
