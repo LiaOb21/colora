@@ -20,13 +20,6 @@ nanoplot:
 fastp:
   t: 20 # number of threads
   mem_mb: 512000 # memory in MB
-  cut_window_size: 4
-  cut_mean_quality: 20
-  optional_params: 
-    "--detect_adapter_for_pe": "true"
-    "--cut_front": "true"
-    "--cut_tail": "true"
-    "-p": "false"
 
 # Customisable parameters for kmc
 kmc:
@@ -60,17 +53,16 @@ minimap2:
 
 # Customisable parameters for hifiasm
 hifiasm:
+  phased_assembly: False # set to true if you want to obtain a phased assembly
   t: 50  # number of threads
   mem_mb: 512000 # memory in MB
   optional_params: 
     "-f": "" # used for small datasets
     "-l": "" # purge level. 0: no purging; 1: light; 2/3: aggressive [0 for trio; 3 for unzip]
     "--ul": "" # use this if you have also ont data yu want to integrate in your assembly
-    "--h1": "" # use this if you want to obtain a phased assembly combining long reads and Hi-C data
-    "--h2": "" # use this if you want to obtain a phased assembly combining long reads and Hi-C data
 
 #Set this to False if you want to skip the fcsgx step:
-include_fcsgx: True #inlcude this rule only if you have preiously downloaded the database (recommended to run fcsgx only on a HPC. It requires around 500 GB of space on your disk and a large RAM)
+include_fcsgx: False #inlcude this rule only if you have preiously downloaded the database (recommended to run fcsgx only on a HPC. It requires around 500 GB of space on your disk and a large RAM)
 
 # Customisable parameters for fcsgx
 fcsgx:
