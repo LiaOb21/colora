@@ -39,6 +39,8 @@ rule hifiasm:
 rule hifiasm_het:
     input:
         reads = "results/reads/hifi/hifi.fastq.gz",
+        hic_forward = "results/fastp/hic_trim_1.fastq.gz",
+        hic_reverse = "results/fastp/hic_trim_2.fastq.gz"
     output:
         gfa_hap1="results/hifiasm/asm.hap1.gfa",
         gfa_hap2="results/hifiasm/asm.hap2.gfa",
@@ -59,7 +61,7 @@ rule hifiasm_het:
         ),
     shell:
         """
-        hifiasm {input.reads} -t {threads} -o results/hifiasm/asm {params.optional_params} >> {log} 2>&1
+        hifiasm {input.reads} -t {threads} -o results/hifiasm/asm --h1 {input.hic_forward} --h2 {input.hic_reverse} {params.optional_params} >> {log} 2>&1
         mv results/hifiasm/asm.hic.hap1.p_ctg.gfa {output.gfa_hap1}
         mv results/hifiasm/asm.hic.hap2.p_ctg.gfa {output.gfa_hap2}
         awk -f scripts/gfa_to_fasta.awk < {output.gfa_hap1} > {output.fasta_hap1}
