@@ -18,7 +18,7 @@ def get_all_inputs(wc=None):
         logger.error(f"Exiting.")
         sys.exit(1)
     if diploid_mode and config["include_purge_dups"] == True:
-        raise ValueError("--h1 and --h2 are set in the hifiasm rule and this means that you want to obtain a phased assembly. In this case you must skip purge_dups, so please set `include_purge_dups: False` in your config.yaml.")
+        raise ValueError("You want to obtain a phased assembly because you set `phased_assembly = True` in the config file. In this case you must skip purge_dups, so please set `include_purge_dups: False` in your config.yaml.")
 
     inputs = [
         "results/nanoplot/NanoPlot-report.html",  # nanoplot report
@@ -28,16 +28,6 @@ def get_all_inputs(wc=None):
         "results/busco", # output directory of busco
     ]
 
-    # Get the OATK outputs
-    oatk_outputs = get_oatk_outputs()
-
-    # If the OATK outputs is a string, convert it to a list
-    if isinstance(oatk_outputs, str):
-        oatk_outputs = [oatk_outputs]
-
-    # Extend the list of inputs with the OATK outputs
-    inputs.extend(oatk_outputs)
-
     inputs.extend(expand(
             "results/yahs_{hap}/asm_yahs_scaffolds_final.fa", hap=hap
         ))  # final scaffolded assembly
@@ -46,20 +36,15 @@ def get_all_inputs(wc=None):
     if not diploid_mode and config["include_purge_dups"] == True:
         inputs.append("results/purge_dups_alt/asm.alternate_purged.fa")
 
-#    inputs.extend(expand("results/busco/{tool}_{hap}_busco", tool=tool, hap=hap))
+    if pltd:
+        inputs.append("results/bandage_pltd/pltd.jpg")
+        inputs.append("results/bandage_pltd/mito.jpg")
+
+    if not pltd:
+        inputs.append("results/bandage/mito.jpg")
 
     return inputs
 
-
-# create a function to read the outputs of oatk rule dynamically (if the plastid database is provided or not)
-def get_oatk_outputs():
-    if config["oatk"]["optional_params"]["-p"]:
-        return [
-            "results/oatk/oatk.asm.mito.ctg.fasta",
-            "results/oatk/oatk.asm.pltd.ctg.fasta",
-        ]
-    else:
-        return "results/oatk/oatk.asm.mito.ctg.fasta"
 
 # create a function to read the inputs of purge_dups rule dynamically
 def get_purge_dups_inputs():
