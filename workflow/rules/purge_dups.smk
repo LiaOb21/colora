@@ -17,11 +17,11 @@ rule purge_dups:
         purged_fasta="results/purge_dups/asm.primary_purged.fa",
         hist_plot="results/purge_dups/hist.out.png",
         link = "results/assemblies/purged_primary.fa",
-    threads: config["minimap2"]["t"]
+    threads: config["high"]["t"]
     log:
         "logs/purge_dups.log",
     resources:
-        mem_mb=config['purge_dups']['mem_mb'],  # access memory from config
+        mem_mb=config["high"]["mem_mb"],  # access memory from config
     conda:
         "../envs/purge_dups.yaml"
     shell:

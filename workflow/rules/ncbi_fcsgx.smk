@@ -11,11 +11,11 @@ rule fcsgx:
         clean_fasta="results/ncbi_fcsgx_{hap}/asm_clean.fa",
         contaminants="results/ncbi_fcsgx_{hap}/contaminants.fa",
         link="results/assemblies/fcsgx_{hap}.fa"
-    threads: config["hifiasm"]["t"]
+    threads: config["high"]["t"]
     log:
         "logs/fcsgx_{hap}.log",
     resources:
-        mem_mb=config['fcsgx']['mem_mb'],  # access memory from config
+        mem_mb=config["high"]["mem_mb"],  # access memory from config
     conda:
         "../envs/fcsgx.yaml"
     shell:

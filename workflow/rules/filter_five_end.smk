@@ -14,7 +14,7 @@ rule fiter_five_end:
     log:
         "logs/fiter_five_end_{hap}.log",
     resources:
-        mem_mb=config['arima']['mem_mb'],  # access memory from config    
+        mem_mb=config["low"]["mem_mb"],  # access memory from config    
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:

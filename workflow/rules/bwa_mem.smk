@@ -13,11 +13,11 @@ rule bwa_mem:
     output:
         bam1="results/arima_mapping_pipeline_{hap}/RAW_DIR/hic_vs_contigs_1.bam",
         bam2="results/arima_mapping_pipeline_{hap}/RAW_DIR/hic_vs_contigs_2.bam",
-    threads: config["arima"]["CPU"]
+    threads: config["high"]["t"]
     log:
         "logs/bwa_mem_{hap}.log",
     resources:
-        mem_mb=config['arima']['mem_mb'],  # access memory from config    
+        mem_mb=config["high"]["mem_mb"],  # access memory from config    
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:

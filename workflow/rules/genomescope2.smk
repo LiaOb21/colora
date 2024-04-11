@@ -11,7 +11,7 @@ rule genomescope2:
     log:
         "logs/genomescope2.log",
     resources:
-        mem_mb=config['arima']['mem_mb'],  # access memory from config    
+        mem_mb=config["medium"]["mem_mb"],  # access memory from config    
     conda:
         "../envs/genomescope2.yaml"
     shell:

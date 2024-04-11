@@ -12,13 +12,13 @@ rule two_read_bam_combiner:
         REF="results/bwa_index_{hap}/asm.fa",
     output:
         tmp_bam="results/arima_mapping_pipeline_{hap}/TMP_DIR/hic_vs_contigs_filt_paired.bam",
-    threads: config["arima"]["CPU"]
+    threads: config["medium"]["t"]
     params:
         MAPQ_FILTER=config["arima"]["MAPQ_FILTER"],
     log:
         "logs/two_read_bam_combiner_{hap}.log",
     resources:
-        mem_mb=config['arima']['mem_mb'],  # access memory from config
+        mem_mb=config["medium"]["mem_mb"],  # access memory from config
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:

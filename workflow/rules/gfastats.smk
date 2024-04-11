@@ -3,16 +3,16 @@ rule gfastats:
         "results/oatk/oatk.asm.mito.ctg.fasta"
     output:
         "results/gfastats/mito.stats"
-    threads: config["fastp"]["t"]
+    threads: config["low"]["t"]
     log:
         "logs/gfastats.log",
     resources:
-        mem_mb=config['fastp']['mem_mb'],  # access memory from config
+        mem_mb=config["low"]["mem_mb"],  # access memory from config
     conda:
         "../envs/gfastats.yaml"
     shell:
         """
-        (gfastats {input} > {output}) 2>> {log}
+        /usr/bin/time -v sh -c 'gfastats {input} > {output}' 2>> {log}
         """
 
 
@@ -23,15 +23,15 @@ rule gfastats_pltd:
     output:
         mito_out = "results/gfastats_pltd/mito.stats",
         pltd_out = "results/gfastats_pltd/pltd.stats"
-    threads: config["fastp"]["t"]
+    threads: config["low"]["t"]
     log:
         "logs/gfastats.log",
     resources:
-        mem_mb=config['fastp']['mem_mb'],  # access memory from config
+        mem_mb=config["low"]["mem_mb"],  # access memory from config
     conda:
         "../envs/gfastats.yaml"
     shell:
         """
-        /usr/bin/time -v sh -c gfastats {input.mito_in} > {output.mito_out} >> {log} 2>&1
-        /usr/bin/time -v sh -c gfastats {input.pltd_in} > {output.pltd_out} >> {log} 2>&1
+        /usr/bin/time -v sh -c 'gfastats {input.mito_in} > {output.mito_out}' >> {log} 2>&1
+        /usr/bin/time -v sh -c 'gfastats {input.pltd_in} > {output.pltd_out}' >> {log} 2>&1
         """

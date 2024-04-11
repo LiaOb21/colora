@@ -12,7 +12,7 @@ rule yahs:
     log:
         "logs/yahs_{hap}.log",
     resources:
-        mem_mb=config['arima']['mem_mb'],  # access memory from config
+        mem_mb=config["medium"]["mem_mb"],  # access memory from config
     conda:
         "../envs/yahs.yaml"
     params:

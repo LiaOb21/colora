@@ -8,11 +8,11 @@ rule busco:
     params:
         lineage=config["busco"]["lineage"],
         labels = list(get_assemblies_QC().keys())
-    threads: config["busco"]["t"]
+    threads: config["high"]["t"]
     log:
         "logs/busco.log"
     resources:
-        mem_mb=config['busco']['mem_mb'],  # access memory from config
+        mem_mb=config["high"]["mem_mb"],  # access memory from config
     conda:
         "../envs/busco.yaml"
     shell:

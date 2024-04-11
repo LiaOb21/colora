@@ -19,11 +19,11 @@ rule purge_dups_alt:
         hap_fa="results/purge_dups_alt/hap.fa",
         purged_fasta="results/purge_dups_alt/asm.alternate_purged.fa",
         hist_plot="results/purge_dups_alt/hist.out.png",
-    threads: config["minimap2"]["t"]
+    threads: config["high"]["t"]
     log:
         "logs/purge_dups_alt.log",
     resources:
-        mem_mb=config['purge_dups']['mem_mb'],  # access memory from config
+        mem_mb=config["high"]["mem_mb"],  # access memory from config
     conda:
         "../envs/purge_dups.yaml"
     shell:

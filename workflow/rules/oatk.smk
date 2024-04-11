@@ -7,13 +7,13 @@ rule oatk:
     output:
         gfa_mito = "results/oatk/oatk.asm.mito.gfa",
         fasta_mito = "results/oatk/oatk.asm.mito.ctg.fasta"
-    threads: config["oatk"]["t"]
+    threads: config["high"]["t"]
     log:
         "logs/oatk.log",
     conda:
         "../envs/oatk.yaml"
     resources:
-        mem_mb=config['oatk']['mem_mb'],  # access memory from config
+        mem_mb=config["high"]["mem_mb"],  # access memory from config
     params:
         k=config["oatk"]["k"],
         c=config["oatk"]["c"],
@@ -33,13 +33,13 @@ rule oatk_pltd:
         fasta_mito = "results/oatk_pltd/oatk.asm.mito.ctg.fasta",
         gfa_pltd = "results/oatk_pltd/oatk.asm.pltd.gfa",
         fasta_pltd = "results/oatk_pltd/oatk.asm.pltd.ctg.fasta"
-    threads: config["oatk"]["t"]
+    threads: config["high"]["t"]
     log:
         "logs/oatk.log",
     conda:
         "../envs/oatk.yaml"
     resources:
-        mem_mb=config['oatk']['mem_mb'],  # access memory from config
+        mem_mb=config["high"]["mem_mb"],  # access memory from config
     params:
         k=config["oatk"]["k"],
         c=config["oatk"]["c"],

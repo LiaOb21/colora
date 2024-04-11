@@ -5,11 +5,11 @@ rule quast:
         unpack(get_assemblies_QC)
     output:
         directory("results/quast"),
-    threads: config["quast"]["t"]
+    threads: config["medium"]["t"]
     log:
         "logs/quast.log",
     resources:
-        mem_mb=config['quast']['mem_mb'],  # access memory from config
+        mem_mb=config["medium"]["mem_mb"],  # access memory from config
     conda:
         "../envs/quast.yaml"
     params:

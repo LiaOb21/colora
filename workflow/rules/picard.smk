@@ -18,7 +18,7 @@ rule picard:
     log:
         "logs/picard_{hap}.log",
     resources:
-        mem_mb=config['arima']['mem_mb'],  # access memory from config
+        mem_mb=config["high"]["mem_mb"],  # access memory from config
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
