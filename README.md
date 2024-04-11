@@ -8,7 +8,7 @@ A Snakemake workflow for for genome assembly.
 
 Why colora? :snake: Colora means "snake" in Sardinian language :snake: 
 
-![Colora_1](https://github.com/LiaOb21/colora/assets/96196229/0d7cce80-bef9-46de-9213-e7e9343aa168)
+![Colora (1)](https://github.com/LiaOb21/colora/assets/96196229/483cf3e4-ceef-4b1a-846a-c0eec629189f)
 
 
 Input reads: hifi reads, optionally ONT, and hic reads.
