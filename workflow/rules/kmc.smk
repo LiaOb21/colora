@@ -8,7 +8,7 @@ rule kmc:
         out_kmc_pre="results/kmc/output.kmc_pre",
         out_kmc_suf="results/kmc/output.kmc_suf",
         hist="results/kmc/out.hist",
-    threads: config["kmc"]["t"]
+    threads: config["high"]["t"]
     params:
         k=config["kmc"]["k"],
         ci=config["kmc"]["ci"],
@@ -17,7 +17,7 @@ rule kmc:
     log:
         "logs/kmc.log",
     resources:
-        mem_mb=config['kmc']['mem_mb'],  # access memory from config
+        mem_mb=config["high"]["mem_mb"],  # access memory from config
     conda:
         "../envs/kmc.yaml"
     shell:

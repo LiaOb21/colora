@@ -12,17 +12,17 @@ rule two_read_bam_combiner:
         REF="results/bwa_index_{hap}/asm.fa",
     output:
         tmp_bam="results/arima_mapping_pipeline_{hap}/TMP_DIR/hic_vs_contigs_filt_paired.bam",
-    threads: config["arima"]["CPU"]
+    threads: config["medium"]["t"]
     params:
         MAPQ_FILTER=config["arima"]["MAPQ_FILTER"],
     log:
         "logs/two_read_bam_combiner_{hap}.log",
     resources:
-        mem_mb=config['arima']['mem_mb'],  # access memory from config
+        mem_mb=config["medium"]["mem_mb"],  # access memory from config
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
-        (samtools faidx {input.REF}) 2>> {log}
-        (perl scripts/two_read_bam_combiner.pl {input.bam1_filt} {input.bam2_filt} samtools {params.MAPQ_FILTER} | samtools view -bS -t {input.REF}.fai - | samtools sort -@ {threads} -o {output.tmp_bam} - ) 2>> {log}
+        (samtools faidx {input.REF}) >> {log} 2>&1
+        (perl scripts/two_read_bam_combiner.pl {input.bam1_filt} {input.bam2_filt} samtools {params.MAPQ_FILTER} | samtools view -bS -t {input.REF}.fai - | samtools sort -@ {threads} -o {output.tmp_bam} - ) >> {log} 2>&1
         """

@@ -11,11 +11,11 @@ rule hifiasm:
         fasta="results/hifiasm/asm.primary.fa",
         fasta_alt="results/hifiasm/asm.alternate.fa",
         link_primary = "results/assemblies/asm_primary.fa",
-    threads: config["hifiasm"]["t"]
+    threads: config["high"]["t"]
     log:
         "logs/hifiasm.log",
     resources:
-        mem_mb=config['hifiasm']['mem_mb'],  # access memory from config
+        mem_mb=config["high"]["mem_mb"],  # access memory from config
     conda:
         "../envs/hifiasm.yaml"
     params:
@@ -48,11 +48,11 @@ rule hifiasm_phased:
         fasta_hap2="results/hifiasm/asm.hap2.fa",
         link_hap1 = "results/assemblies/asm_hap1.fa",
         link_hap2 = "results/assemblies/asm_hap2.fa"
-    threads: config["hifiasm"]["t"]
+    threads: config["high"]["t"]
     log:
         "logs/hifiasm.log",
     resources:
-        mem_mb=config['hifiasm']['mem_mb'],  # access memory from config
+        mem_mb=config["high"]["mem_mb"],  # access memory from config
     conda:
         "../envs/hifiasm.yaml"
     params:

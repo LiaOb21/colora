@@ -19,24 +19,25 @@ rule purge_dups_alt:
         hap_fa="results/purge_dups_alt/hap.fa",
         purged_fasta="results/purge_dups_alt/asm.alternate_purged.fa",
         hist_plot="results/purge_dups_alt/hist.out.png",
-    threads: config["minimap2"]["t"]
+    threads: config["high"]["t"]
     log:
         "logs/purge_dups_alt.log",
     resources:
-        mem_mb=config['purge_dups']['mem_mb'],  # access memory from config
+        mem_mb=config["high"]["mem_mb"],  # access memory from config
     conda:
         "../envs/purge_dups.yaml"
     shell:
         """
         cat {input.fasta} {input.hap_fa_in} > merged.fa 
         echo "results/purge_dups/hap.fa and results/hifiasm/asm.alternate.fa merged" >> {log}
-        (minimap2 -xasm20 merged.fa {input.reads} -t {threads} | gzip -c - > hifi_vs_alternate_contigs.paf.gz) 2>> {log}
-        pbcstat hifi_vs_alternate_contigs.paf.gz 2>> {log}
-        (calcuts PB.stat > cutoffs) 2>> {log}
-        (split_fa merged.fa > asm.alternate.split) 2>> {log}
-        (minimap2 -xasm5 -DP asm.alternate.split asm.alternate.split -t {threads} | gzip -c - > asm.alternate.split.self.paf.gz) 2>> {log} 
-        (purge_dups -2 -T cutoffs -c PB.base.cov asm.alternate.split.self.paf.gz > dups.bed) 2>> {log}
-        hist_plot.py -c cutoffs PB.stat hist.out.png 2>> {log}
+        (minimap2 -xasm20 merged.fa {input.reads} -t {threads} | gzip -c - > hifi_vs_alternate_contigs.paf.gz) >> {log} 2>&1
+        pbcstat hifi_vs_alternate_contigs.paf.gz >> {log} 2>&1
+        (calcuts PB.stat > cutoffs) >> {log} 2>&1
+        (split_fa merged.fa > asm.alternate.split) >> {log} 2>&1
+        (minimap2 -xasm5 -DP asm.alternate.split asm.alternate.split -t {threads} | gzip -c - > asm.alternate.split.self.paf.gz) >> {log} 2>&1 
+        (purge_dups -2 -T cutoffs -c PB.base.cov asm.alternate.split.self.paf.gz > dups.bed) >> {log} 2>&1
+        (get_seqs -e dups.bed merged.fa > purged.fa)  >> {log} 2>&1
+        hist_plot.py -c cutoffs PB.stat hist.out.png >> {log} 2>&1
 
         mkdir -p results/purge_dups/ 
         mv merged.fa {output.merged_fasta} 

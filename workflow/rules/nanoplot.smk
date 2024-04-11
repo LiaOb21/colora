@@ -6,11 +6,11 @@ rule nanoplot:
         "results/reads/hifi/hifi.fastq.gz",
     output:
         "results/nanoplot/NanoPlot-report.html",
-    threads: config["nanoplot"]["t"]
+    threads: config["medium"]["t"]
     log:
         "logs/nanoplot.log",
     resources:
-        mem_mb=config['nanoplot']['mem_mb'],  # access memory from config
+        mem_mb=config["medium"]["mem_mb"],  # access memory from config
     conda:
         "../envs/nanoplot.yaml"
     shell:

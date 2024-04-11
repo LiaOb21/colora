@@ -17,23 +17,23 @@ rule purge_dups:
         purged_fasta="results/purge_dups/asm.primary_purged.fa",
         hist_plot="results/purge_dups/hist.out.png",
         link = "results/assemblies/purged_primary.fa",
-    threads: config["minimap2"]["t"]
+    threads: config["high"]["t"]
     log:
         "logs/purge_dups.log",
     resources:
-        mem_mb=config['purge_dups']['mem_mb'],  # access memory from config
+        mem_mb=config["high"]["mem_mb"],  # access memory from config
     conda:
         "../envs/purge_dups.yaml"
     shell:
         """
-        (minimap2 -xasm20 {input.fasta} {input.reads} -t {threads} | gzip -c - > hifi_vs_primary_contigs.paf.gz) 2>> {log}
-        pbcstat hifi_vs_primary_contigs.paf.gz 2>> {log}
-        (calcuts PB.stat > cutoffs) 2>> {log} 
-        (split_fa results/hifiasm/asm.primary.fa > asm.primary.split) 2>> {log} 
-        (minimap2 -xasm5 -DP asm.primary.split asm.primary.split -t {threads} | gzip -c - > asm.primary.split.self.paf.gz) 2>> {log}
-        (purge_dups -2 -T cutoffs -c PB.base.cov asm.primary.split.self.paf.gz > dups.bed) 2>> {log} 
-        (get_seqs -e dups.bed results/hifiasm/asm.primary.fa > purged.fa) 2>> {log}
-        hist_plot.py -c cutoffs PB.stat hist.out.png 2>> {log}
+        (minimap2 -xasm20 {input.fasta} {input.reads} -t {threads} | gzip -c - > hifi_vs_primary_contigs.paf.gz) >> {log} 2>&1
+        pbcstat hifi_vs_primary_contigs.paf.gz >> {log} 2>&1
+        (calcuts PB.stat > cutoffs) >> {log} 2>&1 
+        (split_fa results/hifiasm/asm.primary.fa > asm.primary.split) >> {log} 2>&1
+        (minimap2 -xasm5 -DP asm.primary.split asm.primary.split -t {threads} | gzip -c - > asm.primary.split.self.paf.gz) >> {log} 2>&1
+        (purge_dups -2 -T cutoffs -c PB.base.cov asm.primary.split.self.paf.gz > dups.bed) >> {log} 2>&1
+        (get_seqs -e dups.bed results/hifiasm/asm.primary.fa > purged.fa) >> {log} 2>&1
+        hist_plot.py -c cutoffs PB.stat hist.out.png >> {log} 2>&1
 
         mkdir -p results/purge_dups/ 
         mv hifi_vs_primary_contigs.paf.gz {output.paf}

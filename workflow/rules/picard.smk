@@ -18,14 +18,14 @@ rule picard:
     log:
         "logs/picard_{hap}.log",
     resources:
-        mem_mb=config['arima']['mem_mb'],  # access memory from config
+        mem_mb=config["high"]["mem_mb"],  # access memory from config
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
         PICARD=${{CONDA_PREFIX}}/share/picard-*/picard.jar
-        java -Xmx4G -Djava.io.tmpdir=temp/ -jar ${{PICARD}} AddOrReplaceReadGroups INPUT={input.tmp_bam} OUTPUT={output.bam_add_read_group} ID={params.hic_sample_name} LB={params.hic_sample_name} SM={params.hic_sample_name} PL=ILLUMINA PU=none 2>> {log}
-        java -Xmx30G -XX:-UseGCOverheadLimit -Djava.io.tmpdir=temp/ -jar ${{PICARD}} MarkDuplicates INPUT={output.bam_add_read_group} OUTPUT={output.mark_dup} METRICS_FILE={output.metrics} TMP_DIR=results/arima_mapping_pipeline_{wildcards.hap}/TMP_DIR ASSUME_SORTED=TRUE VALIDATION_STRINGENCY=LENIENT REMOVE_DUPLICATES=TRUE 2>> {log}
-        samtools index {output.mark_dup} 2>> {log}
-        (perl scripts/get_stats.pl {output.mark_dup} > {output.stats}) 2>> {log}
+        java -Xmx4G -Djava.io.tmpdir=temp/ -jar ${{PICARD}} AddOrReplaceReadGroups INPUT={input.tmp_bam} OUTPUT={output.bam_add_read_group} ID={params.hic_sample_name} LB={params.hic_sample_name} SM={params.hic_sample_name} PL=ILLUMINA PU=none >> {log} 2>&1
+        java -Xmx30G -XX:-UseGCOverheadLimit -Djava.io.tmpdir=temp/ -jar ${{PICARD}} MarkDuplicates INPUT={output.bam_add_read_group} OUTPUT={output.mark_dup} METRICS_FILE={output.metrics} TMP_DIR=results/arima_mapping_pipeline_{wildcards.hap}/TMP_DIR ASSUME_SORTED=TRUE VALIDATION_STRINGENCY=LENIENT REMOVE_DUPLICATES=TRUE >> {log} 2>&1
+        samtools index {output.mark_dup} >> {log} 2>&1
+        (perl scripts/get_stats.pl {output.mark_dup} > {output.stats}) >> {log} 2>&1
         """

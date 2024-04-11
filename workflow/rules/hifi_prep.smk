@@ -14,13 +14,12 @@ rule hifi_prep:
         ),
     output:
         hifi="results/reads/hifi/hifi.fastq.gz",
-    threads: config["hifi_prep"]["t"]
     params:
         num_files=len(glob.glob(config["hifi_path"] + "*.fastq.gz")),
     log:
         "logs/hifi_prep.log",
     resources:
-        mem_mb=config['hifi_prep']['mem_mb'],  # access memory from config
+        mem_mb=config["low"]["mem_mb"],  # access memory from config
     conda:
         "../envs/basic.yaml"
     shell:

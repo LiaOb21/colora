@@ -14,14 +14,14 @@ rule fiter_five_end:
     log:
         "logs/fiter_five_end_{hap}.log",
     resources:
-        mem_mb=config['arima']['mem_mb'],  # access memory from config    
+        mem_mb=config["low"]["mem_mb"],  # access memory from config    
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
         echo "Running filter_five_end.pl on hic_vs_contigs_1.bam..." >> {log}
-        (samtools view -h {input.bam1} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam1_filt}) 2>> {log} 
+        (samtools view -h {input.bam1} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam1_filt}) >> {log} 2>&1 
         echo "Running filter_five_end.pl on hic_vs_contigs_2.bam..." >> {log}
-        (samtools view -h {input.bam2} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam2_filt}) 2>> {log} 
+        (samtools view -h {input.bam2} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam2_filt}) >> {log} 2>&1
         echo "Done" >> {log}
         """

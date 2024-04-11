@@ -13,15 +13,15 @@ rule bwa_mem:
     output:
         bam1="results/arima_mapping_pipeline_{hap}/RAW_DIR/hic_vs_contigs_1.bam",
         bam2="results/arima_mapping_pipeline_{hap}/RAW_DIR/hic_vs_contigs_2.bam",
-    threads: config["arima"]["CPU"]
+    threads: config["high"]["t"]
     log:
         "logs/bwa_mem_{hap}.log",
     resources:
-        mem_mb=config['arima']['mem_mb'],  # access memory from config    
+        mem_mb=config["high"]["mem_mb"],  # access memory from config    
     conda:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
-        (bwa mem -M -t {threads} {input.REF} {input.forward_hic} | samtools view -@ {threads} -Sb - > {output.bam1}) 2>> {log}
-        (bwa mem -M -t {threads} {input.REF} {input.reverse_hic} | samtools view -@ {threads} -Sb - > {output.bam2}) 2>> {log}
+        (bwa mem -M -t {threads} {input.REF} {input.forward_hic} | samtools view -@ {threads} -Sb - > {output.bam1}) >> {log} 2>&1
+        (bwa mem -M -t {threads} {input.REF} {input.reverse_hic} | samtools view -@ {threads} -Sb - > {output.bam2}) >> {log} 2>&1
         """

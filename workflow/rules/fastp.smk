@@ -12,11 +12,11 @@ rule fastp:
         reverse_out="results/fastp/hic_trim_2.fastq.gz",
         json="results/fastp/hic_report_fastp.HiC.json",
         html="results/fastp/hic_report_fastp.HiC.html",
-    threads: config["fastp"]["t"]
+    threads: config["medium"]["t"]
     log:
         "logs/fastp.log",
     resources:
-        mem_mb=config['fastp']['mem_mb'],  # access memory from config
+        mem_mb=config["medium"]["mem_mb"],  # access memory from config
     conda:
         "../envs/fastp.yaml"
     shell:
