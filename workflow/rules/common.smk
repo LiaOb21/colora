@@ -39,9 +39,12 @@ def get_all_inputs(wc=None):
     if pltd:
         inputs.append("results/bandage_pltd/pltd.jpg")
         inputs.append("results/bandage_pltd/mito.jpg")
+        inputs.append("results/gfastats_pltd/pltd.stats")
+        inputs.append("results/gfastats_pltd/mito.stats")
 
     if not pltd:
         inputs.append("results/bandage/mito.jpg")
+        inputs.append("results/gfastats/mito.stats")
 
     return inputs
 

@@ -56,6 +56,8 @@ include: "rules/quast.smk"
 include: "rules/busco.smk"
 # Include bandage rule
 include: "rules/bandage.smk"
+# Include the gfastats rule
+include: "rules/gfastats.smk"
 
 # Define the rule all, which is the default rule that Snakemake runs when no specific rule or target is specified
 # input files are defined in the common.smk file

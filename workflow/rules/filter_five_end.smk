@@ -19,6 +19,9 @@ rule fiter_five_end:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
-        samtools view -h {input.bam1} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam1_filt} 
-        samtools view -h {input.bam2} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam2_filt} 
+        echo "Running filter_five_end.pl on hic_vs_contigs_1.bam..." >> {log}
+        (samtools view -h {input.bam1} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam1_filt}) 2>> {log} 
+        echo "Running filter_five_end.pl on hic_vs_contigs_2.bam..." >> {log}
+        (samtools view -h {input.bam2} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam2_filt}) 2>> {log} 
+        echo "Done" >> {log}
         """

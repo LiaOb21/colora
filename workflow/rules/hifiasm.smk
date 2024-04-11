@@ -36,7 +36,7 @@ rule hifiasm:
         """
 
 
-rule hifiasm_het:
+rule hifiasm_phased:
     input:
         reads = "results/reads/hifi/hifi.fastq.gz",
         hic_forward = "results/fastp/hic_trim_1.fastq.gz",

@@ -25,6 +25,7 @@ rule hifi_prep:
         "../envs/basic.yaml"
     shell:
         """
+        echo "Starting hifi_prep.smk rule..." >> {log}
         {{
             if [ {params.num_files} -gt 1 ]; then
                 cat {input.files} > {output.hifi}
@@ -32,4 +33,5 @@ rule hifi_prep:
                 cp {input.files[0]} {output.hifi}
         fi
         }} >> {log} 2>&1
+        echo "Finished hifi_prep.smk rule." >> {log}
         """
