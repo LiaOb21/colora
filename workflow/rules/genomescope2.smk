@@ -16,5 +16,5 @@ rule genomescope2:
         "../envs/genomescope2.yaml"
     shell:
         """
-        genomescope2 -i {input} -o {output} -k {params.k} >> {log} 2>&1
+        /usr/bin/time -v genomescope2 -i {input} -o {output} -k {params.k} >> {log} 2>&1
         """

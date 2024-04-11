@@ -20,7 +20,7 @@ rule fcsgx:
         "../envs/fcsgx.yaml"
     shell:
         """
-        run_gx.py --fasta {input.fasta} --out-dir results/ncbi_fcsgx_{wildcards.hap}/out --gx-db {params.path_to_gx_db} --tax-id {params.ncbi_tax_id} --debug >> {log} 2>&1
-        cat {input.fasta} | gx clean-genome --action-report results/ncbi_fcsgx_{wildcards.hap}/out/asm.{wildcards.hap}.{params.ncbi_tax_id}.fcs_gx_report.txt --output {output.clean_fasta} --contam-fasta-out {output.contaminants} >> {log} 2>&1
+        /usr/bin/time -v run_gx.py --fasta {input.fasta} --out-dir results/ncbi_fcsgx_{wildcards.hap}/out --gx-db {params.path_to_gx_db} --tax-id {params.ncbi_tax_id} --debug >> {log} 2>&1
+        /usr/bin/time -v sh -c 'cat {input.fasta} | gx clean-genome --action-report results/ncbi_fcsgx_{wildcards.hap}/out/asm.{wildcards.hap}.{params.ncbi_tax_id}.fcs_gx_report.txt --output {output.clean_fasta} --contam-fasta-out {output.contaminants}' >> {log} 2>&1
         ln -srn {output.clean_fasta} {output.link}
         """

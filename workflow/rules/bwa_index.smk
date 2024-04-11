@@ -18,5 +18,5 @@ rule bwa_index:
     shell:
         """
         ln -srn {input} {output.asm}
-        bwa index -a bwtsw {output.asm} >> {log} 2>&1
+        /usr/bin/time -v bwa index -a bwtsw {output.asm} >> {log} 2>&1
         """

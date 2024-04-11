@@ -15,5 +15,5 @@ rule nanoplot:
         "../envs/nanoplot.yaml"
     shell:
         """
-        NanoPlot -t {threads} --fastq {input} --loglength -o results/nanoplot --plots dot --verbose >> {log} 2>&1
+        /usr/bin/time -v NanoPlot -t {threads} --fastq {input} --loglength -o results/nanoplot --plots dot --verbose >> {log} 2>&1
         """

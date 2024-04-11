@@ -22,6 +22,6 @@ rule bwa_mem:
         "../envs/arima_mapping_pipeline.yaml"
     shell:
         """
-        (bwa mem -M -t {threads} {input.REF} {input.forward_hic} | samtools view -@ {threads} -Sb - > {output.bam1}) 2>> {log}
-        (bwa mem -M -t {threads} {input.REF} {input.reverse_hic} | samtools view -@ {threads} -Sb - > {output.bam2}) 2>> {log}
+        /usr/bin/time -v sh -c 'bwa mem -M -t {threads} {input.REF} {input.forward_hic} | samtools view -@ {threads} -Sb - > {output.bam1}' >> {log} 2>&1
+        /usr/bin/time -v sh -c 'bwa mem -M -t {threads} {input.REF} {input.reverse_hic} | samtools view -@ {threads} -Sb - > {output.bam2}' >> {log} 2>&1
         """

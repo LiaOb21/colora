@@ -21,6 +21,6 @@ rule yahs:
         ),
     shell:
         """ 
-        yahs {input.REF} {input.bam} -o results/yahs_{wildcards.hap}/asm_yahs {params.optional_params} >> {log} 2>&1
+        /usr/bin/time -v yahs {input.REF} {input.bam} -o results/yahs_{wildcards.hap}/asm_yahs {params.optional_params} >> {log} 2>&1
         ln -srn {output.scaffolds} {output.link}
         """

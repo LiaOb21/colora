@@ -23,6 +23,6 @@ rule kmc:
     shell:
         """
         mkdir -p results/kmc/temp >> {log} 2>&1
-        kmc -k{params.k} -t{threads} -ci{params.ci} -cs{params.cs} -fq {input} results/kmc/output results/kmc/temp/ >> {log} 2>&1
-        kmc_tools transform results/kmc/output histogram {output.hist} -cx{params.cx} >> {log} 2>&1
+        /usr/bin/time -v kmc -k{params.k} -t{threads} -ci{params.ci} -cs{params.cs} -fq {input} results/kmc/output results/kmc/temp/ >> {log} 2>&1
+        /usr/bin/time -v kmc_tools transform results/kmc/output histogram {output.hist} -cx{params.cx} >> {log} 2>&1
         """

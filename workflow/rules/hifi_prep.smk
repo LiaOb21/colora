@@ -28,9 +28,9 @@ rule hifi_prep:
         echo "Starting hifi_prep.smk rule..." >> {log}
         {{
             if [ {params.num_files} -gt 1 ]; then
-                cat {input.files} > {output.hifi}
+                /usr/bin/time -v sh -c 'cat {input.files} > {output.hifi}' >> {log} 2>&1
             else
-                cp {input.files[0]} {output.hifi}
+                /usr/bin/time -v sh -c 'cp {input.files[0]} {output.hifi}' >> {log} 2>&1
         fi
         }} >> {log} 2>&1
         echo "Finished hifi_prep.smk rule." >> {log}

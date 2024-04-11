@@ -32,6 +32,6 @@ rule gfastats_pltd:
         "../envs/gfastats.yaml"
     shell:
         """
-        (gfastats {input.mito_in} > {output.mito_out}) 2>> {log}
-        (gfastats {input.pltd_in} > {output.pltd_out}) 2>> {log}
+        /usr/bin/time -v sh -c gfastats {input.mito_in} > {output.mito_out} >> {log} 2>&1
+        /usr/bin/time -v sh -c gfastats {input.pltd_in} > {output.pltd_out} >> {log} 2>&1
         """

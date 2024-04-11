@@ -24,7 +24,7 @@ rule hifiasm:
         ),
     shell:
         """
-        hifiasm {input.reads} -t {threads} -o results/hifiasm/asm --primary {params.optional_params} >> {log} 2>&1
+        /usr/bin/time -v hifiasm {input.reads} -t {threads} -o results/hifiasm/asm --primary {params.optional_params} >> {log} 2>&1
         mv results/hifiasm/asm.p_ctg.gfa {output.gfa}
         mv results/hifiasm/asm.a_ctg.gfa {output.gfa_alt}       
         awk -f scripts/gfa_to_fasta.awk < {output.gfa} > {output.fasta}
@@ -61,7 +61,7 @@ rule hifiasm_phased:
         ),
     shell:
         """
-        hifiasm {input.reads} -t {threads} -o results/hifiasm/asm --h1 {input.hic_forward} --h2 {input.hic_reverse} {params.optional_params} >> {log} 2>&1
+        /usr/bin/time -v hifiasm {input.reads} -t {threads} -o results/hifiasm/asm --h1 {input.hic_forward} --h2 {input.hic_reverse} {params.optional_params} >> {log} 2>&1
         mv results/hifiasm/asm.hic.hap1.p_ctg.gfa {output.gfa_hap1}
         mv results/hifiasm/asm.hic.hap2.p_ctg.gfa {output.gfa_hap2}
         awk -f scripts/gfa_to_fasta.awk < {output.gfa_hap1} > {output.fasta_hap1}

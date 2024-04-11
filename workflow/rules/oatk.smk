@@ -20,7 +20,7 @@ rule oatk:
         m=config["oatk"]["m"],
     shell:
         """
-        oatk -k {params.k} -c {params.c} -t {threads} -m {params.m} {input} >> {log} 2>&1
+        /usr/bin/time -v oatk -k {params.k} -c {params.c} -t {threads} -m {params.m} {input} >> {log} 2>&1
         mv oatk.asm* results/oatk >> {log} 2>&1
         """
 
@@ -49,6 +49,6 @@ rule oatk_pltd:
         ),
     shell:
         """
-        oatk -k {params.k} -c {params.c} -t {threads} -m {params.m} {params.optional_params} {input} >> {log} 2>&1
+        /usr/bin/time -v oatk -k {params.k} -c {params.c} -t {threads} -m {params.m} {params.optional_params} {input} >> {log} 2>&1
         mv oatk.asm* results/oatk_pltd >> {log} 2>&1
         """

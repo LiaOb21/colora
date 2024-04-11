@@ -22,7 +22,7 @@ rule busco:
         count=0
         for v in {input} ; do
             k=${{labels[$count]}}
-            busco -i $v -o {output}/$k -m genome -l {params.lineage} -f -c {threads} >> {log} 2>&1
+            /usr/bin/time -v busco -i $v -o {output}/$k -m genome -l {params.lineage} -f -c {threads} >> {log} 2>&1
             count=$(( $count + 1 ))
         done
         """

@@ -20,8 +20,8 @@ rule fiter_five_end:
     shell:
         """
         echo "Running filter_five_end.pl on hic_vs_contigs_1.bam..." >> {log}
-        (samtools view -h {input.bam1} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam1_filt}) 2>> {log} 
+        /usr/bin/time -v sh -c 'samtools view -h {input.bam1} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam1_filt}' >> {log} 2>&1 
         echo "Running filter_five_end.pl on hic_vs_contigs_2.bam..." >> {log}
-        (samtools view -h {input.bam2} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam2_filt}) 2>> {log} 
+        /usr/bin/time -v sh -c 'samtools view -h {input.bam2} | perl scripts/filter_five_end.pl | samtools view -Sb - > {output.bam2_filt}' >> {log} 2>&1
         echo "Done" >> {log}
         """

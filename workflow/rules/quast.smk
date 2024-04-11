@@ -19,5 +19,5 @@ rule quast:
         labels = ",".join(get_assemblies_QC().keys())
     shell:
         """
-        quast {input} -l {params.labels} -o {output}  -t {threads} {params.optional_params} >> {log} 2>&1
+        /usr/bin/time -v quast {input} -l {params.labels} -o {output}  -t {threads} {params.optional_params} >> {log} 2>&1
         """

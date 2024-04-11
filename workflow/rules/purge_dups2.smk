@@ -30,13 +30,14 @@ rule purge_dups_alt:
         """
         cat {input.fasta} {input.hap_fa_in} > merged.fa 
         echo "results/purge_dups/hap.fa and results/hifiasm/asm.alternate.fa merged" >> {log}
-        (minimap2 -xasm20 merged.fa {input.reads} -t {threads} | gzip -c - > hifi_vs_alternate_contigs.paf.gz) 2>> {log}
-        pbcstat hifi_vs_alternate_contigs.paf.gz 2>> {log}
-        (calcuts PB.stat > cutoffs) 2>> {log}
-        (split_fa merged.fa > asm.alternate.split) 2>> {log}
-        (minimap2 -xasm5 -DP asm.alternate.split asm.alternate.split -t {threads} | gzip -c - > asm.alternate.split.self.paf.gz) 2>> {log} 
-        (purge_dups -2 -T cutoffs -c PB.base.cov asm.alternate.split.self.paf.gz > dups.bed) 2>> {log}
-        hist_plot.py -c cutoffs PB.stat hist.out.png 2>> {log}
+        /usr/bin/time -v sh -c 'minimap2 -xasm20 merged.fa {input.reads} -t {threads} | gzip -c - > hifi_vs_alternate_contigs.paf.gz' >> {log} 2>&1
+        /usr/bin/time -v pbcstat hifi_vs_alternate_contigs.paf.gz >> {log} 2>&1
+        /usr/bin/time -v sh -c 'calcuts PB.stat > cutoffs' >> {log} 2>&1
+        /usr/bin/time -v sh -c 'split_fa merged.fa > asm.alternate.split' >> {log} 2>&1
+        /usr/bin/time -v sh -c 'minimap2 -xasm5 -DP asm.alternate.split asm.alternate.split -t {threads} | gzip -c - > asm.alternate.split.self.paf.gz' >> {log} 2>&1
+        /usr/bin/time -v sh -c 'purge_dups -2 -T cutoffs -c PB.base.cov asm.alternate.split.self.paf.gz > dups.bed' >> {log} 2>&1
+        /usr/bin/time -v sh -c 'get_seqs -e dups.bed merged.fa > purged.fa'  >> {log} 2>&1
+        /usr/bin/time -v hist_plot.py -c cutoffs PB.stat hist.out.png >> {log} 2>&1
 
         mkdir -p results/purge_dups/ 
         mv merged.fa {output.merged_fasta} 

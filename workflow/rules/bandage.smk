@@ -12,7 +12,7 @@ rule bandage:
         "../envs/bandage.yaml"
     shell:
         """
-        Bandage image {input} {output}
+        /usr/bin/time -v Bandage image {input} {output} &>> {log}
         """
 
 
@@ -32,6 +32,6 @@ rule bandage_pltd:
         "../envs/bandage.yaml"
     shell:
         """
-        Bandage image {input.mito_gfa} {output.mito_out}
-        Bandage image {input.pltd_gfa} {output.pltd_out}
+        /usr/bin/time -v Bandage image {input.mito_gfa} {output.mito_out} >> {log} 2>&1
+        /usr/bin/time -v Bandage image {input.pltd_gfa} {output.pltd_out} >> {log} 2>&1
         """
