@@ -92,13 +92,11 @@ snakemake --configfile config/config_test.yaml --software-deployment-method cond
 - [x] setting of resources for each rule
 - [x] Rule `purge_dups.smk` and `purge_dups_alt.smk`: redirecting outputs 
 - [x] Formatting and linting to be fixed according to snakemake requirements
-- [ ] implement `assemblyQC` - waiting for new Merqury release to make a new conda recipe (light green path above)
-- [ ] organelle QC
-- [ ] ONT prep
-- [ ] log files: some of them are empty because it's impossible to redirect stderr and stdout to the file
+- [x] implement `assemblyQC` - waiting for new Merqury release to make a new conda recipe (light green path above)
+- [x] organelle QC
+- [x] log files: some of them are empty because it's impossible to redirect stderr and stdout to the file
 - [ ] packages versions: create stable yaml files with conda export
 - [ ] add singularity and docker as option for environment management
-- [ ] check if there is a better way to define oatk output
 - [ ] set up GitHub actions
 
 
