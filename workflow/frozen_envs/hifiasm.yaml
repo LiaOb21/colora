@@ -1,0 +1,14 @@
+name: hifiasm
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1=conda_forge
+  - _openmp_mutex=4.5=2_gnu
+  - hifiasm=0.19.8=h43eeafb_0
+  - libgcc-ng=13.2.0=h807b86a_5
+  - libgomp=13.2.0=h807b86a_5
+  - libstdcxx-ng=13.2.0=h7e041cc_5
+  - libzlib=1.2.13=hd590300_5
+

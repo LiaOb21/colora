@@ -1,0 +1,31 @@
+name: yahs
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1=conda_forge
+  - _openmp_mutex=4.5=2_gnu
+  - bzip2=1.0.8=hd590300_5
+  - c-ares=1.28.1=hd590300_0
+  - ca-certificates=2024.2.2=hbcca054_0
+  - htslib=1.19.1=h81da01d_2
+  - keyutils=1.6.1=h166bdaf_0
+  - krb5=1.21.2=h659d440_0
+  - libcurl=8.7.1=hca28451_0
+  - libdeflate=1.18=h0b41bf4_0
+  - libedit=3.1.20191231=he28a2e2_2
+  - libev=4.33=hd590300_2
+  - libgcc-ng=13.2.0=h807b86a_5
+  - libgomp=13.2.0=h807b86a_5
+  - libnghttp2=1.58.0=h47da74e_1
+  - libssh2=1.11.0=h0841786_0
+  - libstdcxx-ng=13.2.0=h7e041cc_5
+  - libzlib=1.2.13=hd590300_5
+  - ncurses=6.4.20240210=h59595ed_0
+  - openssl=3.2.1=hd590300_1
+  - samtools=1.19.2=h50ea8bc_1
+  - xz=5.2.6=h166bdaf_0
+  - yahs=1.2a.2=he4a0461_2
+  - zstd=1.5.5=hfc55251_0
+
