@@ -54,7 +54,7 @@ hifiasm:
     "--ul": "" # use this if you have also ont data yu want to integrate in your assembly
 
 #Set this to False if you want to skip the fcsgx step:
-include_fcsgx: False #inlcude this rule only if you have preiously downloaded the database (recommended to run fcsgx only on a HPC. It requires around 500 GB of space on your disk and a large RAM)
+include_fcsgx: False #inlcude this rule only if you have previously downloaded the database (recommended to run fcsgx only on a HPC. It requires around 500 GB of space on your disk and a large RAM)
 
 # Customisable parameters for fcsgx
 fcsgx:
