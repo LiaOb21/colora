@@ -39,6 +39,12 @@ oatk:
   optional_params: 
     "-p": "resources/oatkDB/embryophyta_pltd.fam" # to use for species that have a plastid db
 
+# Customisable parameters for fastp
+fastp:
+  optional_params:
+#    "--cut_front": True # to use only with Arima Hi-C library prep kit generated data
+#    "--cut_front_window_size": 5 # to use only with Arima Hi-C library prep kit generated data
+
 # Customisable parameters for hifiasm
 hifiasm:
   phased_assembly: False # set to true if you want to obtain a phased assembly
