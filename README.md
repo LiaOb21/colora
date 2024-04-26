@@ -20,29 +20,43 @@ The usage of this workflow is described in the [Snakemake Workflow Catalog](http
 
 If you use this workflow in a paper, don't forget to give credits to the authors by citing the URL of this (original) <colora> sitory and its DOI (see above).
 
-- place raw hifi reads in resources/raw_hifi
-- place oatk database of interest from github.oatkdb.repo in resources/oatkDB
-- place raw hic reads in resources/raw_hic
-- place ncbi database for FCS-GX in resources/gx_db (optional, this needs ~500GB of disk space and a large RAM)
+## Environment set up
 
+You first have to install conda and snakemake.
 
-How to run `colora`:
+## Reads
+
+Reads must be in `fastq.gz` format.
+
+If HiFi reads are in multiple files, these are automatically joined by colora. HiFi reads are not automatically filtered by colora, therefore if you want to filter them this must be done previously.
+
+Hi-C reads are automatically filtered by colora using fastp. Fastp removes adapters for paired-end data with the parameter `--detect_adapter_for_pe`, which is always set in colora. If you are using Arima Hi-C library prep kit generated data, Arima mapping pipeline suggests to trim 5 bases from the 5' end of both read 1 and read 2, and this can be achieved automatically with colora, setting the right parameters in the config file (see [config/README.md](https://github.com/LiaOb21/colora/blob/main/config/README.md)).
+
+ONT reads (if you have them) must be previously joined (if in multiple files) and filtered (if you want to).
+
+## Other inputs
+
+The other files that we need in order to run colora are:
+
+- oatk database (mandatory)
+- busco database (mandatory)
+- ncbi FCS-gx database (optional, you can avoid this if you are not planning to automatically remove contaminants from your assembly)
+- reference genome for the species under study (optional, you can use this if you want to compare your assembly with the reference genome with quast)
+
+## Running colora
+
+If everything is set up correctly and the `config.yaml` file has been updated according to your needs (see [config/README.md](https://github.com/LiaOb21/colora/blob/main/config/README.md)), you should be able to run `colora` with this simple command:
+
 ```
-snakemake --software-deployment-method conda --snakefile workflow/Snakefile --cores all
-
-snakemake --software-deployment-method conda --snakefile workflow/Snakefile --cores all --dry-run
-
-
-#for the cluster:
-
-snakemake --software-deployment-method conda --conda-frontend mamba --snakefile workflow/Snakefile --cores 100
+snakemake --software-deployment-method conda
 ```
 
-Before executing the command, ensure you have appropriately changed your `config.yaml`
+N.B. if you are using a server where jobs are normally submitted through SLURM or other schedulers, you might consider setting up a snakemake profile in your system to handle job submission.
 
-Test the pipeline:
 
-- 1. Download test data
+## Test the pipeline (update needed):
+
+- 1. Download test data (they will be available soon)
 - 2. Download oatk DB
 
 ```
@@ -92,20 +106,9 @@ snakemake --configfile config/config_test.yaml --software-deployment-method cond
 - [x] setting of resources for each rule
 - [x] Rule `purge_dups.smk` and `purge_dups_alt.smk`: redirecting outputs 
 - [x] Formatting and linting to be fixed according to snakemake requirements
-- [x] implement `assemblyQC` - waiting for new Merqury release to make a new conda recipe (light green path above)
+- [ ] implement `assemblyQC` - waiting for new Merqury release to make a new conda recipe (light green path above)
 - [x] organelle QC
-- [x] log files: some of them are empty because it's impossible to redirect stderr and stdout to the file
-- [ ] packages versions: create stable yaml files with conda export
+- [x] packages versions: create stable yaml files with conda export
 - [ ] add singularity and docker as option for environment management
+- [x] check if there is a better way to define oatk output
 - [ ] set up GitHub actions
-
-
-
-Notes:
-
-- Arima pipeline - changes compared to the original pipeline:
-   - creating conda environments with needed tools so no need to specify tools' path
-   - Remove the PREFIX line and the option -p $PREFIX from the bwa command, it is not necessary and creates problems in the reading of files
-  - add -M flag in bwa mem command - step 1.A and 1.B
-  - pipeline split in several rules
-
