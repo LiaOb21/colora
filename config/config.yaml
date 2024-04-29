@@ -42,8 +42,8 @@ oatk:
 # Customisable parameters for fastp
 fastp:
   optional_params:
-#    "--cut_front": True # to use only with Arima Hi-C library prep kit generated data
-#    "--cut_front_window_size": 5 # to use only with Arima Hi-C library prep kit generated data
+    "--cut_front": False # set to True for Arima Hi-C library prep kit generated data
+    "--cut_front_window_size": "" # set to 5 for Arima Hi-C library prep kit generated data
 
 # Customisable parameters for hifiasm
 hifiasm:
@@ -78,8 +78,8 @@ quast:
   optional_params: 
     "--fragmented": ""
     "--large": ""
-#    "-r": "resources/reference_genomes/yeast/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa"
-#    "-g": "resources/reference_genomes/yeast/Saccharomyces_cerevisiae.R64-1-1.101.gff3"
+#    "-r": "resources/reference_genomes/yeast/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa" #reference genome (fasta)
+#    "-g": "resources/reference_genomes/yeast/Saccharomyces_cerevisiae.R64-1-1.101.gff3" # reference features (gff)
 
 # Customisable parameters for busco
 busco:
