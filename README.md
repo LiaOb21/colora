@@ -11,20 +11,25 @@ Why colora? :snake: Colora means "snake" in Sardinian language :snake:
 ![Colora (2)](https://github.com/LiaOb21/colora/assets/96196229/fc6147b1-03d1-4b66-9496-589a55af410e)
 
 
-Input reads: hifi reads, optionally ONT, and hic reads.
-Other inputs: oatk database, ncbi FCS database (optional), BUSCO database (to be implemented)
-
 ## Usage
 
 The usage of this workflow is described in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=LiaOb21%2Fcolora).
 
 If you use this workflow in a paper, don't forget to give credits to the authors by citing the URL of this (original) <colora> sitory and its DOI (see above).
 
-## Environment set up
+### 1. Environment set up
 
-You first have to install conda and snakemake.
+You first have to install conda/mamba and snakemake.
 
-## Reads
+### 2. Clone colora git repo
+
+```
+git clone https://github.com/LiaOb21/colora.git
+cd colora
+mkdir resources # we link here all the input files in the following examples
+```
+
+### 3. Input reads
 
 Reads must be in `fastq.gz` format.
 
@@ -34,16 +39,55 @@ Hi-C reads are automatically filtered by colora using fastp. Fastp removes adapt
 
 ONT reads (if you have them) must be previously joined (if in multiple files) and filtered (if you want to).
 
-## Other inputs
+### 4. Other inputs
 
 The other files that we need in order to run colora are:
 
-- oatk database (mandatory)
-- busco database (mandatory)
-- ncbi FCS-gx database (optional, you can avoid this if you are not planning to automatically remove contaminants from your assembly)
-- reference genome for the species under study (optional, you can use this if you want to compare your assembly with the reference genome with quast)
+- **oatk database (mandatory)**
 
-## Running colora
+Dikarya in the following code is an example, you must choose the right database for your species:
+
+```
+git clone https://github.com/c-zhou/OatkDB.git
+cd colora/resources
+mkdir oatkDB
+cd oatkDB
+ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam
+ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam.h3f
+ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam.h3i
+ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam.h3m
+ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam.h3p
+```
+
+- **busco database (mandatory)**
+
+Go to https://busco-data.ezlab.org/v5/data/lineages/ and download the database of interest.
+Even in this case, the following is just an example:
+
+```
+cd colora/resources
+mkdir busco_db
+cd busco_db
+wget https://busco-data.ezlab.org/v5/data/lineages/saccharomycetes_odb10.2024-01-08.tar.gz
+```
+
+- **ncbi FCS-gx database (optional)** 
+
+You can avoid this if you are not planning to automatically remove contaminants from your assembly.
+
+```
+mamba create -n ncbi_fcsgx ncbi-fcs-gx
+mamba activate ncbi_fcsgx
+cd colora/resources
+mkdir gxdb
+cd gxdb
+sync_files.py get --mft https://ftp.ncbi.nlm.nih.gov/genomes/TOOLS/FCS/database/latest/all.manifest --dir ./gxdb
+```
+- **reference genome (optional)**
+
+You can use the reference genome for the species under study if you want to compare your assembly with the reference genome with quast. You can also use the reference GFF file (see [config/README.md](https://github.com/LiaOb21/colora/blob/main/config/README.md)).
+
+### 5. Running colora
 
 If everything is set up correctly and the `config.yaml` file has been updated according to your needs (see [config/README.md](https://github.com/LiaOb21/colora/blob/main/config/README.md)), you should be able to run `colora` with this simple command:
 
@@ -63,11 +107,23 @@ N.B. if you are using a server where jobs are normally submitted through SLURM o
 git clone https://github.com/c-zhou/OatkDB.git
 cd colora/resources
 mkdir oatkDB
-cp path/to/where/you/cloned/OatkDB/v20230921/dikarya* oatkDB/
+cd oatkDB
+ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam
+ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam.h3f
+ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam.h3i
+ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam.h3m
+ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam.h3p
+```
+- 3. Download busco lineage
+  
+```
+cd colora/resources
+mkdir busco_db
+cd busco_db
+wget https://busco-data.ezlab.org/v5/data/lineages/saccharomycetes_odb10.2024-01-08.tar.gz
 ```
 
-
-- 3. Download FCS-GX test database 
+- 4. Download FCS-GX test database 
 
 You can skip this step if you are not going to run the decontamination step with FCS-GX
 ```
@@ -79,36 +135,9 @@ cd gx_test_db
 sync_files.py get --mft https://ftp.ncbi.nlm.nih.gov/genomes/TOOLS/FCS/database/test-only/test-only.manifest --dir ./test-only
 ```
 
-- 4. Run the test pipeline
+- 5. Run the test pipeline
 
 ```
 snakemake --configfile config/config_test.yaml --software-deployment-method conda --snakefile workflow/Snakefile --cores 4
 ```
 
-# TODO
-
-
-* The workflow will occur in the snakemake-workflow-catalog once it has been made public. Then the link under "Usage" will point to the usage instructions if `<owner>` and `<repo>` were correctly set.
-
-- [x] Rule for Nanoplot
-- [x] Rule for fastp 
-- [x] Rules for arima pipeline - split in several rules
-- [x] Rule for yahs
-- [x] integrate the snakemake report in the workflow: not necessary
-- [x] input / output: hardcoded is okay
-- [x] test dataset
-- [x] test config file
-- [x] test possibility to add ONT reads as optional param in hifiasm
-- [x] test possibility to add HiC reads as optional params in hifiasm: file names change in this case. Need more study. Probably this needs a separate rule.
-- [x] implement ncbi `FCS` (decontamination) as optional rule (orange path in the scheme above)
-- [x] make purging steps optional 
-- [x] slurm integration (profile)
-- [x] setting of resources for each rule
-- [x] Rule `purge_dups.smk` and `purge_dups_alt.smk`: redirecting outputs 
-- [x] Formatting and linting to be fixed according to snakemake requirements
-- [ ] implement `assemblyQC` - waiting for new Merqury release to make a new conda recipe (light green path above)
-- [x] organelle QC
-- [x] packages versions: create stable yaml files with conda export
-- [ ] add singularity and docker as option for environment management
-- [x] check if there is a better way to define oatk output
-- [ ] set up GitHub actions
