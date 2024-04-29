@@ -254,7 +254,45 @@ You can optionally give as input the reference genome for the species under stud
 
 All the parameters that you can customise for quast are optional, and you can refer to [quast documentation](https://quast.sourceforge.net/docs/manual.html) to see which ones are suitable for your case.
 
-### 1. Example
-### 2. Example
+### 1. Example running quast with no reference genome
+
+In this case just leave all the optional parameters empty:
+```
+# Customisable parameters for quast
+quast:
+  optional_params: 
+    "--fragmented": ""
+    "--large": ""
+```
+
+### 2. Example running quast with reference genome
+
+In this case you have to previously download your reference genome (and GFF, if you want), and specify the path with the `-r` flag (`-g` for the GFF):
+```
+# Customisable parameters for quast
+quast:
+  optional_params: 
+    "--fragmented": ""
+    "--large": ""
+    "-r": "resources/reference_genomes/yeast/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa"
+    "-g": "resources/reference_genomes/yeast/Saccharomyces_cerevisiae.R64-1-1.101.gff3"
+```
 
 # Busco
+
+Busco is used to perform the quality check of the assembly along all the workflow. It processes:
+
+- contig level assembly(ies) produced by hifiasm
+- decontaminated contig level assembly(ies) produced by fcs-gx (if included)
+- purged contig level primary assembly produced by purge_dups (if included)
+- scaffolded assembly(ies) produced by yahs
+
+You must download the busco lineage of your interest before running colora. See [here](https://github.com/LiaOb21/colora/tree/main?tab=readme-ov-file#snakemake-workflow-colora) for instructions on how to download the busco lineage.
+
+You need to specify the path to your busco lineage in the config file:
+
+```
+# Customisable parameters for busco
+busco:
+  lineage: "resources/saccharomycetes_odb10" # lineage to be used for busco analysis
+```
