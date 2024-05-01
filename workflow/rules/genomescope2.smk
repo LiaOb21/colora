@@ -8,6 +8,9 @@ rule genomescope2:
         directory("results/genomescope"),
     params:
         k=config["kmc"]["k"],
+        optional_params=" ".join(
+            f"{k} {v}" for k, v in config["genomescope2"]["optional_params"].items() if v
+        ),
     log:
         "logs/genomescope2.log",
     resources:
@@ -16,5 +19,5 @@ rule genomescope2:
         "../envs/genomescope2.yaml"
     shell:
         """
-        /usr/bin/time -v genomescope2 -i {input} -o {output} -k {params.k} >> {log} 2>&1
+        /usr/bin/time -v genomescope2 -i {input} -o {output} -k {params.k} {params.optional_params} >> {log} 2>&1
         """
