@@ -31,6 +31,12 @@ kmc:
 kmc_tools:
   cx: 1000000 # exclude k-mers occurring more of than <value> times
 
+# Customisable parameters for genomescope2
+genomescope2:
+  optional_params:
+    "-p": "2"
+    "-l": ""
+
 # Customisable parameters for oatk
 oatk:
   k: 1001 # kmer size [1001]
