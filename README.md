@@ -12,7 +12,7 @@ Why colora? :snake: Colora means "snake" in Sardinian language :snake:
 
 ## Overview
 
-The aim of colora is to produces complete, chromosome-scale primary or phased assemblies by integrating the following tools:
+The aim of colora is to produce complete, chromosome-scale primary or phased assemblies by integrating the following tools:
 
 - [Hifiasm](https://github.com/chhylp123/hifiasm): used to extract contigs from raw PacBio HiFi reads. Hifiasm operates either with HiFi reads exclusively or in conjunction with Oxford Nanopore reads to generate primary assemblies. Colora supports also the hifiasm 'Hi-C mode', used to create phased assemblies with distinct haplotypes.
 - [FCS-GX](https://github.com/ncbi/fcs-gx): this pipeline is employed to eliminate contaminants from genome assemblies. This step is optional.
