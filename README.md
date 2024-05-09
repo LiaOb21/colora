@@ -4,13 +4,30 @@
 [![GitHub actions status](https://github.com/LiaOb21/colora/workflows/Tests/badge.svg?branch=main)](https://github.com/LiaOb21/colora/actions?query=branch%3Amain+workflow%3ATests)
 [![DOI](https://zenodo.org/badge/730752023.svg)](https://zenodo.org/doi/10.5281/zenodo.10728679)
 
-A Snakemake workflow for for genome assembly.
+A Snakemake workflow for *de novo* genome assembly.
 
 Why colora? :snake: Colora means "snake" in Sardinian language :snake: 
 
 ![Colora](https://github.com/LiaOb21/colora/assets/96196229/83e8a09d-bc2c-48f7-b84d-36f34118161f)
 
+## Overview
 
+The aim of colora is to produces complete, chromosome-scale primary or phased assemblies by integrating the following tools:
+
+- [Hifiasm](https://github.com/chhylp123/hifiasm): used to extract contigs from raw PacBio HiFi reads. Hifiasm operates either with HiFi reads exclusively or in conjunction with Oxford Nanopore reads to generate primary assemblies. Colora supports also the hifiasm 'Hi-C mode', used to create phased assemblies with distinct haplotypes.
+- [FCS-GX](https://github.com/ncbi/fcs-gx): this pipeline is employed to eliminate contaminants from genome assemblies. This step is optional.
+- [purge_dups](https://github.com/dfguan/purge_dups): applied to remove haplotypic duplications and overlaps from primary assemblies. This step is optional and must be skipped in case of phased assembly (Hi-C mode).
+- [Arima Genomics Mapping Pipeline](https://github.com/ArimaGenomics/mapping_pipeline): used to map Hi-C reads to contigs. It has been adapted to Snakemake within Colora with minor modifications (`-M` flag added to `bwa mem` commands).
+- [YaHS](https://github.com/c-zhou/yahs): used for scaffolding the assemblies.
+
+In addition, Colora executes the following tasks:
+
+- Quality assessment of raw HiFi reads using [NanoPlot](https://github.com/wdecoster/NanoPlot).
+- Quality evaluation and filtering of Hi-C reads with [Fastp](https://github.com/OpenGene/fastp).
+- Analysis of the k-mer spectrum from raw HiFi reads using [KMC](https://github.com/refresh-bio/KMC) and [GenomeScope2](https://github.com/tbenavi1/genomescope2.0).
+- Assembly of mitochondria and chloroplasts (when applicable) with [Oatk](https://github.com/c-zhou/oatk).
+- Quality evaluation of organelle assemblies with [gfastats](https://github.com/vgl-hub/gfastats) and [Bandage](https://github.com/rrwick/Bandage).
+- Quality assessment of the *de novo* genome assembly throughout the workflow using [QUAST](https://github.com/ablab/quast) and [BUSCO](https://gitlab.com/ezlab/busco/-/releases#5.7.0).
 
 ## Usage
 
