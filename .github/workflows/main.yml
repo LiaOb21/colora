@@ -29,7 +29,7 @@ jobs:
       with:
         directory: .
         snakefile: workflow/Snakefile
-        args: "--lint"
+        args: "--lint --configfile config/config_test.yaml"
 
   Testing:
     runs-on: ubuntu-latest
@@ -42,13 +42,13 @@ jobs:
     - name: Test workflow
       uses: snakemake/snakemake-github-action@v1.24.0
       with:
-        directory: .test
+        directory: .
         snakefile: workflow/Snakefile
-        args: "--use-conda --show-failed-logs --cores 3 --conda-cleanup-pkgs cache --all-temp"
+        args: "--configfile config/config_test.yaml --use-conda --show-failed-logs --cores 3 --conda-cleanup-pkgs cache --all-temp --dry-run"
 
     - name: Test report
       uses: snakemake/snakemake-github-action@v1.24.0
       with:
-        directory: .test
+        directory: .
         snakefile: workflow/Snakefile
         args: "--report report.zip"
