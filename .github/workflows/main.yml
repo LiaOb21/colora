@@ -39,19 +39,50 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Download busco lineage
+      run: |
+        mkdir -p test_data/busco_db
+        cd test_data/busco_db
+        wget https://busco-data.ezlab.org/v5/data/lineages/saccharomycetes_odb10.2024-01-08.tar.gz
+        tar -xzf saccharomycetes_odb10.2024-01-08.tar.gz
+
+    - name: Setup Miniconda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        activate-environment: ncbi_fcsgx
+        environment-file: workflow/envs/fcsgx.yaml
+        auto-activate-base: false
+
+    - name: Download FCS-GX test database
+      shell: bash -l {0}
+      run: |
+        conda activate ncbi_fcsgx
+        mkdir -p test_data/gx_test_db
+        cd test_data/gx_test_db
+        sync_files.py get --mft https://ftp.ncbi.nlm.nih.gov/genomes/TOOLS/FCS/database/test-only/test-only.manifest --dir ./test-only
+
+    - name: Install and set up time command
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y time
+        echo "/usr/bin/time" | sudo tee /usr/local/bin/time
+        sudo chmod +x /usr/local/bin/time
+
+    - name: Concatenate ont files
+      run: |
+        cd test_data/raw_ont/
+        cat ont_test_SPSC01_SRR27947616_PRJNA1075684aa.fastq.gz ont_test_SPSC01_SRR27947616_PRJNA1075684ab.fastq.gz ont_test_SPSC01_SRR27947616_PRJNA1075684ac.fastq.gz > ont_test_SPSC01_SRR27947616_PRJNA1075684.fastq.gz
+
     - name: Test workflow
       uses: snakemake/snakemake-github-action@v1.24.0
       with:
         directory: .
         snakefile: workflow/Snakefile
-        args: "--configfile config/config_test.yaml --use-conda --show-failed-logs --cores 3 --conda-cleanup-pkgs cache --all-temp --dry-run"
+        args: "--configfile config/config_test.yaml --use-conda --show-failed-logs --cores 3 --conda-cleanup-pkgs cache --all-temp"
 
-
-# excluding this step for now (because of --dry-run option in the previous step)        
-
-#    - name: Test report
-#      uses: snakemake/snakemake-github-action@v1.24.0
-#      with:
-#        directory: .
-#        snakefile: workflow/Snakefile
-#        args: "--report report.zip"
+    - name: Test report
+      uses: snakemake/snakemake-github-action@v1.24.0
+      with:
+        directory: .
+        snakefile: workflow/Snakefile
+        args: "--report report.zip"
