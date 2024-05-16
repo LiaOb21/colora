@@ -113,17 +113,29 @@ If everything is set up correctly and the `config.yaml` file has been updated ac
 snakemake --software-deployment-method conda
 ```
 
-N.B. if you are using a server where jobs are normally submitted through SLURM or other schedulers, you might consider setting up a snakemake profile in your system to handle job submission.
+**Note:** if you are using a server where jobs are normally submitted through SLURM or other schedulers, you might consider setting up a snakemake profile in your system to handle job submission.
 
 
-## Test the pipeline (update needed):
+## Test the pipeline:
 
-- 1. Download test data (they will be available soon)
-- 2. Download oatk DB
+The test dataset provided is a subset of reads of the organism *Saccharomyces cerevisiae*. The data come from two different BioProjects:
+- HiFi and ONT reads come from the BioProject [PRJNA1075684](https://www.ncbi.nlm.nih.gov/bioproject?LinkName=sra_bioproject&from_uid=31877222) (strain SPSC01)
+- Hi-C reads come from the BioProject [PRJNA1013711](https://www.ncbi.nlm.nih.gov/bioproject?LinkName=sra_bioproject&from_uid=31374389) (strain YBP2)
+
+This dataset is not supposed to have biological meaning, it ahs been crated only with the purpose of testing the workflow functionality. 
+
+#### 1. Clone colora repository:
+
+```
+git clone https://github.com/LiaOb21/colora.git
+cd colora
+```
+
+#### 2. Download oatk DB
 
 ```
 git clone https://github.com/c-zhou/OatkDB.git
-cd colora/resources
+cd test_data
 mkdir oatkDB
 cd oatkDB
 ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam
@@ -131,31 +143,57 @@ ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam.h3f
 ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam.h3i
 ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam.h3m
 ln -s ~/software/OatkDB/v20230921/dikarya_mito.fam.h3p
+cd ..
 ```
-- 3. Download busco lineage
+#### 3. Download busco lineage
   
 ```
-cd colora/resources
 mkdir busco_db
 cd busco_db
 wget https://busco-data.ezlab.org/v5/data/lineages/saccharomycetes_odb10.2024-01-08.tar.gz
+tar -xzf saccharomycetes_odb10.2024-01-08.tar.gz
+cd ..
 ```
 
-- 4. Download FCS-GX test database 
+#### 4. Download FCS-GX test database 
 
-You can skip this step if you are not going to run the decontamination step with FCS-GX
+You can skip this step if you are not going to run the decontamination step with FCS-GX, in which case you should modify the `config/config_test.yaml` file setting `include_fcsgx: False`.
+
 ```
 mamba create -n ncbi_fcsgx ncbi-fcs-gx
 mamba activate ncbi_fcsgx
-cd colora/resources
 mkdir gx_test_db
 cd gx_test_db
 sync_files.py get --mft https://ftp.ncbi.nlm.nih.gov/genomes/TOOLS/FCS/database/test-only/test-only.manifest --dir ./test-only
+mamba deactivate
+cd ..
 ```
 
-- 5. Run the test pipeline
+#### 5. Concatenate HiFi and ONT files
+
+**Note:** With real data this step is only necessary for ONT reads (when available). Hifi files are automatically joined by the workflow. In this case, we have to perform this step manually because of the way the files are split. 
+
 
 ```
+cd raw_hifi
+
+cat hifi_test_SPSC01_SRR27947616_PRJNA1075684aa.fastq.gz hifi_test_SPSC01_SRR27947616_PRJNA1075684ab.fastq.gz > hifi_test_SPSC01_SRR27947616_PRJNA1075684.fastq.gz
+
+rm hifi_test_SPSC01_SRR27947616_PRJNA1075684a*
+
+cd ../raw_ont 
+
+cat ont_test_SPSC01_SRR27947616_PRJNA1075684aa.fastq.gz ont_test_SPSC01_SRR27947616_PRJNA1075684ab.fastq.gz ont_test_SPSC01_SRR27947616_PRJNA1075684ac.fastq.gz > ont_test_SPSC01_SRR27947616_PRJNA1075684.fastq.gz
+
+rm ont_test_SPSC01_SRR27947616_PRJNA1075684a*
+cd ../..
+```
+ 
+#### 6. Run the test pipeline
+
+```
+mamba activate snakemake
 snakemake --configfile config/config_test.yaml --software-deployment-method conda --snakefile workflow/Snakefile --cores 4
 ```
 
+**Note:** The testing will take approximately 40 minutes. It may take longer depending on the time required for the downloading of the conda packages and performance of your system. You can allocate more threads if you prefer.
