@@ -7,7 +7,7 @@ The rules have been divided in high demanding, medium demanding and low demandin
 
 In this part of the `config.yaml` we can set these values.
 
-### 1. Example of suitable values for barley in our testing (genome size ~4.2 Gbp, 75% of repeats):
+### :ear_of_rice: 1. Example of suitable values for barley in our testing (genome size ~4.2 Gbp, ~75% of repeats):
 
 ```
 # Set memory and threads for high demanding rules
@@ -25,6 +25,64 @@ low:
   mem_mb: 51200 # memory in MB
   t: 8 # number of threads
 ```
+
+### :mushroom: 2. Example of suitable values for R. irregularis in our testing (genome size ~146 Mbp, ~37% of repeats)
+
+```
+# Set memory and threads for high demanding rules
+high:
+  mem_mb: 204800 # memory in MB
+  t: 50 # number of threads
+
+# Set memory and threads for medium demanding rules
+medium:
+  mem_mb: 20480 # memory in MB
+  t: 20 # number of threads
+
+# Set memory and threads for low demanding rules
+low:
+  mem_mb: 10240 # memory in MB
+  t: 8 # number of threads
+```
+
+### :seedling: 2. Example of suitable values for A. thaliana in our testing (genome size ~135 Mbp, ~30% of repeats)
+
+```
+# Set memory and threads for high demanding rules
+high:
+  mem_mb: 153600 # memory in MB
+  t: 50 # number of threads
+
+# Set memory and threads for medium demanding rules
+medium:
+  mem_mb: 20480 # memory in MB
+  t: 20 # number of threads
+
+# Set memory and threads for low demanding rules
+low:
+  mem_mb: 10240 # memory in MB
+  t: 8 # number of threads
+```
+
+### :apple: 2. Example of suitable values for apple in our testing (genome size ~700 Mbp, ~51% of repeats)
+
+```
+# Set memory and threads for high demanding rules
+high:
+  mem_mb: 307200 # memory in MB
+  t: 50 # number of threads
+
+# Set memory and threads for medium demanding rules
+medium:
+  mem_mb: 20480 # memory in MB
+  t: 20 # number of threads
+
+# Set memory and threads for low demanding rules
+low:
+  mem_mb: 10240 # memory in MB
+  t: 8 # number of threads
+```
+
 
 # Paths to reads
 
@@ -46,7 +104,9 @@ The k-mer size, if unsure, can be estimated using a script provided by Merqury, 
 
 For the parameter `cs` you must pay attention to your genome size and repetitiveness, as this can lead to wrong estimation of genome size. See [genomescope2 FAQs](https://github.com/tbenavi1/genomescope2.0?tab=readme-ov-file#frequently-asked-questions-faq).
 
-### 1. Example of suitable parameters for barley in our testing (genome size ~4.2 Gbp, 75% of repeats):
+The parameter `-p` for genomescope  sets the ploidy of the model for GenomeScope to use. See [genomescope2 repo](https://github.com/tbenavi1/genomescope2.0) for further details.
+
+### :ear_of_rice: 1. Example of suitable parameters for barley in our testing (genome size ~4.2 Gbp, 75% of repeats):
 
 ```
 # Customisable parameters for kmc
@@ -58,6 +118,12 @@ kmc:
 # Customisable parameters for kmc_tools transform
 kmc_tools:
   cx: 1000000 # exclude k-mers occurring more of than <value> times
+
+# Customisable parameters for genomescope2
+genomescope2:
+  optional_params:
+    "-p": "1"
+    "-l": ""
 ```
 
 # oatk
@@ -66,7 +132,7 @@ See usage section for instructions on how to obtain the oatk database of interes
 
 Note that the `c` parameter, which specifies coverage threshold, can be set as 5-10 times the value of nuclear sequence coverage.
 
-### 1. Example of suitable parameters for barley in our testing (hifi coverage ~30x):
+### :ear_of_rice: 1. Example of suitable parameters for barley in our testing (hifi coverage ~30x):
 
 ```
 # Customisable parameters for oatk
@@ -163,7 +229,7 @@ hifiasm:
 
 FCS-gx is the tool that performs the decontamination of the assembly. However, this rule can be skipped setting `include_fcsgx: False`. This choice is made given the fact that the database that FCS-gx uses is ~500GB, and it needs a big RAM, and we want colora to be as portable as possible. Skipping this rule it's possible to run colora even in a small system.
 
-### 1. Example of suitable parameters for barley:
+### :ear_of_rice: 1. Example of suitable parameters for barley:
 
 ```
 #Set this to False if you want to skip the fcsgx step:
@@ -175,7 +241,7 @@ fcsgx:
   path_to_gx_db: "resources/gxdb"
 ```
 
-### 2. Example of suitable parameters for Rhizophagus irregularis:
+### :mushroom: 2. Example of suitable parameters for Rhizophagus irregularis:
 
 ```
 #Set this to False if you want to skip the fcsgx step:
