@@ -106,6 +106,8 @@ For the parameter `cs` you must pay attention to your genome size and repetitive
 
 The parameter `-p` for genomescope  sets the ploidy of the model for GenomeScope to use. See [genomescope2 repo](https://github.com/tbenavi1/genomescope2.0) for further details.
 
+The parameter `-l` for genomescope  sets the estimated coverage of the 1n peak. See [genomescope2 repo](https://github.com/tbenavi1/genomescope2.0) for further details.
+
 ### :ear_of_rice: 1. Example of suitable parameters for barley in our testing (genome size ~4.2 Gbp, 75% of repeats):
 
 ```
