@@ -90,3 +90,5 @@ quast:
 # Customisable parameters for busco
 busco:
   lineage: "resources/saccharomycetes_odb10" # lineage to be used for busco analysis
+  optional_params: 
+    "--metaeuk": "" # this can be set to True if needed. The default is miniprot 
