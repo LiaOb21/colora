@@ -8,6 +8,9 @@ rule busco:
     params:
         lineage=config["busco"]["lineage"],
         labels = list(get_assemblies_QC().keys())
+        optional_params=" ".join(
+            f"{k}" if v is True else f"{k} {v}" for k, v in config["busco"]["optional_params"].items() if v
+        ),
     threads: config["high"]["t"]
     log:
         "logs/busco.log"
@@ -22,7 +25,7 @@ rule busco:
         count=0
         for v in {input} ; do
             k=${{labels[$count]}}
-            busco -i $v -o {output}/$k -m genome -l {params.lineage} -f -c {threads} >> {log} 2>&1
+            busco -i $v -o {output}/$k -m genome -l {params.lineage} -f -c {threads} {params.optional_params} >> {log} 2>&1
             count=$(( $count + 1 ))
         done
         """
