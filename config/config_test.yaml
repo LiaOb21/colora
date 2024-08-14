@@ -91,3 +91,5 @@ quast:
 # Customisable parameters for busco
 busco:
   lineage: "test_data/busco_db/saccharomycetes_odb10" # lineage to be used for busco analysis
+  optional_params: 
+    "--metaeuk": True
