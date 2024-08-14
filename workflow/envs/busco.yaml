@@ -3,4 +3,4 @@ channels:
   - bioconda
 
 dependencies:
-  - busco=5.7.0
+  - busco=5.7.1
