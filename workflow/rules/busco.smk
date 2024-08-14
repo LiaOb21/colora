@@ -7,7 +7,7 @@ rule busco:
         dir = directory("results/busco"),
     params:
         lineage=config["busco"]["lineage"],
-        labels = list(get_assemblies_QC().keys())
+        labels = list(get_assemblies_QC().keys()),
         optional_params=" ".join(
             f"{k}" if v is True else f"{k} {v}" for k, v in config["busco"]["optional_params"].items() if v
         ),
