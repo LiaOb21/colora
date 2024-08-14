@@ -357,10 +357,14 @@ Busco is used to perform the quality check of the assembly along all the workflo
 
 You must download the busco lineage of your interest before running colora. See [here](https://github.com/LiaOb21/colora/tree/main?tab=readme-ov-file#snakemake-workflow-colora) for instructions on how to download the busco lineage.
 
-You need to specify the path to your busco lineage in the config file:
+You need to specify the path to your busco lineage in the config file. Additionally, you can set further optional parameters. For example, if you prefer to use metaeuk rathern than miniprot (which is the default for busco), you can customise the `config.yaml` as follows:
 
 ```
 # Customisable parameters for busco
 busco:
   lineage: "resources/saccharomycetes_odb10" # lineage to be used for busco analysis
+  optional_params: 
+    "--metaeuk": True
 ```
+
+If you want the default parameters (minprot), you can set `"--metaeuk": ""`. 
