@@ -3,4 +3,4 @@ channels:
   - bioconda
 
 dependencies:
-  - ncbi-fcs-gx=0.5.0
+  - ncbi-fcs-gx=0.5.4
