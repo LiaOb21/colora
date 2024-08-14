@@ -122,7 +122,7 @@ The test dataset provided is a subset of reads of the organism *Saccharomyces ce
 - HiFi and ONT reads come from the BioProject [PRJNA1075684](https://www.ncbi.nlm.nih.gov/bioproject?LinkName=sra_bioproject&from_uid=31877222) (strain SPSC01)
 - Hi-C reads come from the BioProject [PRJNA1013711](https://www.ncbi.nlm.nih.gov/bioproject?LinkName=sra_bioproject&from_uid=31374389) (strain YBP2)
 
-This dataset is not supposed to have biological meaning, it ahs been crated only with the purpose of testing the workflow functionality. 
+This dataset is not supposed to have biological meaning, it has been crated only with the purpose of testing the workflow functionality. 
 
 #### 1. Clone colora repository:
 
