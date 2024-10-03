@@ -10,7 +10,7 @@ Why colora? :snake: Colora means "snake" in Sardinian language :snake:
 
 ![Colora](https://github.com/LiaOb21/colora/assets/96196229/20fbc901-ae09-4c02-9278-f996e834a7ea)
 
-### :snake: [Watch the tutorial](https://www.youtube.com/watch?v=-xWgvj_PmZo&t=789s) organised for [Biodiversity Genomics Academy 2024](https://thebgacademy.org/) to find out more! 
+### :snake: [Watch the tutorial](https://youtu.be/-xWgvj_PmZo?si=Z2be5dozU8rNQ-6E) organised for [Biodiversity Genomics Academy 2024](https://thebgacademy.org/) to find out more! 
 
 ## Overview
 
