@@ -10,6 +10,8 @@ Why colora? :snake: Colora means "snake" in Sardinian language :snake:
 
 ![Colora](https://github.com/LiaOb21/colora/assets/96196229/20fbc901-ae09-4c02-9278-f996e834a7ea)
 
+### :snake: [Watch the tutorial](https://www.youtube.com/watch?v=-xWgvj_PmZo&t=789s) organised for [Biodiversity Genomics Academy 2024](https://thebgacademy.org/) to find out more! 
+
 ## Overview
 
 The aim of colora is to produce complete, chromosome-scale primary or phased assemblies by integrating the following tools:
@@ -55,7 +57,7 @@ If HiFi reads are in multiple files, these are automatically joined by colora. H
 
 Hi-C reads are automatically filtered by colora using fastp. Fastp removes adapters for paired-end data with the parameter `--detect_adapter_for_pe`, which is always set in colora. If you are using Arima Hi-C library prep kit generated data, Arima mapping pipeline suggests to trim 5 bases from the 5' end of both read 1 and read 2, and this can be achieved automatically with colora, setting the right parameters in the config file (see [config/README.md](https://github.com/LiaOb21/colora/blob/main/config/README.md)).
 
-ONT reads (if you have them) must be previously joined (if in multiple files) and filtered (if you want to).
+ONT reads (if you have them) must be previously joined (if in multiple files) and filtered (if you want to). In our testing, filtering ONT reads based on quality rather than length resulted in a more accurate assembly.
 
 ### 4. Other inputs
 
@@ -197,3 +199,47 @@ snakemake --configfile config/config_test.yaml --software-deployment-method cond
 ```
 
 **Note:** The testing will take approximately 40 minutes. It may take longer depending on the time required for the downloading of the conda packages and performance of your system. You can allocate more threads if you prefer.
+
+## Citation
+
+If you use Colora in your work, please cite:
+
+- Obinu, L., Booth, T., Weerd, H. De, Trivedi, U. & Porceddu, A. **Colora: A Snakemake Workflow for Complete Chromosome-scale De Novo Genome Assembly**. bioRxiv 2024.09.10.612003 (2024) doi:10.1101/2024.09.10.612003.
+
+For the tools included in the workflow:
+
+-	Köster, J. & Rahmann, S. Snakemake—a scalable bioinformatics workflow engine. Bioinformatics 28, 2520–2522 (2012).
+
+-	Dale, R. et al. Bioconda: sustainable and comprehensive software distribution for the life sciences. Nature Methods 2018 15:7 15, 475–476 (2018). 
+
+-	Ranallo-Benavidez, T. R., Jaron, K. S. & Schatz, M. C. GenomeScope 2.0 and Smudgeplot for reference-free profiling of polyploid genomes. Nature Communications 2020 11:1 11, 1–10 (2020). 
+
+-	Wick, R. R., Schultz, M. B., Zobel, J. & Holt, K. E. Bandage: interactive visualization of de novo genome assemblies. Bioinformatics 31, 3350–3352 (2015). 
+
+-	Formenti, G. et al. Gfastats: conversion, evaluation and manipulation of genome sequences using assembly graphs. Bioinformatics 38, 4214–4216 (2022). 
+
+-	Astashyn, A. et al. Rapid and sensitive detection of genome contamination at scale with FCS-GX. Genome Biol 25, (2024). 
+
+-	Chenxi Zhou. Oatk: an organelle genome assembly toolkit. https://github.com/c-zhou/oatk (2023). 
+
+-	Deorowicz, S., Debudaj-Grabysz, A. & Grabowski, S. Disk-based k-mer counting on a PC. BMC Bioinformatics 14, 1–12 (2013). 
+
+-	Deorowicz, S., Kokot, M., Grabowski, S. & Debudaj-Grabysz, A. KMC 2: fast and resource-frugal k-mer counting. Bioinformatics 31, 1569–1576 (2015). 
+
+-	Kokot, M., Dlugosz, M. & Deorowicz, S. KMC 3: counting and manipulating k-mer statistics. Bioinformatics 33, 2759–2761 (2017). 
+
+-	Chen, S., Zhou, Y., Chen, Y. & Gu, J. fastp: an ultra-fast all-in-one FASTQ preprocessor. Bioinformatics 34, i884–i890 (2018).  
+
+-	Manni, M., Berkeley, M. R., Seppey, M., Simão, F. A. & Zdobnov, E. M. BUSCO Update: Novel and Streamlined Workflows along with Broader and Deeper Phylogenetic Coverage for Scoring of Eukaryotic, Prokaryotic, and Viral Genomes. Mol Biol Evol 38, 4647–4654 (2021). 
+
+-	Cheng, H., Concepcion, G. T., Feng, X., Zhang, H. & Li, H. Haplotype-resolved de novo assembly using phased assembly graphs with hifiasm. Nature Methods 2021 18:2 18, 170–175 (2021). 
+
+-	Guan, D. et al. Identifying and removing haplotypic duplication in primary genome assemblies. Bioinformatics 36, 2896–2898 (2020). 
+
+-	Mikheenko, A., Prjibelski, A., Saveliev, V., Antipov, D. & Gurevich, A. Versatile genome assembly evaluation with QUAST-LG. Bioinformatics 34, i142–i150 (2018). 
+
+-	De Coster, W., D’Hert, S., Schultz, D. T., Cruts, M. & Van Broeckhoven, C. NanoPack: Visualizing and processing long-read sequencing data. Bioinformatics 34, 2666–2669 (2018). 
+
+- Arima Genomics Mapping Pipeline: https://github.com/ArimaGenomics/mapping_pipeline
+
+-	Zhou, C., McCarthy, S. A. & Durbin, R. YaHS: yet another Hi-C scaffolding tool. Bioinformatics 39, (2023). 
