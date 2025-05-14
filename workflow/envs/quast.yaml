@@ -3,4 +3,4 @@ channels:
   - bioconda
 
 dependencies:
-  - quast=5.2.0
+  - quast=5.3.0

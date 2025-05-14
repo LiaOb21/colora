@@ -3,4 +3,4 @@ channels:
   - bioconda
 
 dependencies:
-  - gfastats=1.3.6
+  - gfastats=1.3.11

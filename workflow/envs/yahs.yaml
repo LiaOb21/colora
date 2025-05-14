@@ -3,5 +3,5 @@ channels:
   - bioconda
 
 dependencies:
-  - yahs=1.2a.2
-  - samtools=1.19
+  - yahs=1.2.2
+  - samtools=1.21
