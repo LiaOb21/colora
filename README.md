@@ -204,7 +204,7 @@ snakemake --configfile config/config_test.yaml --software-deployment-method cond
 
 If you use Colora in your work, please cite:
 
-- Obinu, L., Booth, T., Weerd, H. De, Trivedi, U. & Porceddu, A. **Colora: A Snakemake Workflow for Complete Chromosome-scale De Novo Genome Assembly**. bioRxiv 2024.09.10.612003 (2024) doi:10.1101/2024.09.10.612003.
+- Lia Obinu, Timothy Booth, Heleen De Weerd, Urmi Trivedi, Andrea Porceddu, **Colora: a Snakemake workflow for complete chromosome-scale de novo genome assembly**, Bioinformatics, Volume 41, Issue 5, May 2025, btaf175, https://doi.org/10.1093/bioinformatics/btaf175
 
 For the tools included in the workflow:
 
