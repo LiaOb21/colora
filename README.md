@@ -19,7 +19,7 @@ The aim of colora is to produce complete, chromosome-scale primary or phased ass
 - [Hifiasm](https://github.com/chhylp123/hifiasm): used to extract contigs from raw PacBio HiFi reads. Hifiasm operates either with HiFi reads exclusively or in conjunction with Oxford Nanopore reads to generate primary assemblies. Colora supports also the hifiasm 'Hi-C mode', used to create phased assemblies with distinct haplotypes.
 - [FCS-GX](https://github.com/ncbi/fcs-gx): this pipeline is employed to eliminate contaminants from genome assemblies. This step is optional.
 - [purge_dups](https://github.com/dfguan/purge_dups): applied to remove haplotypic duplications and overlaps from primary assemblies. This step is optional and must be skipped in case of phased assembly (Hi-C mode).
-- [Arima Genomics Mapping Pipeline](https://github.com/ArimaGenomics/mapping_pipeline): used to map Hi-C reads to contigs. It has been adapted to Snakemake within Colora with minor modifications (`-M` flag added to `bwa mem` commands).
+- [Arima Genomics Mapping Pipeline](https://github.com/ArimaGenomics/mapping_pipeline): used to map Hi-C reads to contigs. It has been adapted to Snakemake within Colora with minor modifications (`-5SPM` flag added to `bwa mem` commands).
 - [YaHS](https://github.com/c-zhou/yahs): used for scaffolding the assemblies.
 
 In addition, Colora executes the following tasks:
@@ -88,8 +88,10 @@ Even in this case, the following is just an example:
 cd colora/resources
 mkdir busco_db
 cd busco_db
-wget https://busco-data.ezlab.org/v5/data/lineages/saccharomycetes_odb10.2024-01-08.tar.gz
+wget https://busco-data.ezlab.org/v5/data/lineages/saccharomycetes_odb12.2025-07-01.tar.gz
 ```
+
+Double check that you are using the latest version of you lineage of interest as they are often updated.
 
 - **ncbi FCS-gx database (optional)** 
 
@@ -152,8 +154,8 @@ cd ..
 ```
 mkdir busco_db
 cd busco_db
-wget https://busco-data.ezlab.org/v5/data/lineages/saccharomycetes_odb10.2024-01-08.tar.gz
-tar -xzf saccharomycetes_odb10.2024-01-08.tar.gz
+wget https://busco-data.ezlab.org/v5/data/lineages/saccharomycetaceae_odb12.2025-07-01.tar.gz
+tar -xzf saccharomycetaceae_odb12.2025-07-01.tar.gz
 cd ..
 ```
 
